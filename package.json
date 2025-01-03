@@ -2,9 +2,13 @@
   "name": "petscare",
   "version": "1.0.0",
   "description": "petsCare Application using MERN STACK",
+  "type": "module",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node backend/server",
+    "server": "nodemon backend/server",
+    "client": "npm run dev --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Satyam Sawant",
   "license": "UNLICENSED",
