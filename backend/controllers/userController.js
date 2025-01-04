@@ -82,6 +82,41 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 
+/**
+ * @desc Get user profile
+ * @route GET /api/users/profile
+ * @access private
+ */
+const getUserProfile = asyncHandler(async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+
+    if (user) {
+      res.status(200).json({
+        statusCode: 200,
+        message: "User profile retrieved successfully",
+        user: {
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          isAdmin: user.isAdmin,
+        },
+      });
+    } else {
+      res.status(404).json({
+        statusCode: 404,
+        message: "User not found",
+      });
+    }
+  } catch (error) {
+    res.status(res.statusCode || 500).json({
+      statusCode: res.statusCode || 500,
+      message: error.message,
+    });
+  }
+});
 
 
-export { registerUser, loginUser };
+
+
+export { registerUser, loginUser, getUserProfile };
