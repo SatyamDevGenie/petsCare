@@ -4,7 +4,7 @@ import generateToken from "../utils/generateToken.js"; // Assuming you have this
 
 /**
  * @desc Register new user
- * @route POST /api/users
+ * @route POST /api/users/register
  * @access Public
  */
 const registerUser = asyncHandler(async (req, res) => {
@@ -44,4 +44,44 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 });
 
-export { registerUser };
+
+/**
+ * @desc Auth user
+ * @route POST /api/users/login
+ * @access public
+ */
+const loginUser = asyncHandler(async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+
+    if (user && (await user.matchPassword(password))) {
+      res.status(200).json({
+        statusCode: 200,
+        message: "Login successful",
+        user: {
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          isAdmin: user.isAdmin,
+          token: generateToken(user._id),
+        },
+      });
+    } else {
+      res.status(401).json({
+        statusCode: 401,
+        message: "Invalid email or password",
+      });
+    }
+  } catch (error) {
+    res.status(res.statusCode || 500).json({
+      statusCode: res.statusCode || 500,
+      message: error.message,
+    });
+  }
+});
+
+
+
+
+export { registerUser, loginUser };
