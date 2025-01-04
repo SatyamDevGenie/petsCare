@@ -13,7 +13,8 @@ const userSchema = mongoose.Schema(
       unique: true,
     },
     password: {
-      type: mongoose.Schema.Types.Mixed, // Allows any type for the password
+      // type: mongoose.Schema.Types.Mixed, // Allows any type for the password
+      type: String,
       required: true,
     },
     isAdmin: {
@@ -25,32 +26,21 @@ const userSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-// Hash the password if it's modified before saving
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) {
-    return next();
-  }
 
-  if (typeof this.password !== "string") {
-    // Convert the password to a string if it's not already
-    this.password = String(this.password);
-  }
-
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-  next();
-});
-
-// Compare entered password with the hashed password
 userSchema.methods.matchPassword = async function (enteredPassword) {
-  if (typeof enteredPassword !== "string") {
-    // Convert entered password to a string if it's not already
-    enteredPassword = String(enteredPassword);
-  }
-
   return await bcrypt.compare(enteredPassword, this.password);
 };
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
+    next();
+  }
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+});
 
 const User = mongoose.model("User", userSchema);
 
 export default User;
+
+
+

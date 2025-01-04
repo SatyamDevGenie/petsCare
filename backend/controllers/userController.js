@@ -2,6 +2,7 @@ import asyncHandler from "express-async-handler";
 import User from "../models/userModel.js";
 import generateToken from "../utils/generateToken.js"; // Assuming you have this utility function
 
+
 /**
  * @desc Register new user
  * @route POST /api/users/register
@@ -117,6 +118,54 @@ const getUserProfile = asyncHandler(async (req, res) => {
 });
 
 
+/**
+ * @desc		Update user profile
+ * @route		PUT /api/users/profile
+ * @access	private
+ */
+
+const updateUserProfile = asyncHandler(async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+
+    if (user) {
+      // Update user fields
+      user.name = req.body.name || user.name;
+      user.email = req.body.email || user.email;
+      if (req.body.password) {
+        user.password = req.body.password;
+      }
+
+      // Save updated user to database
+      const updatedUser = await user.save();
+
+      // Respond with updated user data and status code
+      res.status(200).json({
+        statusCode: 200,
+        message: "User profile updated successfully",
+        user: {
+          _id: updatedUser._id,
+          name: updatedUser.name,
+          email: updatedUser.email,
+          isAdmin: updatedUser.isAdmin,
+        },
+        token: generateToken(updatedUser._id),
+      });
+    } else {
+      res.status(404).json({
+        statusCode: 404,
+        message: "User not found",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      statusCode: 500,
+      message: error.message,
+    });
+  }
+});
 
 
-export { registerUser, loginUser, getUserProfile };
+
+
+export { registerUser, loginUser, getUserProfile, updateUserProfile};
