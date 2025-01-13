@@ -2,7 +2,9 @@ import dotenv from "dotenv";
 import express from "express";
 import chalk from "chalk";
 import connectDB from "./config/db.js";
-import userRoutes from "../backend/routes/userRoutes.js"
+import userRoutes from "../backend/routes/userRoutes.js";
+import petRoutes from "../backend/routes/petRoutes.js";
+import cookieParser from "cookie-parser";
 import { errorHandler, notFound } from "./middlewares/errorMiddleware.js";
 
 
@@ -12,14 +14,16 @@ connectDB(); // connection to Mongodb
 
 const app = express();
 app.use(express.json()); // Accepting the json data
+app.use(cookieParser());
 
 // Routes
 app.use("/api/users", userRoutes);
-
+app.use("/api/pets", petRoutes);
 
 app.get("/", (req, res) => {
   res.send("petsCare API is running");
 });
+
 
 
 // Middlewares

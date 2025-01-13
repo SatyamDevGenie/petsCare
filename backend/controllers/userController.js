@@ -2,7 +2,6 @@ import asyncHandler from "express-async-handler";
 import User from "../models/userModel.js";
 import generateToken from "../utils/generateToken.js"; // Assuming you have this utility function
 
-
 /**
  * @desc Register new user
  * @route POST /api/users/register
@@ -45,11 +44,10 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 });
 
-
 /**
  * @desc Auth user
  * @route POST /api/users/login
- * @access public
+ * @access Public
  */
 const loginUser = asyncHandler(async (req, res) => {
   try {
@@ -82,11 +80,10 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 });
 
-
 /**
  * @desc Get user profile
  * @route GET /api/users/profile
- * @access private
+ * @access Private
  */
 const getUserProfile = asyncHandler(async (req, res) => {
   try {
@@ -117,13 +114,11 @@ const getUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-
 /**
- * @desc		Update user profile
- * @route		PUT /api/users/profile
- * @access	private
+ * @desc Update user profile
+ * @route PUT /api/users/profile
+ * @access Private
  */
-
 const updateUserProfile = asyncHandler(async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
@@ -165,7 +160,44 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
+/**
+ * @desc Logout user
+ * @route POST /api/users/logout
+ * @access Public
+ */
+const logoutUser = asyncHandler(async (req, res) => {
+  try {
+    // Clear the "token" cookie by setting it with an empty value and maxAge to 0
+    res.cookie("token", "", {
+      httpOnly: true, // Ensure the cookie cannot be accessed via JavaScript
+      secure: process.env.NODE_ENV === "production", // Send only over HTTPS in production
+      sameSite: "strict", // Prevent CSRF
+      maxAge: 0, // Clear the cookie immediately
+    });
+
+    // Send a success response
+    res.status(200).json({
+      statusCode: 200,
+      message: "Logout successful",
+    });
+  } catch (error) {
+    console.error("Logout Error:", error);
+    res.status(500).json({
+      statusCode: 500,
+      message: "An error occurred while logging out.",
+    });
+  }
+});
+
+
+export { registerUser, loginUser, getUserProfile, updateUserProfile, logoutUser };
 
 
 
-export { registerUser, loginUser, getUserProfile, updateUserProfile};
+
+
+
+
+
+
+
