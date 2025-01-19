@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { registerUser } from "../services/userService";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -9,11 +10,12 @@ const Register = () => {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await registerUser({ name, email, password });
+      await registerUser(dispatch, { name, email, password });
       navigate("/");
     } catch (err: any) {
       setError(err.message || "Something went wrong!");
