@@ -38,9 +38,12 @@ const Header: React.FC = () => {
             </Link>
           </nav>
 
-          <button className="bg-gradient-to-r from-teal-500 to-teal-600 text-white text-sm px-6 py-3 rounded-full font-semibold shadow-lg hover:from-teal-600 hover:to-teal-700 hover:shadow-xl transition-all ease-in-out duration-300 transform hover:scale-105">
+          <Link
+            to="/login"
+            className="bg-gradient-to-r from-teal-500 to-teal-600 text-white text-sm px-6 py-3 rounded-full font-semibold shadow-lg hover:from-teal-600 hover:to-teal-700 hover:shadow-xl transition-all ease-in-out duration-300 transform hover:scale-105"
+          >
             Login
-          </button>
+          </Link>
         </div>
 
         {/* Hamburger Menu (Mobile Only) */}
@@ -69,7 +72,9 @@ const Header: React.FC = () => {
       {/* Mobile Menu */}
       <div
         className={`${
-          isMenuOpen ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
+          isMenuOpen
+            ? "translate-y-0 opacity-100"
+            : "-translate-y-full opacity-0"
         } md:hidden bg-gray-800 bg-opacity-95 fixed top-0 left-0 w-full h-screen transition-transform duration-300 ease-in-out`}
       >
         <div className="flex justify-between items-center px-6 py-4">
