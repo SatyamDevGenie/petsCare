@@ -2,16 +2,21 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../redux/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const Header: React.FC = () => {
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const userInfo = useSelector((state: any) => state.user.userInfo);
 
   const handleLogout = () => {
     dispatch(logout());
+    navigate("/login"); // Redirect to login page
     setIsMenuOpen(false);
     setIsDropdownOpen(false);
   };
