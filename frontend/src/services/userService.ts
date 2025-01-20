@@ -13,7 +13,7 @@ export const registerUser = async (
     const response = await axios.post(`${API_URL}register`, userData);
 
     // Dispatch register action to Redux store
-    dispatch(register(response.data.user));
+    dispatch(register(response.data));
 
     return response.data; // Return the API response if needed
   } catch (error: any) {

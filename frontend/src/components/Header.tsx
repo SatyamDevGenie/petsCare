@@ -53,7 +53,7 @@ const Header: React.FC = () => {
                 className="flex items-center space-x-2 text-sm md:text-base font-medium focus:outline-none"
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               >
-                <span>Welcome, {userInfo.name}</span>
+                <span className="text-black font-extrabold">Welcome {userInfo.name}</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className={`h-5 w-5 transition-transform ${isDropdownOpen ? "rotate-180" : "rotate-0"}`}
@@ -75,7 +75,7 @@ const Header: React.FC = () => {
                       className="block px-4 py-2 text-sm hover:bg-gray-100"
                       onClick={() => setIsDropdownOpen(false)}
                     >
-                      User Profile
+                      Profile
                     </Link>
                     <button
                       onClick={handleLogout}
@@ -170,9 +170,9 @@ const Header: React.FC = () => {
               Contact
             </Link>
             {userInfo && (
-              <div className="mt-3 space-y-4">
+              <div className="mt-3 space-y-4 space-x-4">
                 <p className="text-white text-lg font-extrabold">
-                  Welcome, {userInfo.name} to petsCare
+                  Welcome {userInfo.name} to petsCare
                 </p>
                 <div className="flex space-x-4 justify-center">
                   <Link
