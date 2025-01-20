@@ -9,6 +9,8 @@ import Contact from "./components/Contact";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
+import UserProfile from "./components/UserProfile";
+import EditProfile from "./components/EditProfile";
 
 const App: FC = () => {
   return (
@@ -23,6 +25,8 @@ const App: FC = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
+          <Route path="/profile" element={<UserProfile />}  />
+          <Route path="/edit" element={<EditProfile />} />
         </Routes>
         <Footer />
       </div>

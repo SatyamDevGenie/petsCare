@@ -1,5 +1,5 @@
 import axios from "axios";
-import { register, login, logout } from "../redux/userSlice";
+import { register, login, logout, getUserProfile } from "../redux/userSlice";
 import { AppDispatch } from "../redux/store";
 
 const API_URL = "/api/users/";
@@ -49,6 +49,24 @@ export const loginUser = async (
 // Logout user and dispatch logout action to Redux
 export const logoutUser = (dispatch: AppDispatch) => {
   dispatch(logout()); // Dispatch logout action to store
+};
+
+
+// Fetch user profile
+export const fetchUserProfile = async (dispatch: AppDispatch) => {
+  try {
+    const response = await axios.get(`${API_URL}profile`);
+
+    // Dispatch setUserProfile action to Redux store
+    dispatch(getUserProfile(response.data.user));
+
+    return response.data.user; // Return user data if needed
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.message || "Failed to fetch user profile!");
+    }
+    throw new Error("An unexpected error occurred");
+  }
 };
 
 
