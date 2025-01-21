@@ -16,7 +16,7 @@ const Register = () => {
     e.preventDefault();
     try {
       await registerUser(dispatch, { name, email, password });
-      navigate("/");
+      navigate("/login");
     } catch (err: any) {
       setError(err.message || "Something went wrong!");
     }
