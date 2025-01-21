@@ -1,5 +1,5 @@
 import axios from "axios";
-import { register, login, logout, getUserProfile } from "../redux/userSlice";
+import { register, login, logout, getUserProfile} from "../redux/userSlice";
 import { AppDispatch } from "../redux/store";
 
 const API_URL = "/api/users/";
@@ -52,13 +52,26 @@ export const logoutUser = (dispatch: AppDispatch) => {
 };
 
 
+
 // Fetch user profile
 export const fetchUserProfile = async (dispatch: AppDispatch) => {
   try {
-    const response = await axios.get(`${API_URL}profile`);
+    // Get the token from localStorage or Redux store (depending on your implementation)
+    const token = localStorage.getItem('userToken'); // Assuming the token is stored in localStorage
+    
+    // Make sure the token exists
+    if (!token) {
+      throw new Error('No authentication token found. Please login.');
+    }
+
+    const response = await axios.get(`${API_URL}profile`, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Send the token as a Bearer token
+      },
+    });
 
     // Dispatch setUserProfile action to Redux store
-    dispatch(getUserProfile(response.data.user));
+    dispatch(getUserProfile(response.data));
 
     return response.data.user; // Return user data if needed
   } catch (error: any) {
@@ -68,7 +81,6 @@ export const fetchUserProfile = async (dispatch: AppDispatch) => {
     throw new Error("An unexpected error occurred");
   }
 };
-
 
 
 

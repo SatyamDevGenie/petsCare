@@ -4,13 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { fetchUserProfile } from "../services/userService";
 import { logout } from "../redux/userSlice";
+import { RootState } from "../redux/store";
 
 const UserProfile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   // Retrieve user data from Redux store
-  const { userInfo } = useSelector((state: any) => state.user);
+  const { userInfo } = useSelector((state: RootState) => state.user);
 
   // Local state for handling loading/error states
   const [loading, setLoading] = useState(true);

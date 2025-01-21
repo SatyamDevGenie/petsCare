@@ -16,6 +16,7 @@ const Login = () => {
     try {
       await loginUser(dispatch, { email, password });
       navigate("/");
+      
     } catch (err: any) {
       setError(err.message || "Invalid credentials");
     }
