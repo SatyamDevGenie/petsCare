@@ -1,5 +1,5 @@
 import axios from "axios";
-import { register, login, logout, getUserProfile} from "../redux/userSlice";
+import { register, login, logout, getUserProfile, updateUserProfile} from "../redux/userSlice";
 import { AppDispatch } from "../redux/store";
 
 const API_URL = "/api/users/";
@@ -53,34 +53,79 @@ export const logoutUser = (dispatch: AppDispatch) => {
 
 
 
-// Fetch user profile
+
+
+// Get user profile and dispatch getUserProfile action to Redux
 export const fetchUserProfile = async (dispatch: AppDispatch) => {
   try {
-    // Get the token from localStorage or Redux store (depending on your implementation)
-    const token = localStorage.getItem('userToken'); // Assuming the token is stored in localStorage
-    
-    // Make sure the token exists
-    if (!token) {
-      throw new Error('No authentication token found. Please login.');
+    // Parse the userInfo from localStorage
+    const userInfo = JSON.parse(localStorage.getItem("userInfo") || "null");
+
+    // Check if userInfo is valid and contains token
+    if (userInfo && userInfo.token) {
+      const response = await axios.get(`${API_URL}profile`, {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`, // Use token from parsed userInfo
+          'Content-Type': 'application/json', // Added Content-Type header
+        },
+      });
+
+      // Dispatch getUserProfile action to Redux store
+      dispatch(getUserProfile(response.data.user));
+
+      return response.data; // Return the API response if needed
+    } else {
+      throw new Error("User is not authenticated");
     }
-
-    const response = await axios.get(`${API_URL}profile`, {
-      headers: {
-        Authorization: `Bearer ${token}`, // Send the token as a Bearer token
-      },
-    });
-
-    // Dispatch setUserProfile action to Redux store
-    dispatch(getUserProfile(response.data));
-
-    return response.data.user; // Return user data if needed
   } catch (error: any) {
     if (axios.isAxiosError(error)) {
-      throw new Error(error.response?.data?.message || "Failed to fetch user profile!");
+      throw new Error(error.response?.data?.message || error.message);
     }
     throw new Error("An unexpected error occurred");
   }
 };
+
+
+
+// Update user profile and dispatch updateUserProfile action to Redux
+export const updateUser = async (
+  dispatch: AppDispatch,
+  updatedData: { name: string; email: string; password: string }
+) => {
+  try {
+    // Parse the userInfo from localStorage
+    const userInfo = JSON.parse(localStorage.getItem("userInfo") || "null");
+
+    // Check if userInfo is valid and contains token
+    if (userInfo && userInfo.token) {
+      const response = await axios.put(
+        `${API_URL}profile`,
+        updatedData,
+        {
+          headers: {
+            Authorization: `Bearer ${userInfo.token}`, // Use token from parsed userInfo
+            'Content-Type': 'application/json', // Added Content-Type header
+          },
+        }
+      );
+
+      // Dispatch updateUserProfile action to Redux store
+      dispatch(updateUserProfile(response.data.user));
+
+      return response.data; // Return the API response if needed
+    } else {
+      throw new Error("User is not authenticated");
+    }
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.message || error.message);
+    }
+    throw new Error("An unexpected error occurred");
+  }
+};
+
+
+
 
 
 

@@ -23,11 +23,14 @@ const userSlice = createSlice({
     getUserProfile: (state, action) => {
       state.userInfo = action.payload;
     },
-    
+    updateUserProfile: (state, action) => {
+      state.userInfo = { ...state.userInfo, ...action.payload }; // Merge the current state with the new data
+      localStorage.setItem("userInfo", JSON.stringify(state.userInfo)); // Save to local storage
+    },
   },
 });
 
-export const { login, logout, register, getUserProfile} = userSlice.actions;
+export const { login, logout, register, getUserProfile, updateUserProfile} = userSlice.actions;
 export default userSlice.reducer;
 
 
