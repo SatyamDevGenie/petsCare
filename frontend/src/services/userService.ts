@@ -112,7 +112,7 @@ export const updateUser = async (
       // Dispatch updateUserProfile action to Redux store
       dispatch(updateUserProfile(response.data.user));
 
-      return response.data; // Return the API response if needed
+      return response.data.user; // Return the API response if needed
     } else {
       throw new Error("User is not authenticated");
     }
