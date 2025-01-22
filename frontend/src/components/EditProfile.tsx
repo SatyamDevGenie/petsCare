@@ -17,13 +17,8 @@ const EditProfile: React.FC = () => {
     setSuccess("");
 
     try {
-      // Call updateUser from userService
       const updatedUser = await updateUser(dispatch, { name, email, password });
-
-      // Show success message
       setSuccess("Profile updated successfully!");
-
-      // Clear the form (optional)
       setName(updatedUser.name || "");
       setEmail(updatedUser.email || "");
       setPassword("");
@@ -33,49 +28,64 @@ const EditProfile: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 mt-12">
-      <div className="max-w-md w-full mx-auto bg-white p-8 rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold text-center mb-6">Update Profile</h2>
+    <div className="flex justify-center items-center min-h-screen px-4 mt-9">
+      <div className="bg-white p-8 md:p-16 rounded-xl shadow-lg w-full max-w-md transform transition-all hover:scale-105 hover:shadow-2xl">
+        <h2 className="text-3xl font-extrabold text-center mb-4 text-gray-800">
+          Edit Profile
+        </h2>
 
         {error && (
-          <div className="mb-4 text-red-500 text-center">{error}</div>
+          <div className="mb-3 text-red-500 text-center text-sm">
+            {error}
+          </div>
         )}
 
         {success && (
-          <div className="mb-4 text-green-500 text-center">{success}</div>
+          <div className="mb-3 text-green-500 text-center text-sm">
+            {success}
+          </div>
         )}
 
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="name">
-              Name
+          <div className="mb-4 py-3">
+            <label
+              className="block text-xs font-medium text-gray-700 mb-1"
+              htmlFor="name"
+            >
+              Full Name
             </label>
             <input
               id="name"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your name"
+              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm"
+              placeholder="Name"
             />
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="email">
-              Email
+            <label
+              className="block text-xs font-medium text-gray-700 mb-1"
+              htmlFor="email"
+            >
+              Email Address
             </label>
             <input
               id="email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your email"
+              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm"
+              placeholder="Email"
             />
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="password">
+            <label
+              className="block text-xs font-medium text-gray-700 mb-1"
+              htmlFor="password"
+            >
               Password
             </label>
             <input
@@ -83,17 +93,31 @@ const EditProfile: React.FC = () => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter a new password"
+              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm"
+              placeholder="New Password"
             />
           </div>
 
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-200"
-          >
-            Update Profile
-          </button>
+          <div className="flex space-x-2 mt-4">
+            <button
+              type="submit"
+              className="w-full bg-blue-500 text-white py-2 rounded text-sm shadow hover:bg-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-300"
+            >
+              Save
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                setName("");
+                setEmail("");
+                setPassword("");
+              }}
+              className="w-full bg-red-500 text-white py-2 rounded text-sm shadow hover:bg-red-600 focus:outline-none focus:ring-1 focus:ring-red-300"
+            >
+              Reset
+            </button>
+          </div>
         </form>
       </div>
     </div>
