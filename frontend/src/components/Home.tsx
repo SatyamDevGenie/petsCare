@@ -1,14 +1,41 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPets } from "../services/petsService";
+import PetsCard from "../components/PetsCard";
+import { RootState } from "../redux/store";
+
+interface Pet {
+  _id: string;
+  name: string;
+  type: string;
+  gender: string;
+  petImage: string;
+}
 
 const Home: React.FC = () => {
+  const dispatch = useDispatch();
+  const { petsList } = useSelector((state: RootState) => state.pets);
+
+  useEffect(() => {
+    const fetchPetsData = async () => {
+      try {
+        await fetchPets(dispatch);
+      } catch (error: any) {
+        console.error("Error fetching pets:", error.message);
+      }
+    };
+
+    fetchPetsData();
+  }, [dispatch]);
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gradient-to-b from-indigo-50 to-white">
-      <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-center text-indigo-800 mb-4">
-        Welcome to petsCare!
-      </h1>
-      <p className="text-base sm:text-lg lg:text-xl text-center text-gray-700 mb-8 px-2 sm:px-8">
-        Your one-stop solution for all pet care needs. We ensure your pets get the best care and love they deserve.
-      </p>
+    <div className="container mx-auto px-4 py-40">
+      <h2 className="text-2xl font-bold text-center mb-12">"Find Your Dream Dog or Cat at petsCare"</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
+        {petsList.map((pet: Pet) => (
+          <PetsCard key={pet._id} {...pet} />
+        ))}
+      </div>
     </div>
   );
 };

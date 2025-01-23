@@ -16,7 +16,8 @@ const router = express.Router();
 router.post("/create", protect, createPet);
 
 // Get all pets for a user
-router.get("/", protect, getPets);
+// router.get("/", protect, getPets);
+router.get("/", getPets);              // remove protect - middleware
 
 // Get a single pet by ID
 router.get("/:id", protect, getPetById);
