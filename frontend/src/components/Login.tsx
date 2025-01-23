@@ -15,7 +15,7 @@ const Login = () => {
     e.preventDefault();
     try {
       await loginUser(dispatch, { email, password });
-      navigate("/");
+      navigate("/home");
       
     } catch (err: any) {
       setError(err.message || "Invalid credentials");
