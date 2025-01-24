@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+
 const doctorSchema = mongoose.Schema(
   {
     name: {
@@ -21,7 +22,8 @@ const doctorSchema = mongoose.Schema(
     },
     profileImage: {
       type: String,
-      required: false, // Optional in case the profile image is not provided
+      required: false, // Optional
+      default: '/images/default-image.png', // Default image URL
     },
     notes: {
       type: String,
@@ -34,3 +36,9 @@ const doctorSchema = mongoose.Schema(
 const Doctor = mongoose.model("Doctor", doctorSchema);
 
 export default Doctor;
+
+
+
+
+
+
