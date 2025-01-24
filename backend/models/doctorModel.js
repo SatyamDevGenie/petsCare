@@ -19,6 +19,14 @@ const doctorSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    profileImage: {
+      type: String,
+      required: false, // Optional in case the profile image is not provided
+    },
+    notes: {
+      type: String,
+      required: false, // Optional notes field
+    },
   },
   { timestamps: true }
 );
