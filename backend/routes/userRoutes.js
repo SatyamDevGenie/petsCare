@@ -1,26 +1,61 @@
 import express from "express";
 import {
-
-loginUser,
-logoutUser,
-registerUser,
-getUserProfile,
-updateUserProfile,
-
-
-
-
+  loginUser,
+  logoutUser,
+  registerUser,
+  getUserProfile,
+  updateUserProfile,
+  adminLogin,  // Assuming you have created this controller method
 } from "../controllers/userController.js";
-
-import {protect} from "../middlewares/authMiddleware.js"
+import { protect} from "../middlewares/authMiddleware.js"; // Adding admin middleware
 
 const router = express.Router();
 
-router.route("/register").post(registerUser)
-router.route("/login").post(loginUser)
-router.route("/logout").post(logoutUser)
-router.route("/profile").get(protect, getUserProfile)
-router.route("/profile").put(protect, updateUserProfile)
+// Public Routes
+router.route("/register").post(registerUser); // Register a new user
+router.route("/login").post(loginUser); // User login
+router.route("/logout").post(logoutUser); // Logout user
+
+// Admin Routes
+router.route("/admin/login").post(adminLogin); // Admin login
+
+// Protected Routes (Require Authentication)
+router.route("/profile")
+  .get(protect, getUserProfile) // Get user profile (for authenticated users)
+  .put(protect, updateUserProfile); // Update user profile (for authenticated users)
+
 
 
 export default router;
+
+
+
+
+
+
+// import express from "express";
+// import {
+
+// loginUser,
+// logoutUser,
+// registerUser,
+// getUserProfile,
+// updateUserProfile,
+
+
+
+
+// } from "../controllers/userController.js";
+
+// import {protect} from "../middlewares/authMiddleware.js"
+
+// const router = express.Router();
+
+// router.route("/register").post(registerUser)
+// router.route("/login").post(loginUser)
+// router.route("/logout").post(logoutUser)
+// router.route("/profile").get(protect, getUserProfile)
+// router.route("/profile").put(protect, updateUserProfile)
+
+
+// export default router;
