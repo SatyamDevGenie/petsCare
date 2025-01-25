@@ -25,7 +25,7 @@ const pets = [
     isNeutered: true,
     notes:
       "Highly intelligent and energetic, loves obedience training and playing fetch.",
-    petImage: "/images/shepherd.jpg", // Replace with the actual image URL or path
+      image: "/images/shepherd.jpg", // Replace with the actual image URL or path
   },
 
   {
@@ -53,7 +53,7 @@ const pets = [
     ],
     isNeutered: true,
     notes: "Friendly and outgoing, loves swimming and playing fetch.",
-    petImage: "/images/labrodor.jpg", // Replace with the actual image URL or path
+    image: "/images/labrodor.jpg", // Replace with the actual image URL or path
   },
 
   {
@@ -82,7 +82,7 @@ const pets = [
     isNeutered: true,
     notes:
       "Gentle and affectionate, enjoys lounging by windows and playing with feather toys.",
-    petImage: "/images/max.jpg", // Replace with the actual image URL or path
+      image: "/images/max.jpg", // Replace with the actual image URL or path
   },
 
   {
@@ -111,7 +111,7 @@ const pets = [
     isNeutered: true,
     notes:
       "Very vocal and loves attention. Enjoys climbing and playing with interactive toys.",
-    petImage: "/images/milo.jpg", // Replace with the actual image URL or path
+      image: "/images/milo.jpg", // Replace with the actual image URL or path
   },
 
   {
@@ -140,7 +140,7 @@ const pets = [
     isNeutered: true,
     notes:
       "Affectionate and curious, enjoys warmth and cuddles. Needs regular skin care due to lack of fur.",
-    petImage: "/images/sphynx.jpg", // Replace with the actual image URL or path
+      image: "/images/sphynx.jpg", // Replace with the actual image URL or path
   },
 
   {
@@ -163,7 +163,7 @@ const pets = [
     ],
     isNeutered: false,
     notes: "Loyal and protective, enjoys long walks and training sessions.",
-    petImage: "/images/Rottweiler.jpg", // Replace with the actual image URL or path
+    image: "/images/Rotweiler.jpg", // Replace with the actual image URL or path
   },
 ];
 

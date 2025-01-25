@@ -9,7 +9,7 @@ interface Pet {
   name: string;
   type: string;
   gender: string;
-  petImage: string;
+  image: string;
 }
 
 const Home: React.FC = () => {
@@ -30,8 +30,8 @@ const Home: React.FC = () => {
 
   return (
     <div className="container mx-auto px-4 py-40">
-      <h2 className="text-2xl font-bold text-center mb-12">"Find Your Dream Dog or Cat at petsCare"</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
+      <h6 className="text-center text-xl sm:text-lg md:text-xl font-extrabold mb-16 sm:mb-8">" Compassionate Care, Healthier Paws 🐾"</h6>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-10">
         {petsList.map((pet: Pet) => (
           <PetsCard key={pet._id} {...pet} />
         ))}

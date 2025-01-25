@@ -45,7 +45,7 @@ const createPet = asyncHandler(async (req, res) => {
 
 // @desc    Get all pets
 // @route   GET /api/pets
-// @access  Private
+// @access  Public
 const getPets = asyncHandler(async (req, res) => {
   try {
     const pets = await Pet.find({});
@@ -65,38 +65,34 @@ const getPets = asyncHandler(async (req, res) => {
 
 // @desc    Get a single pet by ID
 // @route   GET /api/pets/:id
-// @access  Private
+// @access  Public
 const getPetById = asyncHandler(async (req, res) => {
   try {
+    // Attempt to find the pet by ID
     const pet = await Pet.findById(req.params.id);
 
-    if (!pet) {
-      return res.status(404).json({
+    if (pet) {
+      res.status(200).json({
+        success: true,
+        message: "Pet retrieved successfully.",
+        data: pet,
+      });
+    } else {
+      res.status(404).json({
         success: false,
-        message: "Pet not found."
+        message: "Pet not found. Please check the ID and try again.",
       });
     }
-
-    if (pet.user.toString() !== req.user._id.toString()) {
-      return res.status(403).json({
-        success: false,
-        message: "Not authorized to access this pet."
-      });
-    }
-
-    res.status(200).json({
-      success: true,
-      message: "Pet retrieved successfully.",
-      data: pet,
-    });
-  } catch (error) {
+  } catch (err) {
+    console.error("Error retrieving pet:", err.message);
     res.status(500).json({
       success: false,
       message: "An error occurred while retrieving the pet.",
-      error: error.message
+      error: err.message,
     });
   }
 });
+
 
 // @desc    Update a pet
 // @route   PUT /api/pets/:id

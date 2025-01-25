@@ -16,11 +16,10 @@ const router = express.Router();
 router.post("/create", protect, createPet);
 
 // Get all pets for a user
-// router.get("/", protect, getPets);
 router.get("/", getPets);              // remove protect - middleware
 
 // Get a single pet by ID
-router.get("/:id", protect, getPetById);
+router.get("/:id", getPetById);
 
 // Update a pet
 router.put("/:id", protect, updatePet);
@@ -29,6 +28,6 @@ router.put("/:id", protect, updatePet);
 router.delete("/:id", protect, deletePet);
 
 // Get vaccination records for a pet
-router.get("/:id/vaccination-records", protect, getVaccinationRecords);
+router.get("/:id/vaccination-records", getVaccinationRecords);
 
 export default router;

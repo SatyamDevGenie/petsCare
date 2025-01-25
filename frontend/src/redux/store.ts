@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./userSlice";  // Ensure correct path to userSlice
 import petsReducer from "./petsSlice"   // Ensure correct path to petsSlice
 
+
 // Middleware to sync local storage with Redux state
 const localStorageMiddleware = (store: { getState: () => any; }) => (next: (arg0: any) => any) => (action: any) => {
   const result = next(action); // Dispatch the action

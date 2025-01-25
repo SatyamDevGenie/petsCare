@@ -44,7 +44,7 @@ const petSchema = mongoose.Schema(
     notes: {
       type: String,
     },
-    petImage: {
+    image: {
       type: String, // Store the URL or file path to the pet image
       required: false, // Not mandatory but can be added later
     },

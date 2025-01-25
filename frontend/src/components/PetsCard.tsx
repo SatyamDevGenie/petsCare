@@ -1,51 +1,45 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+
 
 interface PetCardProps {
   _id: string;
   name: string;
   type: string;
   gender: string;
-  petImage: string;
+  image: string;
 }
 
 const PetsCard: React.FC<PetCardProps> = ({
   _id,
   name,
   type,
-  petImage,
+  image,
   gender,
 }) => {
   return (
-    <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.2 }}>
+    
       <Link to={`/pets/${_id}`} className="block">
-        <div className="bg-white p-7 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+        <div className="bg-white p-4 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 transform hover:scale-105 mt-5">
           <img
-            src={petImage}
+            src={image}
             alt={name}
-            className="w-full h-35 object-cover rounded-lg mb-4"
+            className="w-full h-full object-cover rounded-lg mb-4 transition-all duration-300 ease-in-out transform hover:scale-10"
           />
-          <h2 className="text-2xl font-extrabold text-white mb-2 text-center bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600">{name}</h2>
+          <h2 className="text-lg font-extrabold text-white mb-2 text-center bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 px-2 py-1 rounded-full">
+            {name}
+          </h2>
           <p className="text-gray-600 mb-1">
-            <span className="text-sm font-extrabold text-black mb-2"> 
-              Type:
-            </span>{" "}
-            <span className="text-sm font-semibold text-gray-800 mb-2"> 
-              {type}
-            </span>
+            <span className="text-sm font-extrabold text-black">Type:</span>{" "}
+            <span className="text-sm font-semibold text-gray-800">{type}</span>
           </p>
           <p className="text-gray-600">
-            <span className="text-sm font-extrabold text-black mb-2"> 
-              Gender:
-            </span>{" "}
-            <span className="text-sm font-semibold text-gray-800 mb-2"> 
-              {gender}
-            </span>
+            <span className="text-sm font-extrabold text-black">Gender:</span>{" "}
+            <span className="text-sm font-semibold text-gray-800">{gender}</span>
           </p>
         </div>
       </Link>
-    </motion.div>
+    
   );
 };
 
