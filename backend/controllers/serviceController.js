@@ -41,4 +41,30 @@ const createService = asyncHandler(async (req, res) => {
   }
 });
 
-export { createService };
+
+
+// @desc    Get all services
+// @route   GET /api/services
+// @access  Public
+const getServices = asyncHandler(async (req, res) => {
+    try {
+      // Fetch all services
+      const services = await Service.find({});
+  
+      // Return success response
+      res.status(200).json({
+        message: "Services fetched successfully",
+        services,
+      });
+    } catch (error) {
+      // Catch and handle any errors
+      res.status(500).json({
+        message: error.message || "Something went wrong while fetching services",
+      });
+    }
+  });
+
+
+
+
+export { createService, getServices };
