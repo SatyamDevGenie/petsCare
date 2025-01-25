@@ -94,5 +94,47 @@ const getSingleService = asyncHandler(async (req, res) => {
 
 
 
+  // @desc    Update a service
+// @route   PUT /api/services/:id
+// @access  Private/Admin
+const updateService = asyncHandler(async (req, res) => {
+    try {
+      const { title, description, price} = req.body;
+  
+      // Find the service by ID
+      const service = await Service.findById(req.params.id);
+  
+      // If service not found, throw an error
+      if (!service) {
+        res.status(404);
+        throw new Error("Service not found");
+      }
+  
+      // Update the service fields
+      service.title = title || service.title;
+      service.description = description || service.description;
+      service.price = price || service.price;
+  
+      // Save the updated service
+      const updatedService = await service.save();
+  
+      // Send a success response with the updated service data
+      res.json({
+        message: "Service updated successfully",
+        _id: updatedService._id,
+        title: updatedService.title,
+        description: updatedService.description,
+        price: updatedService.price,
+      });
+    } catch (error) {
+      // Catch any errors and send a JSON error message
+      res.status(500).json({
+        message: error.message || "Something went wrong while updating the service",
+      });
+    }
+  });
 
-export { createService, getServices, getSingleService };
+
+
+
+export { createService, getServices, getSingleService, updateService };
