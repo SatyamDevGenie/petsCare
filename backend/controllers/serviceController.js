@@ -66,5 +66,33 @@ const getServices = asyncHandler(async (req, res) => {
 
 
 
+  // @desc    Get a single service by ID
+// @route   GET /api/services/:id
+// @access  Public
+const getSingleService = asyncHandler(async (req, res) => {
+    try {
+      const service = await Service.findById(req.params.id);
+  
+      if (!service) {
+        res.status(404).json({
+            message: "Service not Found"
+        })
+      }
+  
+      // Return success response with service details
+      res.status(200).json({
+        message: "Service fetched successfully",
+        service,
+      });
+    } catch (error) {
+      // Catch and handle any errors
+      res.status(500).json({
+        message: error.message || "Something went wrong while fetching the service",
+      });
+    }
+  });
 
-export { createService, getServices };
+
+
+
+export { createService, getServices, getSingleService };
