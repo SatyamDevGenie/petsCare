@@ -8,12 +8,12 @@ import {
   getVaccinationRecords,
 } from "../controllers/petController.js";
 
-import { protect } from "../middlewares/authMiddleware.js";
+import { protect, admin } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
 // Create a new pet
-router.post("/create", protect, createPet);
+router.post("/create", protect, admin, createPet);
 
 // Get all pets for a user
 router.get("/", getPets);              // remove protect - middleware
