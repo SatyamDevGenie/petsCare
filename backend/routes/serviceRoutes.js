@@ -1,5 +1,5 @@
 import express from "express";
-import { createService, getServices, getSingleService, updateService } from "../controllers/serviceController.js"; // Importing functions from the controller
+import { createService, getServices, getSingleService, updateService, deleteService } from "../controllers/serviceController.js"; // Importing functions from the controller
 import { protect, admin } from "../middlewares/authMiddleware.js"; // Middleware to protect routes and ensure Admin access
 
 const router = express.Router();
@@ -26,6 +26,10 @@ router.get("/:id", getSingleService); // Public route for fetching a single serv
 // @desc    Update a service
 // @access  Private/Admin
 router.put("/:id", protect, admin, updateService); // Protect the route and allow only Admins
+
+
+// Delete service route
+router.route("/:id").delete(protect, admin, deleteService);  // Protect the route and allow only Admins
 
 
 export default router;
