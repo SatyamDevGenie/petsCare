@@ -12,6 +12,7 @@ import Logout from "./components/Logout";
 import UserProfile from "./components/UserProfile";
 import EditProfile from "./components/EditProfile";
 import PetDetail from "./components/PetDetail";
+import CreatePet from "./components/CreatePet";
 
 const App: FC = () => {
   return (
@@ -28,7 +29,8 @@ const App: FC = () => {
           <Route path="/logout" element={<Logout />} />
           <Route path="/profile" element={<UserProfile />}  />
           <Route path="/edit" element={<EditProfile />} />
-           <Route path="/pets/:petId" element={<PetDetail _id={""} name={""} breed={""} age={0} notes={""} image={""} type={""} />} /> 
+          <Route path="/pets/:petId" element={<PetDetail _id={""} name={""} breed={""} age={0} notes={""} image={""} type={""} />} /> 
+          <Route path="/create-pet" element={<CreatePet /> } />
         </Routes>
         <Footer />
       </div>
