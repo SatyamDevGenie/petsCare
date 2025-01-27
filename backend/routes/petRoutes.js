@@ -12,22 +12,14 @@ import { protect, admin } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-// Create a new pet
-router.post("/create", protect, admin, createPet);
+// Admin-only routes
+router.post("/create", protect, admin, createPet); // Admin can create a pet
+router.put("/:id", protect, admin, updatePet);    // Admin can update a pet
+router.delete("/:id", protect, admin, deletePet); // Admin can delete a pet
 
-// Get all pets for a user
-router.get("/", getPets);              // remove protect - middleware
-
-// Get a single pet by ID
-router.get("/:id", getPetById);
-
-// Update a pet
-router.put("/:id", protect, updatePet);
-
-// Delete a pet
-router.delete("/:id", protect, deletePet);
-
-// Get vaccination records for a pet
-router.get("/:id/vaccination-records", getVaccinationRecords);
+// Public routes (or logged-in users if protect is needed)
+router.get("/", getPets);                         // Get all pets (public)
+router.get("/:id", getPetById);                   // Get a single pet by ID (public)
+router.get("/:id/vaccination-records", getVaccinationRecords); // Vaccination records (public)
 
 export default router;
