@@ -13,6 +13,9 @@ import UserProfile from "./components/UserProfile";
 import EditProfile from "./components/EditProfile";
 import PetDetail from "./components/PetDetail";
 import CreatePet from "./components/CreatePet";
+import SingleService from "./components/SingleService";
+
+
 
 const App: FC = () => {
   return (
@@ -23,13 +26,14 @@ const App: FC = () => {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/service/:service_id" element={<SingleService />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/profile" element={<UserProfile />}  />
           <Route path="/edit" element={<EditProfile />} />
-          <Route path="/pets/:petId" element={<PetDetail _id={""} name={""} breed={""} age={0} notes={""} image={""} type={""} />} /> 
+          <Route path="/pet/:petId" element={<PetDetail _id={""} name={""} breed={""} age={0} notes={""} image={""} type={""} />} /> 
           <Route path="/create-pet" element={<CreatePet /> } />
         </Routes>
         <Footer />

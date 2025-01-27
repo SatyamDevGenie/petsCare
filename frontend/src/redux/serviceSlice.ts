@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 // Define the Service interface
 interface Service {
   id: string;
+  _id: string,
   title: string;
   description: string;
   price: number;
@@ -11,10 +12,12 @@ interface Service {
 // Define the initial state for the slice
 interface ServiceState {
   allServices: Service[];
+  SingleService:Service | null;
 }
 
 const initialState: ServiceState = {
   allServices: [], // Initialize as an empty array
+  SingleService:null,
 };
 
 const serviceSlice = createSlice({
@@ -24,10 +27,14 @@ const serviceSlice = createSlice({
     getServices(state, action: PayloadAction<Service[]>) {
       state.allServices = action.payload;
     },
+    getSingleService(state, action){
+      state.SingleService= action.payload;
+      localStorage.setItem("SingleService", JSON.stringify(state.SingleService));
+  }
   },
 });
 
-export const { getServices } = serviceSlice.actions;
+export const { getServices, getSingleService } = serviceSlice.actions;
 export default serviceSlice.reducer;
 
 
@@ -35,24 +42,3 @@ export default serviceSlice.reducer;
 
 
 
-
-// import { createSlice } from "@reduxjs/toolkit";
-
-// const initialState = {
-//   allServices: [],
-// };
-
-// const serviceSlice = createSlice({
-//   name: "services",
-//   initialState,
-//   reducers: {
-//     getServices: (state, action) => {
-//       state.allServices = action.payload;
-//       localStorage.setItem("allServices", JSON.stringify(state.allServices)); // Save to local storage
-//     },
-//   },
-// });
-
-
-// export const { getServices } = serviceSlice.actions;
-// export default serviceSlice.reducer;
