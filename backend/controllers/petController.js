@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler";
 import Pet from "../models/petModel.js";
+import generateToken from '../utils/generateToken.js' // Assuming you have this utility function
 
 // @desc    Create a new pet
 // @route   POST /api/pets
