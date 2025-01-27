@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-black text-gray-300 w-full">
-      <div className="px-5">
+    <footer className="bg-black text-gray-300 w-full mt-3">
+      <div className="px-5 py-5">
         {/* Top Section */}
         <div className="flex flex-wrap justify-between items-center border-b border-gray-700 pb-6 max-w-screen-xl mx-auto">
           {/* Logo and About */}
