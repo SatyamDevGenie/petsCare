@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 // Define the Service interface
 interface Service {
-  id: string;
   _id: string,
   title: string;
   description: string;

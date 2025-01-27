@@ -17,7 +17,7 @@ router.put("/:id", protect, admin, updateDoctor);
 router.delete("/:id", protect, admin, deleteDoctor);
 
 // Public routes (logged-in users only)
-router.get("/", protect, getDoctors);
-router.get("/:id", protect, getDoctorById);
+router.get("/", getDoctors);
+router.get("/:id", getDoctorById);
 
 export default router;

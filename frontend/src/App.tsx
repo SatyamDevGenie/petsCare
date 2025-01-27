@@ -5,7 +5,6 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import About from "./components/About";
 import Services from "./components/Services";
-import Contact from "./components/Contact";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
@@ -14,6 +13,7 @@ import EditProfile from "./components/EditProfile";
 import PetDetail from "./components/PetDetail";
 import CreatePet from "./components/CreatePet";
 import SingleService from "./components/SingleService";
+import Doctors from "./components/Doctors";
 
 
 
@@ -27,7 +27,8 @@ const App: FC = () => {
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
           <Route path="/service/:service_id" element={<SingleService />} />
-          <Route path="/contact" element={<Contact />} />
+          
+          <Route path="/doctors" element={<Doctors />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
