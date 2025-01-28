@@ -15,6 +15,7 @@ import CreatePet from "./components/CreatePet";
 import SingleService from "./components/SingleService";
 import Doctors from "./components/Doctors";
 import SingleDoctor from "./components/SingleDoctor";
+import AddService from "./components/AddService";
 
 
 
@@ -28,6 +29,7 @@ const App: FC = () => {
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
           <Route path="/service/:service_id" element={<SingleService />} />
+          <Route path="/create/Service" element={<AddService />} />
           <Route path="/doctors" element={<Doctors />} />
           <Route path="/doctor/:doctor_id" element={<SingleDoctor />} />
           <Route path="/register" element={<Register />} />

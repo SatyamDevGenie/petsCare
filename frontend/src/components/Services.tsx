@@ -28,7 +28,7 @@ const Services: React.FC = () => {
   }, [dispatch]);
 
   const handleAddServices = () => {
-    navigate("/add-services");
+    navigate("/create/Service");
   };
 
   const isAdmin = userInfo && userInfo.email === "admin@gmail.com";
