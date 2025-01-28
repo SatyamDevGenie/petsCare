@@ -14,6 +14,7 @@ import PetDetail from "./components/PetDetail";
 import CreatePet from "./components/CreatePet";
 import SingleService from "./components/SingleService";
 import Doctors from "./components/Doctors";
+import SingleDoctor from "./components/SingleDoctor";
 
 
 
@@ -27,8 +28,8 @@ const App: FC = () => {
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
           <Route path="/service/:service_id" element={<SingleService />} />
-          
           <Route path="/doctors" element={<Doctors />} />
+          <Route path="/doctor/:doctor_id" element={<SingleDoctor />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />

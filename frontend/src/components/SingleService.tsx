@@ -5,6 +5,7 @@ import { AppDispatch } from "../redux/store";
 import { fetchSingleService } from "../services/adminServices";
 import { FaDollarSign } from "react-icons/fa";
 import { FiLoader } from "react-icons/fi";
+import { motion } from "framer-motion"; // Import motion for animations
 
 const SingleService: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -22,25 +23,50 @@ const SingleService: React.FC = () => {
   return (
     <div className="container mx-auto px-4 py-12 mt-20">
       {SingleService ? (
-        <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden mt-5">
-          <div className="p-6 sm:p-10">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-blue-600 text-center">
+        <motion.div
+          className="max-w-4xl mx-auto bg-gradient-to-r from-blue-500 via-purple-600 to-pink-500 rounded-3xl shadow-xl overflow-hidden mt-5"
+          initial={{ opacity: 0, y: 50 }} // Start from opacity 0 and slight downward movement
+          animate={{ opacity: 1, y: 0 }} // Fade in and reset the y position
+          transition={{ duration: 0.8 }} // Duration of the animation
+        >
+          <div className="p-8 sm:p-12">
+            <motion.h2
+              className="text-4xl sm:text-5xl font-bold text-white text-center mb-6"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
               {SingleService.title}
-            </h2>
-            <p className="text-gray-700 mb-6 leading-relaxed text-center text-base sm:text-lg font-medium">
+            </motion.h2>
+            <motion.p
+              className="text-lg sm:text-xl text-white leading-relaxed text-center mb-6 font-medium"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
               {SingleService.description}
-            </p>
-            <div className="flex items-center justify-center gap-2 text-base sm:text-lg font-extrabold text-green-500 mb-6">
-              <FaDollarSign className="text-xl sm:text-2xl" />
-              <span>${SingleService.price}</span>
-            </div>
-            <div className="flex justify-center mt-6 sm:mt-8">
-              <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 sm:py-3 sm:px-8 rounded-full text-sm sm:text-lg shadow-md transition-transform transform hover:scale-105">
+            </motion.p>
+            <motion.div
+              className="flex items-center justify-center gap-2 text-base sm:text-lg font-extrabold text-yellow-300 mb-6"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              <FaDollarSign className="text-3xl sm:text-4xl" />
+              <span className="text-3xl sm:text-5xl">{SingleService.price}</span>
+            </motion.div>
+            <motion.div
+              className="flex justify-center mt-6 sm:mt-8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+            >
+              <button className="bg-gradient-to-r from-green-400 to-blue-500 text-white py-3 px-8 sm:py-4 sm:px-10 rounded-full text-lg shadow-lg transform transition-all duration-200 hover:scale-110 hover:shadow-2xl">
                 Contact Us
               </button>
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       ) : (
         <div className="flex justify-center items-center h-64">
           <FiLoader className="text-blue-500 animate-spin text-4xl" />

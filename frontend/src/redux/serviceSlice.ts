@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 // Define the Service interface
 interface Service {
   _id: string,
+  id: string,
   title: string;
   description: string;
   price: number;
