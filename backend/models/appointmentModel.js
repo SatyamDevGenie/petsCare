@@ -26,7 +26,7 @@ const appointmentSchema = mongoose.Schema(
       enum: ["Pending", "Completed", "Cancelled"],
       default: "Pending",
     },
-    notes: {
+    query: {
       type: String,
     },
   },

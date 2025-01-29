@@ -6,6 +6,7 @@ import userRoutes from "../backend/routes/userRoutes.js";
 import petRoutes from "../backend/routes/petRoutes.js";
 import serviceRoutes from "../backend/routes/serviceRoutes.js";
 import doctorRoutes from "../backend/routes/doctorRoutes.js";
+import appointmentRoutes from "../backend/routes/appointmentRoutes.js";
 import cookieParser from "cookie-parser";
 import { errorHandler, notFound } from "./middlewares/errorMiddleware.js";
 
@@ -23,6 +24,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/pets", petRoutes);
 app.use("/api/services", serviceRoutes)
 app.use("/api/doctors", doctorRoutes)
+app.use("/api/appointment", appointmentRoutes)
 
 app.get("/", (req, res) => {
   res.send("petsCare API is running");
