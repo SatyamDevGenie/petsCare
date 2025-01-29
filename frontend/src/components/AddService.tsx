@@ -4,6 +4,7 @@ import { AppDispatch, RootState } from "../redux/store";
 import { useNavigate } from "react-router-dom";
 import { createService as addServiceAPI } from "../services/adminServices";
 import { motion } from "framer-motion";
+import toast from "react-hot-toast";
 
 const AddService: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -11,7 +12,6 @@ const AddService: React.FC = () => {
 
   const { userInfo } = useSelector((state: RootState) => state.user);
 
-  // Local state for form data
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -32,15 +32,36 @@ const AddService: React.FC = () => {
       if (userInfo && userInfo.isAdmin) {
         const newService = {
           ...formData,
-          price: parseFloat(formData.price), // Convert price to a number
+          price: parseFloat(formData.price),
         };
 
         await dispatch(addServiceAPI(newService));
-        alert("Service added successfully!");
-        navigate("/services"); // Redirect to the services page
+
+        toast.success("Service added successfully!", {
+          style: {
+            fontSize: "14px",
+            padding: "8px",
+            minWidth: "200px",
+            fontFamily: "Arial Black",
+            fontWeight: "bolder",
+          },
+        });
+
+        navigate("/services");
+      } else {
+        toast.error("You are not authorized to add a service!", {
+          style: {
+            fontSize: "14px",
+            padding: "8px",
+            minWidth: "200px",
+            fontFamily: "Arial Black",
+            fontWeight: "bolder",
+          },
+        });
       }
     } catch (error: any) {
       console.error("Failed to add service:", error.message);
+      toast.error("Failed to add service. Please try again!");
     }
   };
 
@@ -52,18 +73,18 @@ const AddService: React.FC = () => {
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
       <motion.div
-        className="w-full max-w-md bg-white shadow-xl rounded-3xl p-6"
+        className="w-full max-w-sm sm:max-w-md bg-white shadow-xl rounded-3xl p-6"
         whileHover={{ scale: 1.02, boxShadow: "0px 8px 24px rgba(0, 0, 0, 0.15)" }}
       >
         <motion.h2
-          className="text-3xl p-3 font-bold text-center text-black mb-6"
+          className="text-2xl sm:text-3xl p-3 font-bold text-center text-black mb-6"
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
         >
           Create a New Service
         </motion.h2>
-        <form onSubmit={handleSubmit} className="space-y-6 p-4">
+        <form onSubmit={handleSubmit} className="space-y-6 p-8 sm:p-4">
           {/* Title Input */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -72,7 +93,7 @@ const AddService: React.FC = () => {
           >
             <label
               htmlFor="title"
-              className="block text-xl font-medium text-gray-700 mb-2"
+              className="block text-lg sm:text-xl font-medium text-gray-700 mb-2"
             >
               Title
             </label>
@@ -83,7 +104,7 @@ const AddService: React.FC = () => {
               value={formData.title}
               onChange={handleChange}
               required
-              className="text-sm w-full p-3 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="text-sm sm:text-base w-full p-3 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder="Enter service title"
             />
           </motion.div>
@@ -96,7 +117,7 @@ const AddService: React.FC = () => {
           >
             <label
               htmlFor="description"
-              className="block text-xl font-medium text-gray-700 mb-2"
+              className="block text-lg sm:text-xl font-medium text-gray-700 mb-2"
             >
               Description
             </label>
@@ -106,7 +127,7 @@ const AddService: React.FC = () => {
               value={formData.description}
               onChange={handleChange}
               required
-              className="text-sm w-full p-3 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="text-sm sm:text-base w-full p-3 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               rows={4}
               placeholder="Enter service description"
             />
@@ -120,7 +141,7 @@ const AddService: React.FC = () => {
           >
             <label
               htmlFor="price"
-              className="block font-medium text-xl text-gray-700 mb-2"
+              className="block text-lg sm:text-xl font-medium text-gray-700 mb-2"
             >
               Price ($)
             </label>
@@ -131,7 +152,7 @@ const AddService: React.FC = () => {
               value={formData.price}
               onChange={handleChange}
               required
-              className="w-full text-sm p-3 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full text-sm sm:text-base p-3 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder="Enter service price"
             />
           </motion.div>
@@ -145,7 +166,7 @@ const AddService: React.FC = () => {
           >
             <button
               type="submit"
-              className="w-full text-sm bg-gradient-to-r from-blue-500 to-purple-500 text-white py-3 px-6 rounded-xl font-semibold shadow-lg hover:from-blue-600 hover:to-purple-600 transform transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-400"
+              className="w-full text-sm sm:text-base bg-gradient-to-r from-blue-500 to-purple-500 text-white py-3 px-6 rounded-xl font-semibold shadow-lg hover:from-blue-600 hover:to-purple-600 transform transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-400"
             >
               Add Service
             </button>

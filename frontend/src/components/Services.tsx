@@ -38,7 +38,7 @@ const Services: React.FC = () => {
       className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 mt-16"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 2 }}
+      transition={{ duration: 0.0 }}
     >
       {/* Heading Animation */}
       <motion.h2

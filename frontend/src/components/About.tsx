@@ -4,9 +4,10 @@ import { motion } from "framer-motion"; // Import Framer Motion
 const AboutUs: React.FC = () => {
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 mt-16">
+      
       {/* Heading Animation */}
       <motion.h2
-        className="text-3xl sm:text-4xl font-bold text-center text-black mb-8"
+        className="text-3xl sm:text-4xl font-bold text-center text-black mb-8 mt-5"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}

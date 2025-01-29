@@ -17,12 +17,15 @@ import Doctors from "./components/Doctors";
 import SingleDoctor from "./components/SingleDoctor";
 import AddService from "./components/AddService";
 
+import { Toaster } from "react-hot-toast"
+
 
 
 const App: FC = () => {
   return (
     <Router>
       <div className="h-screen flex items-center w-full flex-col font-extrabold text-4xl">
+      <Toaster position="top-center" reverseOrder={false} />
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />

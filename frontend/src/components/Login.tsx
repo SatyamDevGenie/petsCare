@@ -3,6 +3,7 @@ import { loginUser } from "../services/userService";
 import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -16,9 +17,31 @@ const Login = () => {
     e.preventDefault();
     try {
       await loginUser(dispatch, { email, password });
+ 
+      // Show success toast
+      toast.success("Login successfully !", {
+        style: {
+          fontSize: "14px", // Smaller text size
+          padding: "8px",   // Reduce padding
+          minWidth: "200px", // Reduce width
+          fontFamily:"Arial Black",
+          fontWeight:"bolder"
+        },
+      });
+
       navigate("/");
     } catch (err: any) {
       setError(err.message || "Invalid credentials");
+
+      toast.error("You are not authorized to add a service !", {
+        style: {
+          fontSize: "14px", // Smaller text size
+          padding: "8px",   // Reduce padding
+          minWidth: "200px", // Reduce width
+          fontFamily:"Arial Black",
+          fontWeight:"bolder"
+        },
+      });
     }
   };
 

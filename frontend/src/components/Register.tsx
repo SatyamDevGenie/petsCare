@@ -3,6 +3,7 @@ import { registerUser } from "../services/userService";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { motion } from "framer-motion";
+import toast from "react-hot-toast";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -17,9 +18,30 @@ const Register = () => {
     e.preventDefault();
     try {
       await registerUser(dispatch, { name, email, password });
+
+      // Show success toast
+      toast.success("Register Successfully !", {
+        style: {
+          fontSize: "14px", // Smaller text size
+          padding: "8px",   // Reduce padding
+          minWidth: "200px", // Reduce width
+          fontFamily:"Arial Black",
+          fontWeight:"bolder"
+        },
+      });
+
       navigate("/login");
     } catch (err: any) {
       setError(err.message || "Something went wrong!");
+      toast.error("You are not authorized to add a service !", {
+        style: {
+          fontSize: "14px", // Smaller text size
+          padding: "8px",   // Reduce padding
+          minWidth: "200px", // Reduce width
+          fontFamily:"Arial Black",
+          fontWeight:"bolder"
+        },
+      });
     }
   };
 
