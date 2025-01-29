@@ -33,4 +33,23 @@ const bookAppointment = asyncHandler(async (req, res) => {
   });
 });
 
-export { bookAppointment };
+
+// @desc    Get all appointments (Admin Only)
+// @route   GET /api/appointments/all
+// @access  Private/Admin
+const getAllAppointments = asyncHandler(async (req, res) => {
+    const appointments = await Appointment.find({})
+      .populate("petOwner", "name email") // Fetch pet owner details
+      .populate("pet", "name type breed age") // Fetch pet details
+      .populate("doctor", "name specialization"); // Fetch doctor details
+  
+    res.status(200).json({
+      success: true,
+      count: appointments.length,
+      appointments,
+    });
+  });
+  
+
+
+export { bookAppointment, getAllAppointments };
