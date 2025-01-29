@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { registerUser } from "../services/userService";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { motion } from "framer-motion";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -23,25 +24,44 @@ const Register = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen mt-16">
-      <form
+    <motion.div
+      className="flex justify-center items-center min-h-screen mt-16"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
+    >
+      <motion.form
         onSubmit={handleSubmit}
-        className="bg-white p-8 md:p-16 rounded-xl shadow-lg w-full max-w-md transform transition-all hover:scale-105 hover:shadow-2xl"
+        className="bg-white p-8 md:p-16 rounded-xl shadow-lg w-full max-w-md"
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        whileHover={{ scale: 1.05, boxShadow: "0px 8px 30px rgba(0, 0, 0, 0.2)" }}
+        transition={{ duration: 0.4, ease: "easeInOut" }}
       >
-        <h2 className="text-3xl font-extrabold text-center mb-6 text-gray-800">
+        <motion.h2
+          className="text-3xl font-extrabold text-center mb-6 text-gray-800"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
           Register
-        </h2>
-       
+        </motion.h2>
+
         {error && (
-          <div className="text-red-600 text-center text-sm mb-4 border border-red-400 rounded p-2 bg-red-50">
+          <motion.div
+            className="text-red-600 text-center text-sm mb-4 border border-red-400 rounded p-2 bg-red-50"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
             {error}
-          </div>
+          </motion.div>
         )}
         <div className="mb-6">
           <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
             Full Name
           </label>
-          <input
+          <motion.input
             type="text"
             id="name"
             value={name}
@@ -49,13 +69,14 @@ const Register = () => {
             className="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
             placeholder="Enter your name"
             required
+            whileFocus={{ scale: 1.02 }}
           />
         </div>
         <div className="mb-6">
           <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
             Email Address
           </label>
-          <input
+          <motion.input
             type="email"
             id="email"
             value={email}
@@ -63,13 +84,14 @@ const Register = () => {
             className="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
             placeholder="Enter your email"
             required
+            whileFocus={{ scale: 1.02 }}
           />
         </div>
         <div className="mb-6">
           <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
             Password
           </label>
-          <input
+          <motion.input
             type="password"
             id="password"
             value={password}
@@ -77,17 +99,25 @@ const Register = () => {
             className="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
             placeholder="Enter your password"
             required
+            whileFocus={{ scale: 1.02 }}
           />
         </div>
-        <button
+        <motion.button
           type="submit"
           className="w-full bg-gradient-to-r from-green-500 to-blue-500 text-sm text-white py-3 rounded-lg shadow-md hover:from-green-600 hover:to-blue-600 transition duration-200"
+          whileHover={{ scale: 1.03, backgroundColor: "#22c55e" }}
+          whileTap={{ scale: 0.95 }}
         >
           Register
-        </button>
-        <div className="mt-6 text-center">
+        </motion.button>
+        <motion.div
+          className="mt-6 text-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
           <p className="text-sm text-gray-600">
-            Already have an account ?{' '}
+            Already have an account?{" "}
             <Link
               to="/login"
               className="text-green-500 hover:text-green-700 underline transition"
@@ -95,11 +125,10 @@ const Register = () => {
               Login
             </Link>
           </p>
-        </div>
-      </form>
-    </div>
+        </motion.div>
+      </motion.form>
+    </motion.div>
   );
-  
 };
 
 export default Register;

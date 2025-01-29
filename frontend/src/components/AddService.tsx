@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
 import { useNavigate } from "react-router-dom";
 import { createService as addServiceAPI } from "../services/adminServices";
+import { motion } from "framer-motion";
 
 const AddService: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
   const { userInfo } = useSelector((state: RootState) => state.user);
-  const { addService } = useSelector((state: RootState) => state.services);
 
   // Local state for form data
   const [formData, setFormData] = useState({
@@ -39,85 +39,120 @@ const AddService: React.FC = () => {
         alert("Service added successfully!");
         navigate("/services"); // Redirect to the services page
       }
-
-      // Dispatch the addService action
     } catch (error: any) {
       console.error("Failed to add service:", error.message);
     }
   };
 
   return (
-    <div className="container mx-auto p-6">
-      <h2 className="text-2xl font-semibold text-center mb-6">
-        Add a New Service
-      </h2>
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+    <motion.div
+      className="container mx-auto px-4 py-12 mt-12 flex items-center justify-center"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+    >
+      <motion.div
+        className="w-full max-w-md bg-white shadow-xl rounded-3xl p-6"
+        whileHover={{ scale: 1.02, boxShadow: "0px 8px 24px rgba(0, 0, 0, 0.15)" }}
       >
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="title"
+        <motion.h2
+          className="text-3xl p-3 font-bold text-center text-black mb-6"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.6 }}
+        >
+          Create a New Service
+        </motion.h2>
+        <form onSubmit={handleSubmit} className="space-y-6 p-4">
+          {/* Title Input */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.4, duration: 0.5 }}
           >
-            Title
-          </label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            required
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          />
-        </div>
+            <label
+              htmlFor="title"
+              className="block text-xl font-medium text-gray-700 mb-2"
+            >
+              Title
+            </label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              required
+              className="text-sm w-full p-3 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="Enter service title"
+            />
+          </motion.div>
 
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="description"
+          {/* Description Input */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.5, duration: 0.5 }}
           >
-            Description
-          </label>
-          <textarea
-            id="description"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            required
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          />
-        </div>
+            <label
+              htmlFor="description"
+              className="block text-xl font-medium text-gray-700 mb-2"
+            >
+              Description
+            </label>
+            <textarea
+              id="description"
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              required
+              className="text-sm w-full p-3 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              rows={4}
+              placeholder="Enter service description"
+            />
+          </motion.div>
 
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="price"
+          {/* Price Input */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.6, duration: 0.5 }}
           >
-            Price ($)
-          </label>
-          <input
-            type="number"
-            id="price"
-            name="price"
-            value={formData.price}
-            onChange={handleChange}
-            required
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          />
-        </div>
+            <label
+              htmlFor="price"
+              className="block font-medium text-xl text-gray-700 mb-2"
+            >
+              Price ($)
+            </label>
+            <input
+              type="number"
+              id="price"
+              name="price"
+              value={formData.price}
+              onChange={handleChange}
+              required
+              className="w-full text-sm p-3 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="Enter service price"
+            />
+          </motion.div>
 
-        <div className="flex items-center justify-between">
-          <button
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          {/* Submit Button */}
+          <motion.div
+            className="text-center"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.7, duration: 0.4 }}
           >
-            Add Service
-          </button>
-        </div>
-      </form>
-    </div>
+            <button
+              type="submit"
+              className="w-full text-sm bg-gradient-to-r from-blue-500 to-purple-500 text-white py-3 px-6 rounded-xl font-semibold shadow-lg hover:from-blue-600 hover:to-purple-600 transform transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-400"
+            >
+              Add Service
+            </button>
+          </motion.div>
+        </form>
+      </motion.div>
+    </motion.div>
   );
 };
 

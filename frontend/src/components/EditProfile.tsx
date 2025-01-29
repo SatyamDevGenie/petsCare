@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateUser } from "../services/userService";
+import { motion } from "framer-motion"; // Import Framer Motion
 
 const EditProfile: React.FC = () => {
   const [name, setName] = useState("");
@@ -29,21 +30,36 @@ const EditProfile: React.FC = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen px-4 mt-9">
-      <div className="bg-white p-8 md:p-16 rounded-xl shadow-lg w-full max-w-md transform transition-all hover:scale-105 hover:shadow-2xl">
+      <motion.div
+        className="bg-white p-8 md:p-16 rounded-xl shadow-lg w-full max-w-md transform transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-2xl"
+        initial={{ opacity: 0, y: -50 }} // Initial state of the component
+        animate={{ opacity: 1, y: 0 }} // Animated state
+        transition={{ duration: 0.5 }}
+      >
         <h2 className="text-3xl font-extrabold text-center mb-4 text-gray-800">
           Edit Profile
         </h2>
 
         {error && (
-          <div className="mb-3 text-red-500 text-center text-sm">
+          <motion.div
+            className="mb-3 text-red-500 text-center text-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+          >
             {error}
-          </div>
+          </motion.div>
         )}
 
         {success && (
-          <div className="mb-3 text-green-500 text-center text-sm">
+          <motion.div
+            className="mb-3 text-green-500 text-center text-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+          >
             {success}
-          </div>
+          </motion.div>
         )}
 
         <form onSubmit={handleSubmit}>
@@ -59,7 +75,7 @@ const EditProfile: React.FC = () => {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm"
+              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm transition-all duration-300"
               placeholder="Name"
             />
           </div>
@@ -76,7 +92,7 @@ const EditProfile: React.FC = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm"
+              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm transition-all duration-300"
               placeholder="Email"
             />
           </div>
@@ -93,33 +109,39 @@ const EditProfile: React.FC = () => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm"
+              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm transition-all duration-300"
               placeholder="New Password"
             />
           </div>
 
           <div className="flex space-x-2 mt-4">
-            <button
+            <motion.button
               type="submit"
-              className="w-full bg-blue-500 text-white py-2 rounded text-sm shadow hover:bg-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-300"
+              className="w-full bg-blue-500 text-white py-2 rounded text-sm shadow hover:bg-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-300 transition-all duration-300 transform hover:scale-105"
+              initial={{ scale: 1 }}
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 300 }}
             >
               Save
-            </button>
+            </motion.button>
 
-            <button
+            <motion.button
               type="button"
               onClick={() => {
                 setName("");
                 setEmail("");
                 setPassword("");
               }}
-              className="w-full bg-red-500 text-white py-2 rounded text-sm shadow hover:bg-red-600 focus:outline-none focus:ring-1 focus:ring-red-300"
+              className="w-full bg-red-500 text-white py-2 rounded text-sm shadow hover:bg-red-600 focus:outline-none focus:ring-1 focus:ring-red-300 transition-all duration-300 transform hover:scale-105"
+              initial={{ scale: 1 }}
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 300 }}
             >
               Reset
-            </button>
+            </motion.button>
           </div>
         </form>
-      </div>
+      </motion.div>
     </div>
   );
 };
