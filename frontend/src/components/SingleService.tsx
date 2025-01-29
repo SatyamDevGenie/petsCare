@@ -1,23 +1,35 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { AppDispatch } from "../redux/store";
 import { fetchSingleService } from "../services/adminServices";
 import { FaDollarSign } from "react-icons/fa";
 import { FiLoader } from "react-icons/fi";
 import { motion } from "framer-motion";
 
+
 const SingleService: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
   const { service_id } = useParams<{ service_id: string }>();
 
   const { SingleService } = useSelector((state: any) => state.services);
+  const { userInfo } = useSelector((state: any) => state.user);  // Access the login state from your Redux store
 
   useEffect(() => {
     if (service_id) {
       dispatch(fetchSingleService(service_id));
     }
   }, [dispatch, service_id]);
+
+  const handleEdit = () => {
+    navigate(`/edit-service/${service_id}`); // Navigate to the edit service page
+  };
+
+  const handleDelete = () => {
+    // Handle delete logic here, maybe showing a confirmation modal
+    console.log("Delete service:", service_id);
+  };
 
   return (
     <div className="container mx-auto px-4 py-12 mt-5">
@@ -46,6 +58,28 @@ const SingleService: React.FC = () => {
                 <FaDollarSign className="text-2xl sm:text-3xl text-yellow-500" />
                 <span className="text-3xl sm:text-4xl font-bold">{SingleService.price}</span>
               </div>
+
+              {userInfo && (
+                <div className="mt-6 flex justify-center gap-4">
+                  <motion.button
+                    onClick={handleEdit}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="bg-yellow-500 text-white py-2 px-6 rounded-full text-lg font-semibold"
+                  >
+                    Edit
+                  </motion.button>
+                  <motion.button
+                    onClick={handleDelete}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="bg-red-500 text-white py-2 px-6 rounded-full text-lg font-semibold"
+                  >
+                    Delete
+                  </motion.button>
+                </div>
+              )}
+
               <div className="mt-8 flex justify-center">
                 <motion.button
                   whileHover={{ scale: 1.1 }}
@@ -69,3 +103,12 @@ const SingleService: React.FC = () => {
 };
 
 export default SingleService;
+
+
+
+
+
+
+
+
+
