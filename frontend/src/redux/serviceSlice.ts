@@ -15,6 +15,7 @@ interface ServiceState {
   SingleService: Service | null;
   addService: Service | null;
   updateService: Service | null;
+  removeService: Service | null;
 }
 
 const initialState: ServiceState = {
@@ -22,6 +23,7 @@ const initialState: ServiceState = {
   SingleService: null,
   addService: null,
   updateService: null,
+  removeService: null
 };
 
 const serviceSlice = createSlice({
@@ -48,9 +50,12 @@ const serviceSlice = createSlice({
         JSON.stringify(state.updateService)
       );
     },
+    deleteService(state, action) {
+      state.removeService = action.payload;
+    }
   },
 });
 
-export const { getServices, getSingleService, addService, editService } =
+export const { getServices, getSingleService, addService, editService, deleteService } =
   serviceSlice.actions;
 export default serviceSlice.reducer;

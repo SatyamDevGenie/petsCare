@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../redux/store";
 import { updateService } from "../services/adminServices";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 interface ModalProps {
   singleService: {
@@ -16,7 +17,6 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ singleService, isOpen, onClose }) => {
-  // Destructure singleService
   if (!isOpen) return null;
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
@@ -26,13 +26,14 @@ const Modal: React.FC<ModalProps> = ({ singleService, isOpen, onClose }) => {
     description: singleService?.description,
     price: singleService?.price,
   });
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [name]: value, // Value is always a string
+      [name]: value,
     }));
   };
 
@@ -47,12 +48,34 @@ const Modal: React.FC<ModalProps> = ({ singleService, isOpen, onClose }) => {
           price: formData.price,
         })
       );
+
+      // Show success toast
+      toast.success("Service Updated Successfully !", {
+        style: {
+          fontSize: "14px", // Smaller text size
+          padding: "8px",   // Reduce padding
+          minWidth: "200px", // Reduce width
+          fontFamily:"Arial Black",
+          fontWeight:"bolder"
+        },
+      });
+
       navigate("/services");
-      alert("Service Updated successfully!");
     } catch (error: any) {
       throw new Error(error.message);
+
+      toast.success("Something went wrong !", {
+        style: {
+          fontSize: "14px", // Smaller text size
+          padding: "8px",   // Reduce padding
+          minWidth: "200px", // Reduce width
+          fontFamily:"Arial Black",
+          fontWeight:"bolder"
+        },
+      });
     }
   };
+
   return (
     <>
       {singleService ? (
@@ -60,7 +83,7 @@ const Modal: React.FC<ModalProps> = ({ singleService, isOpen, onClose }) => {
           <div className="bg-white rounded-lg shadow-xl sm:w-96">
             <div className="px-4 py-3 pb-0 border-b border-gray-200 flex justify-between">
               <h3 className="text-xl font-bold text-gray-900 my-4 mt-2">
-                Update Service {/* Use singleService.title */}
+                Update Service
               </h3>
               <button
                 onClick={onClose}
@@ -70,8 +93,8 @@ const Modal: React.FC<ModalProps> = ({ singleService, isOpen, onClose }) => {
               </button>
             </div>
 
-            <div className=" pb-0">
-              <form onSubmit={handleSubmit} className=" pt-4">
+            <div className="pb-0">
+              <form onSubmit={handleSubmit} className="pt-4">
                 <div className="mb-4 mx-4">
                   <label
                     className="block text-gray-700 text-sm font-bold mb-1"
@@ -134,9 +157,9 @@ const Modal: React.FC<ModalProps> = ({ singleService, isOpen, onClose }) => {
                   </button>
                   <button
                     type="submit"
-                    className="px-3 py-2  text-sm text-white bg-indigo-600 rounded-md hover:bg-indigo-700"
+                    className="px-3 py-2 text-sm text-white bg-indigo-600 rounded-md hover:bg-indigo-700"
                   >
-                    Save Changes {/* Or "Update" */}
+                    Save Changes
                   </button>
                 </div>
               </form>
