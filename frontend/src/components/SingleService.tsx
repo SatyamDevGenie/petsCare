@@ -7,14 +7,13 @@ import { FaDollarSign } from "react-icons/fa";
 import { FiLoader } from "react-icons/fi";
 import { motion } from "framer-motion";
 
-
 const SingleService: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { service_id } = useParams<{ service_id: string }>();
 
   const { SingleService } = useSelector((state: any) => state.services);
-  const { userInfo } = useSelector((state: any) => state.user);  // Access the login state from your Redux store
+  const { userInfo } = useSelector((state: any) => state.user); // Get user info from Redux store
 
   useEffect(() => {
     if (service_id) {
@@ -27,9 +26,10 @@ const SingleService: React.FC = () => {
   };
 
   const handleDelete = () => {
-    // Handle delete logic here, maybe showing a confirmation modal
     console.log("Delete service:", service_id);
   };
+
+  const isAdmin = userInfo && userInfo.email === "admin@gmail.com";
 
   return (
     <div className="container mx-auto px-4 py-12 mt-5">
@@ -40,10 +40,10 @@ const SingleService: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <div className=" h-40 sm:h-52"></div>
+          <div className="h-40 sm:h-52"></div>
           <div className="p-2 sm:p-12 relative -mt-16">
             <motion.div
-              className=" p-6 sm:p-8"
+              className="p-6 sm:p-8"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -59,7 +59,8 @@ const SingleService: React.FC = () => {
                 <span className="text-3xl sm:text-4xl font-bold">{SingleService.price}</span>
               </div>
 
-              {userInfo && (
+              {/* Show Edit & Delete buttons only for Admins */}
+              {isAdmin && (
                 <div className="mt-6 flex justify-center gap-4">
                   <motion.button
                     onClick={handleEdit}
@@ -103,12 +104,3 @@ const SingleService: React.FC = () => {
 };
 
 export default SingleService;
-
-
-
-
-
-
-
-
-
