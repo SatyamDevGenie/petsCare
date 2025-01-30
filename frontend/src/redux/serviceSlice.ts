@@ -14,12 +14,14 @@ interface ServiceState {
   allServices: Service[];
   SingleService: Service | null;
   addService: Service | null;
+  updateService: Service | null;
 }
 
 const initialState: ServiceState = {
   allServices: [], // Initialize as an empty array
   SingleService: null,
   addService: null,
+  updateService: null,
 };
 
 const serviceSlice = createSlice({
@@ -39,8 +41,16 @@ const serviceSlice = createSlice({
     addService: (state, action) => {
       state.addService = action.payload;
     },
+    editService: (state, action) => {
+      state.updateService = action.payload;
+      localStorage.setItem(
+        "updateService",
+        JSON.stringify(state.updateService)
+      );
+    },
   },
 });
 
-export const { getServices, getSingleService, addService } = serviceSlice.actions;
+export const { getServices, getSingleService, addService, editService } =
+  serviceSlice.actions;
 export default serviceSlice.reducer;
