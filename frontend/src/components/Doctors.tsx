@@ -1,26 +1,28 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
 import { fethDoctorsList } from "../services/doctorService";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import AddDoctorModal from "./AddDoctorModel";
+import { Plus } from "lucide-react"
 
 const Doctors: React.FC = () => {
+
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
+  const [open, setOpen] = useState(false);
+
   // Fetch doctors list and user details from Redux store
   const { doctorsList } = useSelector((state: RootState) => state.doctors);
-  const { userInfo } = useSelector((state: RootState) => state.user);
+  const { userInfo } = useSelector((state: any) => state.user);
+  const { addDoctor } = useSelector((state: RootState) => state.doctors);
 
   useEffect(() => {
     // Dispatch action to fetch doctors list
     dispatch(fethDoctorsList);
-  }, [dispatch]);
-
-  const handleCreateDoctor = () => {
-    navigate("/create-doctor"); // Redirect to create doctor page
-  };
+  }, [dispatch, addDoctor]);
 
   return (
     <motion.div
@@ -47,9 +49,10 @@ const Doctors: React.FC = () => {
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
         >
           <button
-            onClick={handleCreateDoctor}
-            className="bg-blue-600 text-sm hover:bg-blue-700 text-white mt-10 font-bold py-3 px-6 rounded-lg transition duration-200 ease-in-out transform hover:scale-105"
+            onClick={() => setOpen(true)}
+            className="bg-indigo-600 text-white font-medium mb-8 p-2 md:px-5 sm:p-3 text-sm sm:text-lg flex items-center justify-center rounded-lg shadow-md hover:bg-indigo-700 transition duration-200 ease-in-out transform hover:scale-105"
           >
+            <Plus className="w-5 h-5 sm:w-6 sm:h-6 mr-2" />
             Add Doctor
           </button>
         </motion.div>
@@ -57,7 +60,7 @@ const Doctors: React.FC = () => {
 
       {doctorsList && doctorsList.length > 0 ? (
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-12 py-10"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mt-12 py-10 h-full"
           initial="hidden"
           animate="visible"
           variants={{
@@ -104,9 +107,13 @@ const Doctors: React.FC = () => {
                   </div>
                 </div>
               </Link>
+              
             </motion.div>
           ))}
+        {/* Corrected the closing tag for AddDoctorModal */}
+        <AddDoctorModal isOpen={open} onClose={() => setOpen(false)} />
         </motion.div>
+        
       ) : (
         <motion.p
           className="text-center text-gray-500"

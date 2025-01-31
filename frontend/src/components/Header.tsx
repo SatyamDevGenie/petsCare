@@ -3,10 +3,9 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../redux/userSlice";
 import { useNavigate } from "react-router-dom";
-
+import toast from "react-hot-toast";
 
 const Header: React.FC = () => {
-
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -17,6 +16,21 @@ const Header: React.FC = () => {
 
   const handleLogout = () => {
     dispatch(logout());
+    // Show success toast
+    toast.success("Logout successfully!", {
+      style: {
+        fontSize: "14px", // Smaller text size
+        padding: "8px", // Reduce padding
+        minWidth: "200px", // Reduce width
+        fontFamily: "Arial Black",
+        fontWeight: "bolder",
+        backgroundColor: "gray", // Custom green for success
+        color: "white", // White text color for contrast
+        borderRadius: "8px", // Rounded corners
+        boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Optional subtle shadow
+      },
+    });
+
     navigate("/login"); // Redirect to login page
     setIsMenuOpen(false);
     setIsDropdownOpen(false);
@@ -59,7 +73,9 @@ const Header: React.FC = () => {
                 className="flex items-center space-x-2 text-sm md:text-base font-medium focus:outline-none"
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               >
-                <span className="text-black font-extrabold">Welcome {userInfo.name}</span>
+                <span className="text-black font-extrabold">
+                  Welcome {userInfo.name}
+                </span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className={`h-5 w-5 transition-transform ${isDropdownOpen ? "rotate-180" : "rotate-0"}`}

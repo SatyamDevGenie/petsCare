@@ -23,6 +23,14 @@ const doctors = [
       profileImage: "/images/male-doctor.png", // Replace with actual image URL or path
       notes: "Focuses on preventive care and general health checkups for pets.",
     },
+    {
+      name: "Dr. Mahesh Naik",
+      email: "mahesh@gmail.com",
+      specialization: "Personal Mentor",
+      contactNumber: "9988776688",
+      profileImage: "/images/male-doctor.png", // Replace with actual image URL or path
+      notes: "Focuses on preventive care and general health checkups for pets.",
+    },
   ];
   
   export default doctors;

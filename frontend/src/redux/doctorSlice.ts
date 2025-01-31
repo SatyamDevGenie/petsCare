@@ -13,11 +13,13 @@ interface doctor {
 interface doctorState {
   doctorsList: doctor[];
   singleDoctor: doctor | null;
+  addDoctor: doctor | null;
 }
 
 const initialState: doctorState = {
   doctorsList: [],
   singleDoctor: null,
+  addDoctor: null
 };
 
 const doctorSlice = createSlice({
@@ -29,9 +31,12 @@ const doctorSlice = createSlice({
     },
     getSingleDoctor:(state,action)=>{
         state.singleDoctor= action.payload;
+    },
+    createDoctor: (state, action) => {
+      state.addDoctor = action.payload;
     }
   },
 });
 
-export const { getAllDoctors, getSingleDoctor } = doctorSlice.actions;
+export const { getAllDoctors, getSingleDoctor, createDoctor } = doctorSlice.actions;
 export default doctorSlice.reducer;
