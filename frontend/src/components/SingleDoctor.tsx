@@ -1,14 +1,20 @@
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
 import { fetchSingleDoctor } from "../services/doctorService";
 import { motion } from "framer-motion";
+import EditDoctorModal from "./EditDoctorModel";
 
 const SingleDoctor: React.FC = () => {
+  const [isOpen, setisOpen] = useState<boolean>(false);
+
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+
   const { doctor_id } = useParams(); // Fetch doctor ID from route params
   const { singleDoctor } = useSelector((state: RootState) => state.doctors);
+  const { userInfo } = useSelector((state: RootState) => state.user); // Assuming you store the user's role here
 
   useEffect(() => {
     if (doctor_id) {
@@ -107,18 +113,47 @@ const SingleDoctor: React.FC = () => {
           animate={{ width: "100%", transition: { duration: 2 } }}
         ></motion.div>
 
-        {/* Call to Action */}
-        <div className="text-center">
-          <motion.button
-            className="bg-indigo-600 text-xl hover:bg-indigo-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-200"
-            variants={buttonVariants}
-            whileHover="hover"
-            whileTap="tap"
-          >
-            Book Appointment
-          </motion.button>
-        </div>
+        {/* Conditionally Render Book Appointment Button for Non-Admin Users */}
+        {userInfo && !userInfo.isAdmin && (
+          <div className="text-center">
+            <motion.button
+              className="bg-indigo-600 text-xl hover:bg-indigo-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-200"
+              variants={buttonVariants}
+              whileHover="hover"
+              whileTap="tap"
+            >
+              Book Appointment
+            </motion.button>
+          </div>
+        )}
+
+        {/* Conditionally Render Edit and Delete Buttons for Admin */}
+        {userInfo && userInfo.isAdmin && (
+          <div className="flex justify-center space-x-4 mt-6">
+            <motion.button
+              className="bg-yellow-500 text-white text-xl py-2 px-6 rounded-lg hover:bg-yellow-600"
+              onClick={() => setisOpen(true)} // Open Edit Modal
+            >
+              Edit Doctor
+            </motion.button>
+            <motion.button
+              className="bg-red-500 text-white py-2  text-xl px-6 rounded-lg hover:bg-red-600"
+              onClick={() => {
+                // Handle delete action (add your delete logic here)
+              }}
+            >
+              Delete Doctor
+            </motion.button>
+          </div>
+        )}
       </motion.div>
+
+      {/* Edit Doctor Modal */}
+      <EditDoctorModal
+        singleDoctor={singleDoctor}
+        isOpen={isOpen}
+        onClose={() => setisOpen(false)}
+      />
     </motion.div>
   );
 };

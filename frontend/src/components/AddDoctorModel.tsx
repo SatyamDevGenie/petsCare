@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "../redux/store";
 import { createDoctor } from "../services/doctorService";
+import toast from "react-hot-toast";
 
 interface ModalProps {
   isOpen: boolean;
@@ -31,6 +32,16 @@ const handleSubmit = (e: React.FormEvent) => {
     }
     dispatch(createDoctor(newDoctor));
     navigate("/doctors");
+    // Show success toast
+    toast.success("Doctor Added Successfully !", {
+      style: {
+        fontSize: "14px", // Smaller text size
+        padding: "8px",   // Reduce padding
+        minWidth: "200px", // Reduce width
+        fontFamily:"Arial Black",
+        fontWeight:"bolder"
+      },
+    });
     onClose();
 }
 

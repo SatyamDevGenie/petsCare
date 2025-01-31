@@ -1,6 +1,6 @@
 import axios from "axios";
 import { AppDispatch, RootState } from "../redux/store";
-import { getAllDoctors, getSingleDoctor, createDoctor as newDoctor } from "../redux/doctorSlice";
+import { getAllDoctors, getSingleDoctor, createDoctor as newDoctor, editDoctor } from "../redux/doctorSlice";
 
 const API_URL = "/api/doctors/";
 
@@ -61,5 +61,39 @@ export const fetchSingleDoctor =
         );
       }
       throw new Error("An unexpected error occurred");
+    }
+  };
+
+
+  export const updateDoctor =
+  (doctor: any) => async (dispatch: AppDispatch, getState: () => RootState) => {
+    try {
+      const { userInfo } = getState().user;
+      if (!userInfo || !userInfo.token) {
+        throw new Error("No token found. Authorization denied.");
+      }
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`, // Include the JWT token
+        },
+      };
+      const response = await axios.put(
+        `${API_URL}${doctor._id}`,
+        doctor,
+        config
+      );
+      dispatch(editDoctor(response.data.doctor));
+      return response.data;
+    } catch (error: any) {
+      console.error(
+        "Failed to add service:",
+        error.response?.data || error.message
+      );
+      throw new Error(
+        error.response?.data?.message ||
+          "Failed to add service. Please try again."
+      );
     }
   };
