@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
-import { fetchSingleDoctor } from "../services/doctorService";
+import { fetchSingleDoctor, cancelDoctor } from "../services/doctorService";
 import { motion } from "framer-motion";
 import EditDoctorModal from "./EditDoctorModel";
+import toast from "react-hot-toast";
 
 const SingleDoctor: React.FC = () => {
   const [isOpen, setisOpen] = useState<boolean>(false);
@@ -42,6 +43,31 @@ const SingleDoctor: React.FC = () => {
   const buttonVariants = {
     hover: { scale: 1.1 },
     tap: { scale: 0.9 },
+  };
+
+  const handleDelete = async (singleDoctor: any) => {
+    if (!singleDoctor || !singleDoctor._id) {
+      console.error("Error: Doctor ID is undefined.");
+      return;
+    }
+    if (singleDoctor) {
+      try {
+        await dispatch(cancelDoctor(singleDoctor)); // Dispatch the cancelDoctor action
+        navigate("/doctors"); // Navigate to the doctors list after successful deletion
+        // Show success toast
+      toast.success("Deleted Doctor Successfully !", {
+        style: {
+          fontSize: "14px", // Smaller text size
+          padding: "8px",   // Reduce padding
+          minWidth: "200px", // Reduce width
+          fontFamily:"Arial Black",
+          fontWeight:"bolder"
+        },
+      });
+      } catch (err: any) {
+        console.error("Error deleting doctor:", err);
+      }
+    }
   };
 
   // Display the doctor's details
@@ -137,10 +163,8 @@ const SingleDoctor: React.FC = () => {
               Edit Doctor
             </motion.button>
             <motion.button
-              className="bg-red-500 text-white py-2  text-xl px-6 rounded-lg hover:bg-red-600"
-              onClick={() => {
-                // Handle delete action (add your delete logic here)
-              }}
+              className="bg-red-500 text-white py-2 text-xl px-6 rounded-lg hover:bg-red-600"
+              onClick={() => handleDelete(singleDoctor)} // Call handleDelete
             >
               Delete Doctor
             </motion.button>

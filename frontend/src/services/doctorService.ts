@@ -1,6 +1,6 @@
 import axios from "axios";
 import { AppDispatch, RootState } from "../redux/store";
-import { getAllDoctors, getSingleDoctor, createDoctor as newDoctor, editDoctor } from "../redux/doctorSlice";
+import { getAllDoctors, getSingleDoctor, createDoctor as newDoctor, editDoctor, deleteDoctor } from "../redux/doctorSlice";
 
 const API_URL = "/api/doctors/";
 
@@ -85,6 +85,34 @@ export const fetchSingleDoctor =
         config
       );
       dispatch(editDoctor(response.data.doctor));
+      return response.data;
+    } catch (error: any) {
+      console.error(
+        "Failed to add service:",
+        error.response?.data || error.message
+      );
+      throw new Error(
+        error.response?.data?.message ||
+          "Failed to add service. Please try again."
+      );
+    }
+  };
+
+
+  export const cancelDoctor =
+  (doctor: any) => async (dispatch: AppDispatch, getState: () => RootState) => {
+    try {
+      const { userInfo } = getState().user;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const response = await axios.delete(`${API_URL}${doctor._id}`, config);
+      dispatch(deleteDoctor(response.data));
       return response.data;
     } catch (error: any) {
       console.error(
