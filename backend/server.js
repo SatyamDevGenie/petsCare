@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import express from "express";
 import chalk from "chalk";
 import cors from "cors";
+import path from "path";
 import connectDB from "./config/db.js";
 import userRoutes from "../backend/routes/userRoutes.js";
 import petRoutes from "../backend/routes/petRoutes.js";
@@ -37,7 +38,7 @@ app.use("/api/pets", petRoutes);
 app.use("/api/services", serviceRoutes)
 app.use("/api/doctors", doctorRoutes)
 app.use("/api/appointment", appointmentRoutes)
-app.use("/uploads", uploadRoutes);
+app.use("/api/upload", uploadRoutes);
 
 app.get("/", (req, res) => {
   res.send("petsCare API is running");
