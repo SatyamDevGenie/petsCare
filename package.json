@@ -39,6 +39,7 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
     "passport": "^0.7.0",
+    "path": "^0.12.7",
     "redux": "^4.2.1",
     "redux-devtools-extension": "^2.13.9",
     "typescript": "^5.7.3"
