@@ -17,7 +17,10 @@ const storage = multer.diskStorage({
     cb(null, uploadDir);
   },
   filename(req, file, cb) {
-    cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`);
+    cb(
+      null,
+      `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`
+    );
   },
 });
 
@@ -56,8 +59,9 @@ router.post("/", (req, res) => {
     }
 
     // Normalize path for cross-platform support
-    const filePath = `/${req.file.path.replace(/\\/g, "/")}`;
-
+    const filePath = `${req.protocol}://${req.get("host")}/uploads/${
+      req.file.filename
+    }`;
     res.json({ filePath });
   });
 });
