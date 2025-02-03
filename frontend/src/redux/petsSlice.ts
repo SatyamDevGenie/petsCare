@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+
 const initialState = {
   petsList: [],
-  pet:null
+  pet:null,
+  newPet: null
 };
 
 const petsSlice = createSlice({
@@ -16,9 +18,12 @@ const petsSlice = createSlice({
     setSinglePet: (state, action) => {
       state.pet = action.payload;
       localStorage.setItem("pet", JSON.stringify(state.pet)); // Save to local storage
+    },
+    addPet: (state, action) => {
+      state.newPet = (action.payload);
     }
   },
 });
 
-export const { setPets, setSinglePet } = petsSlice.actions;
+export const { setPets, setSinglePet, addPet } = petsSlice.actions;
 export default petsSlice.reducer;

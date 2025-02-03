@@ -1,6 +1,6 @@
 import axios from "axios";
-import { setPets, setSinglePet} from "../redux/petsSlice";
-import { AppDispatch } from "../redux/store";
+import { addPet, setPets, setSinglePet} from "../redux/petsSlice";
+import { AppDispatch, RootState } from "../redux/store";
 
 
 const API_URL = "/api/pets/";
@@ -31,4 +31,42 @@ export const fetchSinglePet = (petId: string) => async (dispatch: AppDispatch) =
     throw new Error("An unexpected error occurred");
   }
 };
+
+
+
+export const createPet = (petData: any) => async (
+  dispatch: AppDispatch,
+  getState: () => RootState
+) => {
+  try {
+    const { userInfo } = getState().user;
+
+    if (!userInfo || !userInfo.token) {
+      throw new Error("No token found. Authorization denied.");
+    }
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`, // Include the JWT token
+      },
+    };
+
+    const response = await axios.post(`${API_URL}create`, petData, config);
+
+    dispatch(addPet(response.data.data)); // Dispatch action to add the new pet
+    return response.data.data;
+  } catch (error: any) {
+    console.error("Failed to create pet:", error.response?.data || error.message);
+    throw new Error(
+      error.response?.data?.message || "Failed to create pet. Please try again."
+    );
+  }
+};
+
+
+
+
+
+
 

@@ -20,6 +20,6 @@ router.delete("/:id", protect, admin, deletePet); // Admin can delete a pet
 // Public routes (or logged-in users if protect is needed)
 router.get("/", getPets);                         // Get all pets (public)
 router.get("/:id", getPetById);                   // Get a single pet by ID (public)
-router.get("/:id/vaccination-records", getVaccinationRecords); // Vaccination records (public)
+router.get("/:id/vaccination-records", protect, admin,  getVaccinationRecords); // Vaccination records (public)
 
 export default router;

@@ -38,7 +38,7 @@ app.use("/api/pets", petRoutes);
 app.use("/api/services", serviceRoutes)
 app.use("/api/doctors", doctorRoutes)
 app.use("/api/appointment", appointmentRoutes)
-app.use("/api/upload", uploadRoutes);
+app.use("/api/uploads", uploadRoutes);
 
 app.get("/", (req, res) => {
   res.send("petsCare API is running");
