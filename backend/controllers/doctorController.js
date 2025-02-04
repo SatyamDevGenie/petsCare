@@ -158,4 +158,41 @@ const getDoctorById = asyncHandler(async (req, res) => {
   }
 });
 
-export { createDoctor, updateDoctor, deleteDoctor, getDoctors, getDoctorById };
+
+
+
+const loginDoctor = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+
+  console.log("Received login request for:", email); // Debug log
+
+  const doctor = await Doctor.findOne({ email });
+
+  if (!doctor) {
+    console.log("Doctor not found in DB");
+    return res.status(401).json({ message: "Invalid email or password" });
+  }
+
+  console.log("Doctor found:", doctor);
+
+  const isMatch = await doctor.matchPassword(password);
+
+  console.log("Password match:", isMatch);
+
+  if (doctor && isMatch) {
+    res.json({
+      _id: doctor._id,
+      name: doctor.name,
+      email: doctor.email,
+      specialization: doctor.specialization,
+      token: generateToken(doctor._id),
+    });
+  } else {
+    console.log("Incorrect password");
+    res.status(401).json({ message: "Invalid email or password" });
+  }
+});
+
+
+
+export { createDoctor, updateDoctor, deleteDoctor, getDoctors, getDoctorById, loginDoctor };

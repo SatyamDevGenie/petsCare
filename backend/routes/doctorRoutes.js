@@ -6,6 +6,7 @@ import {
   deleteDoctor,
   getDoctors,
   getDoctorById,
+  loginDoctor,
 } from "../controllers/doctorController.js";
 import { protect, admin } from "../middlewares/authMiddleware.js";
 
@@ -19,5 +20,6 @@ router.delete("/:id", protect, admin, deleteDoctor);
 // Public routes (logged-in users only)
 router.get("/", getDoctors);
 router.get("/:id", getDoctorById);
+router.post("/login", loginDoctor)
 
 export default router;
