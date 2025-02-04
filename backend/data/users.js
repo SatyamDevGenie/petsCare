@@ -1,4 +1,5 @@
 import bcrypt from "bcryptjs";
+
 const users = [
   {
     name: "Administrator",

@@ -23,12 +23,17 @@ const appointmentSchema = mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["Pending", "Completed", "Cancelled"],
+      enum: ["Pending", "Accepted", "Rejected", "Cancelled"],
       default: "Pending",
     },
     query: {
       type: String,
     },
+    doctorResponse: {
+      type: String,
+      enum: ["Accepted", "Rejected", "Pending"],
+      default: "Pending",
+    }, // Track doctor's response
   },
   { timestamps: true }
 );
