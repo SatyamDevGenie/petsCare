@@ -34,6 +34,10 @@ const doctorSchema = mongoose.Schema(
       type: String,
       required: false, // Optional notes field
     },
+    isDoctor: {
+      type: Boolean,
+      default: true, // Ensuring all entries default to a doctor
+    },
   },
   { timestamps: true }
 );

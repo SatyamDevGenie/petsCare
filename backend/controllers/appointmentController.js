@@ -1,32 +1,34 @@
 import asyncHandler from "express-async-handler";
 import Appointment from "../models/appointmentModel.js";
-import generateToken from "../utils/generateToken.js"; // Assuming you have this utility function
 
-// Book an appointment (for logged-in users)
+// Book an appointment (Only petOwners can book)
 const bookAppointment = asyncHandler(async (req, res) => {
   const { petId, doctorId, appointmentDate, query } = req.body;
 
-  // Check if all required fields are provided
   if (!petId || !doctorId || !appointmentDate) {
     return res.status(400).json({
       success: false,
-      message:
-        "Please provide all required fields (petId, doctorId, appointmentDate).",
+      message: "Please provide petId, doctorId, and appointmentDate.",
     });
   }
 
-  // Create the new appointment
+  if (req.user.role !== "petOwner") {
+    return res.status(403).json({
+      success: false,
+      message: "Only pet owners can book appointments.",
+    });
+  }
+
   const appointment = new Appointment({
-    petOwner: req.user._id, // Get the logged-in user from the request
+    petOwner: req.user._id,
     pet: petId,
     doctor: doctorId,
     appointmentDate,
     query,
-    status: "Pending", // Initially set status to 'Pending'
-    doctorResponse: "Pending", // Initially set doctor's response to 'Pending'
+    status: "Pending",
+    doctorResponse: "Pending",
   });
 
-  // Save the appointment in the database
   const savedAppointment = await appointment.save();
 
   res.status(201).json({
@@ -35,14 +37,12 @@ const bookAppointment = asyncHandler(async (req, res) => {
   });
 });
 
-// @desc    Get all appointments (Admin Only)
-// @route   GET /api/appointments/all
-// @access  Private/Admin
+// Get all appointments (Only Admin)
 const getAllAppointments = asyncHandler(async (req, res) => {
   const appointments = await Appointment.find({})
-    .populate("petOwner", "name email") // Fetch pet owner details
-    .populate("pet", "name type breed age") // Fetch pet details
-    .populate("doctor", "name specialization"); // Fetch doctor details
+    .populate("petOwner", "name email")
+    .populate("pet", "name type breed age")
+    .populate("doctor", "name specialization");
 
   res.status(200).json({
     success: true,
@@ -53,17 +53,15 @@ const getAllAppointments = asyncHandler(async (req, res) => {
 
 // Doctor Accept/Reject Appointment
 const respondToAppointment = asyncHandler(async (req, res) => {
-  const { appointmentId, response } = req.body; // response can be 'Accepted' or 'Rejected'
+  const { appointmentId, response } = req.body;
 
-  // Validate response
   if (!["Accepted", "Rejected"].includes(response)) {
     return res.status(400).json({
       success: false,
-      message: "Invalid response. It should be 'Accepted' or 'Rejected'.",
+      message: "Response must be 'Accepted' or 'Rejected'.",
     });
   }
 
-  // Find the appointment by ID and update it
   const appointment = await Appointment.findById(appointmentId);
 
   if (!appointment) {
@@ -73,7 +71,6 @@ const respondToAppointment = asyncHandler(async (req, res) => {
     });
   }
 
-  // Ensure the logged-in doctor is the one being assigned to this appointment
   if (appointment.doctor.toString() !== req.user._id.toString()) {
     return res.status(403).json({
       success: false,
@@ -81,16 +78,9 @@ const respondToAppointment = asyncHandler(async (req, res) => {
     });
   }
 
-  // Update the appointment based on doctor's response
   appointment.doctorResponse = response;
+  appointment.status = response;
 
-  if (response === "Accepted") {
-    appointment.status = "Accepted";
-  } else if (response === "Rejected") {
-    appointment.status = "Rejected";
-  }
-
-  // Save the updated appointment
   const updatedAppointment = await appointment.save();
 
   res.status(200).json({
@@ -100,3 +90,9 @@ const respondToAppointment = asyncHandler(async (req, res) => {
 });
 
 export { bookAppointment, getAllAppointments, respondToAppointment };
+
+
+
+
+
+

@@ -10,6 +10,7 @@ const doctors = [
       contactNumber: "9876543210",
       profileImage: "/images/male-doctor.png", // Replace with actual image URL or path
       notes: "Specializes in surgical procedures and emergency cases. Compassionate and thorough.",
+      isDoctor: true,
     },
     {
       name: "Dr. Priya Sharma",
@@ -19,6 +20,7 @@ const doctors = [
       contactNumber: "9123456789",
       profileImage: "/images/female-doctor.png", // Replace with actual image URL or path
       notes: "Experienced in handling and treating exotic animals like reptiles and birds.",
+      isDoctor: true,
     },
     {
       name: "Dr. Arjun Mehta",
@@ -28,6 +30,7 @@ const doctors = [
       contactNumber: "9988776655",
       profileImage: "/images/male-doctor.png", // Replace with actual image URL or path
       notes: "Focuses on preventive care and general health checkups for pets.",
+      isDoctor: true,
     },
     {
       name: "Dr. Mahesh Naik",
@@ -37,6 +40,7 @@ const doctors = [
       contactNumber: "9988776688",
       profileImage: "/images/male-doctor.png", // Replace with actual image URL or path
       notes: "Focuses on preventive care and general health checkups for pets.",
+      isDoctor: true,
     },
   ];
   
