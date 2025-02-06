@@ -3,6 +3,7 @@ import {
   bookAppointment,
   getAllAppointments,
   respondToAppointment,
+  getUserAppointments
 } from "../controllers/appointmentController.js";
 import { protect, admin, doctor } from "../middlewares/authMiddleware.js";
 
@@ -16,6 +17,8 @@ router.put("/respond", protect, doctor, respondToAppointment);
 
 // Route for admin to get all appointments
 router.get("/all", protect, admin, getAllAppointments);
+
+router.get("/usersAppointments", protect, getUserAppointments); // Pet Owners Only
 
 export default router;
 

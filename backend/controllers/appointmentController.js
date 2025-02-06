@@ -89,7 +89,31 @@ const respondToAppointment = asyncHandler(async (req, res) => {
   });
 });
 
-export { bookAppointment, getAllAppointments, respondToAppointment };
+
+
+// Get appointments for the logged-in petOwner
+const getUserAppointments = asyncHandler(async (req, res) => {
+  if (req.user.role !== "petOwner") {
+    return res.status(403).json({
+      success: false,
+      message: "Only pet owners can view their appointments.",
+    });
+  }
+
+  const appointments = await Appointment.find({ petOwner: req.user._id })
+    .populate("pet", "name type breed age")
+    .populate("doctor", "name specialization");
+
+  res.status(200).json({
+    success: true,
+    count: appointments.length,
+    appointments,
+  });
+});
+
+
+
+export { bookAppointment, getAllAppointments, respondToAppointment, getUserAppointments };
 
 
 
