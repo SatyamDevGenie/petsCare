@@ -1,16 +1,15 @@
 import React, { useState } from "react";
+import { createDoctor } from "../services/doctorService";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "../redux/store";
-import { createDoctor } from "../services/doctorService";
-import toast from "react-hot-toast";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const AddDoctorModel: React.FC<ModalProps> = ({ isOpen, onClose }) => {
+const AddDoctorModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -22,35 +21,22 @@ const AddDoctorModel: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
-
-const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Doctor Added", formData);
-    
+    console.log("Doctor added:", formData);
     const newDoctor = {
-        ...formData,
-    }
+      ...formData,
+    };
     dispatch(createDoctor(newDoctor));
     navigate("/doctors");
-    // Show success toast
-    toast.success("Doctor Added Successfully !", {
-      style: {
-        fontSize: "14px", // Smaller text size
-        padding: "8px",   // Reduce padding
-        minWidth: "200px", // Reduce width
-        fontFamily:"Arial Black",
-        fontWeight:"bolder"
-      },
-    });
     onClose();
-}
+  };
 
-const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({...formData, [e.target.name]: e.target.value});
-}
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-if(!isOpen) return null;
-
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-10 flex items-center justify-center bg-gray-900 bg-opacity-50">
@@ -159,5 +145,4 @@ if(!isOpen) return null;
   );
 };
 
-
-export default AddDoctorModel;
+export default AddDoctorModal;

@@ -4,7 +4,7 @@ import Doctor from "../models/doctorModel.js";
 import generateToken from '../utils/generateToken.js' // Assuming you have this utility function
 
 // @desc    Create a new doctor (Admin only)
-// @route   POST /api/doctors
+// @route   POST /api/doctors/create
 // @access  Private/Admin
 const createDoctor = asyncHandler(async (req, res) => {
   try {

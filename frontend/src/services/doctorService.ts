@@ -2,9 +2,9 @@ import axios from "axios";
 import { AppDispatch, RootState } from "../redux/store";
 import { getAllDoctors, getSingleDoctor, createDoctor as newDoctor, editDoctor, deleteDoctor } from "../redux/doctorSlice";
 
-const API_URL = "/api/doctors/";
+const API_URL = "http://localhost:5000/api/doctors/";
 
-export const fethDoctorsList = async (dispatch: AppDispatch) => {
+export const fetchDoctorsList = async (dispatch: AppDispatch) => {
   try {
     const response = await axios.get(`${API_URL}`);
     dispatch(getAllDoctors(response.data.doctors));

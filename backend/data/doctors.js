@@ -32,16 +32,6 @@ const doctors = [
       notes: "Focuses on preventive care and general health checkups for pets.",
       isDoctor: true,
     },
-    {
-      name: "Dr. Mahesh Naik",
-      email: "mahesh@gmail.com",
-      password: bcrypt.hashSync("doctor123", 10),
-      specialization: "Personal Mentor",
-      contactNumber: "9988776688",
-      profileImage: "/images/male-doctor.png", // Replace with actual image URL or path
-      notes: "Focuses on preventive care and general health checkups for pets.",
-      isDoctor: true,
-    },
   ];
   
   export default doctors;
