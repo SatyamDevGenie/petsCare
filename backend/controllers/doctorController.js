@@ -162,7 +162,7 @@ const getDoctorById = asyncHandler(async (req, res) => {
 
 
 const loginDoctor = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
+  const { email } = req.body;
 
   console.log("Received login request for:", email); // Debug log
 
@@ -170,27 +170,19 @@ const loginDoctor = asyncHandler(async (req, res) => {
 
   if (!doctor) {
     console.log("Doctor not found in DB");
-    return res.status(401).json({ message: "Invalid email or password" });
+    return res.status(401).json({ message: "Doctor not found" });
   }
 
   console.log("Doctor found:", doctor);
 
-  const isMatch = await doctor.matchPassword(password);
-
-  console.log("Password match:", isMatch);
-
-  if (doctor && isMatch) {
-    res.json({
-      _id: doctor._id,
-      name: doctor.name,
-      email: doctor.email,
-      specialization: doctor.specialization,
-      token: generateToken(doctor._id),
-    });
-  } else {
-    console.log("Incorrect password");
-    res.status(401).json({ message: "Invalid email or password" });
-  }
+  // If the doctor exists, return the response without password validation
+  res.json({
+    _id: doctor._id,
+    name: doctor.name,
+    email: doctor.email,
+    specialization: doctor.specialization,
+    token: generateToken(doctor._id),
+  });
 });
 
 
