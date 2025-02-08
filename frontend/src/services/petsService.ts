@@ -1,5 +1,5 @@
 import axios from "axios";
-import { addPet, editPet, setPets, setSinglePet} from "../redux/petsSlice";
+import { addPet, editPet, setPets, setSinglePet, removePet} from "../redux/petsSlice";
 import { AppDispatch, RootState } from "../redux/store";
 
 
@@ -105,6 +105,33 @@ export const updatePet =
     }
   };
 
+
+
+  export const deletePet =
+  (id: any) => async (dispatch: AppDispatch, getState: () => RootState) => {
+    try {
+      const { userInfo } = getState().user;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`, // Include the JWT token
+        },
+      };
+      const response = await axios.delete(`${API_URL}${id}`, config);
+      dispatch(removePet(response.data));
+      return response.data;
+    } catch (error: any) {
+      console.error(
+        "Failed to add service:",
+        error.response?.data || error.message
+      );
+      throw new Error(
+        error.response?.data?.message ||
+          "Failed to add service. Please try again."
+      );
+    }
+  };
 
 
 

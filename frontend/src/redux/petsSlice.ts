@@ -6,6 +6,7 @@ const initialState = {
   pet:null,
   newPet: null,
   updatePet: null,
+  deletePet: null
 };
 
 const petsSlice = createSlice({
@@ -25,9 +26,12 @@ const petsSlice = createSlice({
     },
     editPet: (state, action) => {
       state.updatePet = action.payload;
+    },
+    removePet: (state, action) => {
+      state.deletePet = action.payload;
     }
   },
 });
 
-export const { setPets, setSinglePet, addPet, editPet } = petsSlice.actions;
+export const { setPets, setSinglePet, addPet, editPet, removePet } = petsSlice.actions;
 export default petsSlice.reducer;

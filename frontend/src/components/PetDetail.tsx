@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { fetchSinglePet, updatePet } from "../services/petsService";
+import { fetchSinglePet, updatePet, deletePet } from "../services/petsService";
 import { RootState, AppDispatch } from "../redux/store";
 import EditPetModal from "./EditPetModel";
 
@@ -45,6 +45,16 @@ const PetDetail: React.FC<Pet> = () => {
       <div className="text-center text-xl text-red-500">Pet not found</div>
     );
   }
+
+
+  const handleDelete = async () => {
+    try {
+      dispatch(deletePet(pet._id));
+      navigate("/");
+    } catch (error: any) {
+      console.error("Error deleting service:", error);
+    }
+  };
 
 
   return (
@@ -96,6 +106,12 @@ const PetDetail: React.FC<Pet> = () => {
                     className="text-sm bg-indigo-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                   >
                     Edit
+                  </button>
+                   <button
+                    onClick={handleDelete}
+                    className="text-sm bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                  >
+                    Delete
                   </button>
                 </div>
               </div>
