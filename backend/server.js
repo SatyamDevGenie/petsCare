@@ -37,7 +37,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/pets", petRoutes);
 app.use("/api/services", serviceRoutes)
 app.use("/api/doctors", doctorRoutes)
-app.use("/api/appointments", appointmentRoutes)
+app.use("/api/appointment", appointmentRoutes)
 app.use("/api/uploads", uploadRoutes);
 
 app.get("/", (req, res) => {

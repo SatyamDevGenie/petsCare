@@ -5,10 +5,13 @@ import { AppDispatch, RootState } from "../redux/store";
 import { fetchSingleDoctor, cancelDoctor } from "../services/doctorService";
 import { motion } from "framer-motion";
 import EditDoctorModal from "./EditDoctorModel";
+import AppointmentModal from "./AppointmentModal";
 import toast from "react-hot-toast";
 
 const SingleDoctor: React.FC = () => {
+
   const [isOpen, setisOpen] = useState<boolean>(false);
+  const [BookAptisOpen, setBookAptisOpen] = useState<boolean>(false);
 
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
@@ -55,15 +58,15 @@ const SingleDoctor: React.FC = () => {
         await dispatch(cancelDoctor(singleDoctor)); // Dispatch the cancelDoctor action
         navigate("/doctors"); // Navigate to the doctors list after successful deletion
         // Show success toast
-      toast.success("Deleted Doctor Successfully !", {
-        style: {
-          fontSize: "14px", // Smaller text size
-          padding: "8px",   // Reduce padding
-          minWidth: "200px", // Reduce width
-          fontFamily:"Arial Black",
-          fontWeight:"bolder"
-        },
-      });
+        toast.success("Deleted Doctor Successfully !", {
+          style: {
+            fontSize: "14px", // Smaller text size
+            padding: "8px", // Reduce padding
+            minWidth: "200px", // Reduce width
+            fontFamily: "Arial Black",
+            fontWeight: "bolder",
+          },
+        });
       } catch (err: any) {
         console.error("Error deleting doctor:", err);
       }
@@ -141,15 +144,13 @@ const SingleDoctor: React.FC = () => {
 
         {/* Conditionally Render Book Appointment Button for Non-Admin Users */}
         {userInfo && !userInfo.isAdmin && (
-          <div className="text-center">
-            <motion.button
-              className="bg-indigo-600 text-xl hover:bg-indigo-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-200"
-              variants={buttonVariants}
-              whileHover="hover"
-              whileTap="tap"
+          <div className="flex justify-center items-center">
+            <button
+              onClick={() => setBookAptisOpen(true)}
+              className=" text-sm bg-indigo-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             >
-              Book Appointment
-            </motion.button>
+              Book Appointnent
+            </button>
           </div>
         )}
 
@@ -178,6 +179,13 @@ const SingleDoctor: React.FC = () => {
         isOpen={isOpen}
         onClose={() => setisOpen(false)}
       />
+
+      <AppointmentModal
+        singleDoctor={singleDoctor}
+        isOpen={BookAptisOpen}
+        onClose={() => setBookAptisOpen(false)}
+      />
+
     </motion.div>
   );
 };
