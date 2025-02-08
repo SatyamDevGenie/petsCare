@@ -4,7 +4,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   petsList: [],
   pet:null,
-  newPet: null
+  newPet: null,
+  updatePet: null,
 };
 
 const petsSlice = createSlice({
@@ -21,9 +22,12 @@ const petsSlice = createSlice({
     },
     addPet: (state, action) => {
       state.newPet = (action.payload);
+    },
+    editPet: (state, action) => {
+      state.updatePet = action.payload;
     }
   },
 });
 
-export const { setPets, setSinglePet, addPet } = petsSlice.actions;
+export const { setPets, setSinglePet, addPet, editPet } = petsSlice.actions;
 export default petsSlice.reducer;

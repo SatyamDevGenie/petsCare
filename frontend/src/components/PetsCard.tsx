@@ -19,7 +19,7 @@ const PetsCard: React.FC<PetCardProps> = ({
 }) => {
   return (
     
-      <Link to={`/pet/${_id}`} className="block">
+      <Link to={`/pets/${_id}`} className="block">
         <div className="bg-white p-4 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 transform hover:scale-105 mt-5">
           <img
             src={image}

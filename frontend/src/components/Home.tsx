@@ -94,7 +94,7 @@ const Home: React.FC = () => {
             }}
             transition={{ duration: 2 }}
           >
-            <PetsCard {...pet} />
+            <PetsCard key={pet._id} {...pet} />
           </motion.div>
         ))}
       </motion.div>

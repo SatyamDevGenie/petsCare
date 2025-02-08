@@ -98,7 +98,7 @@ const getPetById = asyncHandler(async (req, res) => {
 // @access  Private
 const updatePet = asyncHandler(async (req, res) => {
   try {
-    const { name, type, breed, age, gender, notes, image } = req.body;
+    const { name, type, breed, age, gender, notes } = req.body;
 
     const pet = await Pet.findById(req.params.id);
 
@@ -122,7 +122,6 @@ const updatePet = asyncHandler(async (req, res) => {
     pet.age = age || pet.age;
     pet.gender = gender || pet.gender;
     pet.notes = notes || pet.notes;
-    pet.image = petimage || pet.image;
 
     const updatedPet = await pet.save();
     res.status(200).json({
