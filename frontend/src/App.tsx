@@ -31,7 +31,7 @@ const App: FC = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/services" element={<Services />} />
+          <Route path="/services"  element={<Services />} />
           <Route path="/service/:service_id" element={<SingleService />} />
           <Route path="/create/Service" element={<AddService />} />
           <Route path="/doctors" element={<Doctors />} />
