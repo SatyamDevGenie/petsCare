@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import AddDoctorModal from "./AddDoctorModel";
 import { Plus } from "lucide-react";
 
-const DoctorHome: React.FC = () => {
+const Doctors: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [open, setOpen] = useState(false);
 
@@ -79,7 +79,7 @@ const DoctorHome: React.FC = () => {
   );
 };
 
-export default DoctorHome;
+export default Doctors;
 
 
 

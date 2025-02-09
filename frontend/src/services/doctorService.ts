@@ -8,6 +8,7 @@ export const fetchDoctorsList = async (dispatch: AppDispatch) => {
   try {
     const response = await axios.get(`${API_URL}`);
     dispatch(getAllDoctors(response.data.doctors));
+
     return response.data.doctors;
   } catch (error: any) {
     if (axios.isAxiosError(error)) {
@@ -53,7 +54,7 @@ export const fetchSingleDoctor =
 
       const response = await axios.post(`${API_URL}create`, doctor, config);
       dispatch(newDoctor(response.data.doctor));
-      return response.data;
+      return response.data.doctor;
     } catch (error: any) {
       if (axios.isAxiosError(error)) {
         throw new Error(

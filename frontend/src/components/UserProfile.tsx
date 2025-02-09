@@ -1,28 +1,33 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { fetchUserProfile } from "../services/userService"; // Update this import to match your service file
+import { fetchUserProfile } from "../services/userService";
 import { logout } from "../redux/userSlice";
-import { RootState } from "../redux/store";
-import { motion } from "framer-motion"; // Import framer-motion for animations
+import { AppDispatch, RootState } from "../redux/store";
+import { motion } from "framer-motion";
+import { getUserAppointmentsAsync } from "../services/appointmentService";
 
 const UserProfile = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
-  // Retrieve user data from Redux store
   const { userInfo } = useSelector((state: RootState) => state.user);
+  const { appointments } = useSelector((state: RootState) => state.appointment);
+  const { singleDoctor } = useSelector((state: RootState) => state.doctors);
 
-  // Local state for handling loading/error states
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    dispatch(getUserAppointmentsAsync());
+  }, [dispatch]);
 
   useEffect(() => {
     const loadUserProfile = async () => {
       try {
         setLoading(true);
-        await fetchUserProfile(dispatch); // Fetch user profile
-        setLoading(false); // User profile fetched successfully
+        await fetchUserProfile(dispatch);
+        setLoading(false);
       } catch (err: any) {
         setError(err.message || "Failed to load user profile");
         setLoading(false);
@@ -30,116 +35,101 @@ const UserProfile = () => {
     };
 
     if (!userInfo) {
-      loadUserProfile(); // Fetch the user profile if not already available in Redux
+      loadUserProfile();
     } else {
-      setLoading(false); // If userInfo is already in store, no need to fetch again
+      setLoading(false);
     }
   }, [dispatch, userInfo]);
 
   const handleLogout = () => {
-    dispatch(logout()); // Dispatch logout action to clear user info from Redux store
-    navigate("/login"); // Redirect to login page
+    dispatch(logout());
+    navigate("/login");
   };
 
   const handleEditProfile = () => {
-    navigate("/edit"); // Redirect to edit profile page
+    navigate("/edit");
   };
 
-  // Show loading spinner while data is being fetched
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
+      <div className="flex justify-center items-center min-h-screen bg-gray-100">
         <div className="text-lg font-semibold text-gray-700">Loading...</div>
       </div>
     );
   }
 
-  // Show error message if an error occurred
   if (error) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
+      <div className="flex justify-center items-center min-h-screen bg-gray-100">
         <div className="text-red-600 text-lg font-semibold">{error}</div>
       </div>
     );
   }
 
-  // If userInfo is available, display the profile
   return (
     <motion.div
-      className="flex justify-center items-center min-h-screen mt-9"
+      className="flex flex-col items-center min-h-screen p-4 md:p-8 bg-gray-100"
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
       <motion.div
-        className="bg-white p-8 md:p-16 rounded-xl shadow-lg w-full max-w-md transform transition-all hover:scale-105 hover:shadow-2xl"
+        className="bg-white p-6 md:p-10 rounded-xl shadow-lg w-full max-w-xl transform transition-all hover:shadow-2xl"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.7 }}
       >
-        <h2 className="text-3xl font-extrabold text-center mb-6 text-gray-800">
+        <h2 className="text-2xl md:text-3xl font-extrabold text-center mb-6 text-gray-800">
           User Profile
         </h2>
+        <div className="space-y-4">
+          <div>
+            <strong className="block text-sm font-medium text-gray-700">Full Name</strong>
+            <p className="text-lg text-gray-800">{userInfo?.name}</p>
+          </div>
+          <div>
+            <strong className="block text-sm font-medium text-gray-700">Email</strong>
+            <p className="text-lg text-gray-800">{userInfo?.email}</p>
+          </div>
+          <div>
+            <strong className="block text-sm font-medium text-gray-700">Admin Status</strong>
+            <p className="text-lg text-gray-800">{userInfo?.isAdmin ? "Yes" : "No"}</p>
+          </div>
+        </div>
 
-        <motion.div
-          className="mb-6 py-3"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.7, delay: 0.1 }}
-        >
-          <strong className="block text-sm font-medium text-gray-700 mb-1">
-            Full Name
-          </strong>
-          <p className="text-lg text-gray-800">{userInfo?.name}</p>
-        </motion.div>
-
-        <motion.div
-          className="mb-6"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-        >
-          <strong className="block text-sm font-medium text-gray-700 mb-1">
-            Email Address
-          </strong>
-          <p className="text-lg text-gray-800">{userInfo?.email}</p>
-        </motion.div>
-
-        <motion.div
-          className="mb-6"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-        >
-          <strong className="block text-sm font-medium text-gray-700 mb-1">
-            Admin Status
-          </strong>
-          <p className="text-lg text-gray-800">
-            {userInfo?.isAdmin ? "Yes" : "No"}
-          </p>
-        </motion.div>
-
-        <div className="flex justify-between mt-6 space-x-4">
+        <div className="flex flex-col md:flex-row justify-between mt-6 space-y-3 md:space-y-0 md:space-x-4">
           <motion.button
             onClick={handleEditProfile}
-            className="w-full sm:w-auto bg-gradient-to-r from-green-500 to-blue-500 text-white px-8 pb-3 rounded-lg shadow-lg hover:from-green-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-300"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.7, delay: 0.4 }}
+            className="w-full text-sm md:w-auto bg-gradient-to-r from-green-500 to-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:from-green-600 hover:to-blue-600 transition-all duration-300"
           >
-            <span className="font-medium text-lg">Edit Profile</span>
+            Edit Profile
           </motion.button>
-
           <motion.button
             onClick={handleLogout}
-            className="w-full sm:w-auto bg-red-500 text-white px-8 pb-3 rounded-lg shadow-lg hover:bg-red-600 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-300"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.7, delay: 0.5 }}
+            className="w-full text-sm md:w-auto bg-red-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-red-600 transition-all duration-300"
           >
-            <span className="font-medium text-lg">Logout</span>
+            Logout
           </motion.button>
         </div>
+
+        {appointments && appointments.length > 0 ? (
+          <>
+            <h2 className="text-xl text-center mt-6 font-semibold">My Appointments</h2>
+            <div className="mt-4 space-y-4">
+              {appointments.map((appointment, index) => (
+                <div key={index} className="bg-gray-50 p-4 rounded-lg shadow border">
+                  <p className="text-sm"><strong>Pet Owner:</strong> {userInfo.name}</p>
+                  <p className="text-sm"><strong>Pet:</strong> {appointment.pet?.name || "Unknown"}</p>
+                  <p className="text-sm"><strong>Doctor:</strong> {singleDoctor?.name || "Unknown"}</p>
+                  <p className="text-sm"><strong>Date:</strong> {appointment.appointmentDate}</p>
+                  <p className="text-sm"><strong>Status:</strong> {appointment.status}</p>
+                </div>
+              ))}
+            </div>
+          </>
+        ) : (
+          <p className="mt-6 font-normal text-center text-gray-600">No Appointments</p>
+        )}
       </motion.div>
     </motion.div>
   );

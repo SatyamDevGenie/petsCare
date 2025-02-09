@@ -12,10 +12,13 @@ interface Appointment {
 
 interface AppointmentState {
   bookAppointment: Appointment | null;
+  appointments: Appointment[];
+  
 }
 
 const initialState: AppointmentState = {
   bookAppointment: null,
+  appointments: [],
 };
 
 const appointmentSlice = createSlice({
@@ -29,9 +32,12 @@ const appointmentSlice = createSlice({
         JSON.stringify(state.bookAppointment)
       );
     },
+    setAppointments: (state, action) => {
+      state.appointments = action.payload; // Overwrite with API response
+    },
   },
 });
 
 
-export const {bookApt} = appointmentSlice.actions;
+export const {bookApt, setAppointments} = appointmentSlice.actions;
 export default appointmentSlice.reducer;
