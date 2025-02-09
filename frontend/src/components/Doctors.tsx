@@ -2,13 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
 import { fetchDoctorsList } from "../services/doctorService";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import AddDoctorModal from "./AddDoctorModel";
 import { Plus } from "lucide-react";
 
 const Doctors: React.FC = () => {
+
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
+
   const [open, setOpen] = useState(false);
 
   // Fetch doctors list from the Redux store
@@ -20,6 +23,12 @@ const Doctors: React.FC = () => {
     // Dispatch action to fetch doctors list
     dispatch(fetchDoctorsList);
   }, [dispatch, addDoctor]);
+
+
+  const handleAptClick = () => {
+    navigate("/allApointments");
+  };
+
 
   return (
     <div className="container mx-auto px-6 py-8 mt-20">
@@ -41,6 +50,12 @@ const Doctors: React.FC = () => {
           >
             <Plus className="w-5 h-5 sm:w-6 sm:h-6 mr-2" />
             Add Doctor
+          </button>
+          <button
+            onClick={handleAptClick}
+            className=" ml-4 bg-indigo-600 text-white font-medium mb-8 p-2 md:px-5 sm:p-3 text-sm sm:text-lg flex items-center justify-center rounded-lg shadow-md hover:bg-indigo-700 transition duration-200 ease-in-out transform hover:scale-105"
+          >
+            Get All Appointments
           </button>
         </motion.div>
       )}

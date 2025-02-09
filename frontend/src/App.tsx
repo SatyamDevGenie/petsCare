@@ -18,6 +18,7 @@ import SingleDoctor from "./components/SingleDoctor";
 import AddService from "./components/AddService";
 
 import { Toaster } from "react-hot-toast"
+import AllAppointments from "./components/AllAppointments";
 
 
 
@@ -42,6 +43,7 @@ const App: FC = () => {
           <Route path="/edit" element={<EditProfile />} />
           <Route path="/pets/:petId" element={<PetDetail _id={""} name={""} breed={""} age={0} notes={""} image={""} type={""} gender={""} />} /> 
           <Route path="/create-pet" element={<CreatePet /> } />
+          <Route path="/*" element={<AllAppointments />} />
         </Routes>
         <Footer />
       </div>
