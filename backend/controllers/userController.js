@@ -116,7 +116,7 @@ const adminLogin = asyncHandler(async (req, res) => {
 
 /**
  * @desc Doctor Login
- * @route POST /api/users/doctor/login
+ * @route POST /api/users/doctor/doctorLogin
  * @access Public
  */
 const doctorLogin = asyncHandler(async (req, res) => {
@@ -136,8 +136,11 @@ const doctorLogin = asyncHandler(async (req, res) => {
       _id: doctor._id,
       name: doctor.name,
       email: doctor.email,
+      specialization: doctor.specialization,
+      contactNumber: doctor.contactNumber,
+      profileImage: doctor.profileImage,
       isDoctor: doctor.isDoctor,
-      token: generateToken(doctor._id),
+      token: generateToken(doctor._id), // JWT token for authentication
     });
   } else {
     res.status(401);

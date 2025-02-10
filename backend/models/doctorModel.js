@@ -53,7 +53,7 @@ doctorSchema.pre('save', async function (next) {
     next()
   }
   const salt = await bcrypt.genSalt(10)
-  this.password = await bcrypt.bcrypt.hashSync()(this.password, salt)
+  this.password = await bcrypt.hashSync()(this.password, salt)
 })
 
 
