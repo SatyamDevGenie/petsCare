@@ -11,74 +11,80 @@ import Appointment from "./models/appointmentModel.js";
 import Service from "./models/serviceModel.js"; // Import the Service model
 
 dotenv.config();
-
 connectDB();
 
 const importData = async () => {
   try {
-    // Delete existing data to avoid duplication
-    await Doctor.deleteMany();
-    await Pet.deleteMany();
-    await User.deleteMany();
+    console.log("Deleting existing data...");
+    // Delete all existing data
     await Appointment.deleteMany();
-    await Service.deleteMany(); // Delete existing services data
+    await Pet.deleteMany();
+    await Service.deleteMany();
+    await Doctor.deleteMany();
+    await User.deleteMany();
 
-    // Insert user data and get their IDs
+    console.log("Inserting new data...");
+    
+    // Insert users and doctors first
     const createdUsers = await User.insertMany(users);
+    const createdDoctors = await Doctor.insertMany(doctors);
 
-    // Create a map of user email to user ID
+    // Map user and doctor emails to their _ids
     const userMap = createdUsers.reduce((map, user) => {
       map[user.email] = user._id;
       return map;
     }, {});
 
-    // Create pets and ensure 'user' field references valid ObjectId
+    const doctorMap = createdDoctors.reduce((map, doctor) => {
+      map[doctor.email] = doctor._id;
+      return map;
+    }, {});
+
+    // Assign user and doctor IDs to pets
     const samplePets = pets.map((pet, index) => ({
       ...pet,
-      user: userMap[users[index % users.length].email], // Assign user ID based on email
+      user: userMap[users[index % users.length].email], // Assign user ID
+      doctor: doctorMap[doctors[index % doctors.length].email], // Assign doctor ID
     }));
 
-    // Insert pets data into the database
+    // Insert pets into the database
     await Pet.insertMany(samplePets);
 
-    // Insert doctors data into the database
-    await Doctor.insertMany(doctors);
-
-    // Insert services data into the database
+    // Insert services data
     const sampleServices = services.map((service) => ({
       title: service.title,
       description: service.description,
       price: service.price,
-      image: service.image, // Optional, omit if not needed
+      image: service.image, // Optional
     }));
-    await Service.insertMany(sampleServices); // Insert services into the database
+    await Service.insertMany(sampleServices);
 
-    console.log("Data imported successfully!");
+    console.log("✅ Data imported successfully!");
     process.exit();
   } catch (err) {
-    console.error(`Error: ${err}`);
+    console.error(`❌ Error: ${err.message}`);
     process.exit(1);
   }
 };
 
 const destroyData = async () => {
   try {
-    // Delete all pets, users, doctors, and services data
-    await Doctor.deleteMany();
-    await Pet.deleteMany();
-    await User.deleteMany();
+    console.log("Deleting all data...");
     await Appointment.deleteMany();
-    await Service.deleteMany(); // Delete services data
+    await Pet.deleteMany();
+    await Service.deleteMany();
+    await Doctor.deleteMany();
+    await User.deleteMany();
 
-    console.log("Data destroyed!");
+    console.log("✅ Data destroyed successfully!");
     process.exit();
   } catch (err) {
-    console.error(`Error: ${err}`);
+    console.error(`❌ Error: ${err.message}`);
     process.exit(1);
   }
 };
 
-// Check command line argument to determine whether to destroy or import data
+// Check command line argument to determine action
 if (process.argv[2] === "-d") {
   destroyData();
 } else {

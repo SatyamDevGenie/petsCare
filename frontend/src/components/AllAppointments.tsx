@@ -17,14 +17,14 @@ const AllAppointments: React.FC = () => {
 
   return (
     <div className="container mx-auto p-6 mt-12">
-      <h2 className="text-2xl font-bold text-center mb-4 mt-10">All Appointments</h2>
+      <h2 className="text-3xl font-bold text-center mb-4 mt-10">Appointment Dashboard</h2>
 
       {allAppointments.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7 mt-12">
           {allAppointments.map((appointment, index) => (
             <div
               key={index}
-              className="border border-gray-300 rounded-lg shadow-md p-4"
+              className="border border-gray-300 rounded-lg shadow-md p-4 mt-12"
             >
               <table className="w-full border-collapse">
                 <tbody>
@@ -43,7 +43,7 @@ const AllAppointments: React.FC = () => {
                       Pet
                     </td>
                     <td className="border px-4 py-2 text-sm font-normal">
-                      {appointment.pet?.name || "Unknown"}
+                      {appointment.pet?.breed || "Unknown"}
                     </td>
                   </tr>
                   <tr>

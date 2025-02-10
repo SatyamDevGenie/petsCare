@@ -2,7 +2,9 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface Appointment {
   petOwner: { _id: string; name: string } | string;
-  pet: { _id: string; name: string };
+  pet: {
+    breed: string; _id: string; name: string 
+};
   doctor: { _id: string; name: string };
   appointmentDate: string;
   query: string;

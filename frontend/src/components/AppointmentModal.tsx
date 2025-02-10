@@ -118,7 +118,7 @@ const AppointmentModal: React.FC<ModalProps> = ({
                   <option value="">Select a Pet</option>
                   {petsList.map((pet) => (
                     <option key={pet._id} value={pet._id}>
-                      {pet.name}
+                      {pet.breed}
                     </option>
                   ))}
                 </select>

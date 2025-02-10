@@ -160,42 +160,4 @@ const getDoctorById = asyncHandler(async (req, res) => {
 
 
 
-
-const loginDoctor = asyncHandler(async (req, res) => {
-  try {
-    const { email, password } = req.body;
-
-    console.log("Received login request for:", email); // Debug log
-
-    const doctor = await Doctor.findOne({ email });
-
-    if (doctor && (await doctor.matchPassword(password))) {
-      res.status(200).json({
-        statusCode: 200,
-        message: "Login successful",
-        doctor: {
-          _id: doctor._id,
-          name: doctor.name,
-          email: doctor.email,
-          specialization: doctor.specialization,
-          token: generateToken(doctor._id),
-        },
-      });
-    } else {
-      console.log("Invalid email or password");
-      res.status(401).json({
-        statusCode: 401,
-        message: "Invalid email or password",
-      });
-    }
-  } catch (error) {
-    res.status(res.statusCode || 500).json({
-      statusCode: res.statusCode || 500,
-      message: error.message,
-    });
-  }
-});
-
-
-
-export { createDoctor, updateDoctor, deleteDoctor, getDoctors, getDoctorById, loginDoctor };
+export { createDoctor, updateDoctor, deleteDoctor, getDoctors, getDoctorById};

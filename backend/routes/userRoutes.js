@@ -6,6 +6,7 @@ import {
   getUserProfile,
   updateUserProfile,
   adminLogin,  // Assuming you have created this controller method
+  doctorLogin
 } from "../controllers/userController.js";
 import { protect} from "../middlewares/authMiddleware.js"; // Adding admin middleware
 
@@ -23,6 +24,11 @@ router.route("/admin/login").post(adminLogin); // Admin login
 router.route("/profile")
   .get(protect, getUserProfile) // Get user profile (for authenticated users)
   .put(protect, updateUserProfile); // Update user profile (for authenticated users)
+
+
+  // router.post("/doctorLogin", doctorLogin); // Doctor login route
+  router.route("/doctorLogin").post(doctorLogin)
+
 
 
 

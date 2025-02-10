@@ -22,6 +22,10 @@ const userSchema = mongoose.Schema(
       enum: ['petOwner', 'doctor', 'admin'], // Allowed roles
       default: 'petOwner' // Default role is petOwner
     },
+    isDoctor: {
+      type: Boolean,
+      default: false, // Removed incorrect property
+    },
     isAdmin: {
       type: Boolean,
       required: true,

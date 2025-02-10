@@ -119,8 +119,8 @@ const UserProfile = () => {
               {appointments.map((appointment, index) => (
                 <div key={index} className="bg-gray-50 p-4 rounded-lg shadow border">
                   <p className="text-sm"><strong>Pet Owner:</strong> {userInfo.name}</p>
-                  <p className="text-sm"><strong>Pet:</strong> {appointment.pet?.name || "Unknown"}</p>
-                  <p className="text-sm"><strong>Doctor:</strong> {singleDoctor?.name || "Unknown"}</p>
+                  <p className="text-sm"><strong>Pet:</strong> {appointment.pet?.breed || "Unknown"}</p>
+                  <p className="text-sm"><strong>Doctor:</strong> {singleDoctor?.name || appointment?.doctor?.name || "Unknown"}</p>
                   <p className="text-sm"><strong>Date:</strong> {appointment.appointmentDate}</p>
                   <p className="text-sm"><strong>Status:</strong> {appointment.status}</p>
                 </div>

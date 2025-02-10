@@ -36,7 +36,7 @@ const doctorSchema = mongoose.Schema(
     },
     isDoctor: {
       type: Boolean,
-      default: true, // Ensuring all entries default to a doctor
+      default: true, // Set to true by default
     },
   },
   { timestamps: true }
@@ -53,7 +53,7 @@ doctorSchema.pre('save', async function (next) {
     next()
   }
   const salt = await bcrypt.genSalt(10)
-  this.password = await bcrypt.hash(this.password, salt)
+  this.password = await bcrypt.bcrypt.hashSync()(this.password, salt)
 })
 
 

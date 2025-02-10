@@ -1,6 +1,7 @@
-import asyncHandler from "express-async-handler";
-import User from "../models/userModel.js";
-import generateToken from "../utils/generateToken.js"; // Assuming you have this utility function
+import asyncHandler from 'express-async-handler'
+import User from '../models/userModel.js'
+import Doctor from '../models/doctorModel.js'
+import generateToken from '../utils/generateToken.js' // Assuming you have this utility function
 
 /**
  * @desc Register new user
@@ -9,40 +10,40 @@ import generateToken from "../utils/generateToken.js"; // Assuming you have this
  */
 const registerUser = asyncHandler(async (req, res) => {
   try {
-    const { name, email, password } = req.body;
-    const userExists = await User.findOne({ email });
+    const { name, email, password } = req.body
+    const userExists = await User.findOne({ email })
 
     if (userExists) {
-      res.status(400);
-      throw new Error("User already exists");
+      res.status(400)
+      throw new Error('User already exists')
     }
 
-    const user = await User.create({ name, email, password });
+    const user = await User.create({ name, email, password })
 
     if (user) {
       res.status(201).json({
         success: true,
         code: 201,
-        message: "User registered successfully",
+        message: 'User registered successfully',
         data: {
           _id: user._id,
           name: user.name,
           email: user.email,
           isAdmin: user.isAdmin,
-          token: generateToken(user._id),
-        },
-      });
+          token: generateToken(user._id)
+        }
+      })
     } else {
-      res.status(400);
-      throw new Error("Invalid user data");
+      res.status(400)
+      throw new Error('Invalid user data')
     }
   } catch (error) {
     res.status(res.statusCode || 500).json({
       success: false,
-      message: error.message,
-    });
+      message: error.message
+    })
   }
-});
+})
 
 /**
  * @desc Auth user
@@ -51,34 +52,36 @@ const registerUser = asyncHandler(async (req, res) => {
  */
 const loginUser = asyncHandler(async (req, res) => {
   try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    const { email, password } = req.body
+    const user = await User.findOne({ email })
 
     if (user && (await user.matchPassword(password))) {
       res.status(200).json({
         statusCode: 200,
-        message: "Login successful",
+        message: 'Login successful',
         user: {
           _id: user._id,
           name: user.name,
           email: user.email,
+          role: user.role,
+          isDoctor: user.isDoctor, // ✅ Will return true if user is a doctor
           isAdmin: user.isAdmin,
-          token: generateToken(user._id),
-        },
-      });
+          token: generateToken(user._id)
+        }
+      })
     } else {
       res.status(401).json({
         statusCode: 401,
-        message: "Invalid email or password",
-      });
+        message: 'Invalid email or password'
+      })
     }
   } catch (error) {
     res.status(res.statusCode || 500).json({
       statusCode: res.statusCode || 500,
-      message: error.message,
-    });
+      message: error.message
+    })
   }
-});
+})
 
 /**
  * @desc Admin Login
@@ -86,14 +89,14 @@ const loginUser = asyncHandler(async (req, res) => {
  * @access Public
  */
 const adminLogin = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password } = req.body
 
-  const admin = await User.findOne({ email });
+  const admin = await User.findOne({ email })
 
   if (admin && (await admin.matchPassword(password))) {
     if (!admin.isAdmin) {
-      res.status(401);
-      throw new Error("Not authorized as admin");
+      res.status(401)
+      throw new Error('Not authorized as admin')
     }
 
     res.json({
@@ -101,13 +104,49 @@ const adminLogin = asyncHandler(async (req, res) => {
       name: admin.name,
       email: admin.email,
       isAdmin: admin.isAdmin,
-      token: generateToken(admin._id),
+      token: generateToken(admin._id)
+    })
+  } else {
+    res.status(401)
+    throw new Error('Invalid email or password')
+  }
+})
+
+
+
+/**
+ * @desc Doctor Login
+ * @route POST /api/users/doctor/login
+ * @access Public
+ */
+const doctorLogin = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+
+  // Find the user by email
+  const doctor = await Doctor.findOne({ email });
+
+  // Check if user exists and password matches
+  if (doctor && (await doctor.matchPassword(password))) {
+    if (!doctor.isDoctor) {
+      res.status(401);
+      throw new Error("Not authorized as a doctor");
+    }
+
+    res.json({
+      _id: doctor._id,
+      name: doctor.name,
+      email: doctor.email,
+      isDoctor: doctor.isDoctor,
+      token: generateToken(doctor._id),
     });
   } else {
     res.status(401);
     throw new Error("Invalid email or password");
   }
 });
+
+
+
 
 /**
  * @desc Logout user
@@ -119,15 +158,15 @@ const logoutUser = asyncHandler(async (req, res) => {
     // Optionally clear any cookies or headers here if using them for authentication.
     res.status(200).json({
       statusCode: 200,
-      message: "Logout successful",
-    });
+      message: 'Logout successful'
+    })
   } catch (error) {
     res.status(500).json({
       statusCode: 500,
-      message: error.message,
-    });
+      message: error.message
+    })
   }
-});
+})
 
 /**
  * @desc Get user profile
@@ -136,32 +175,32 @@ const logoutUser = asyncHandler(async (req, res) => {
  */
 const getUserProfile = asyncHandler(async (req, res) => {
   try {
-    const user = await User.findById(req.user._id);
+    const user = await User.findById(req.user._id)
 
     if (user) {
       res.status(200).json({
         statusCode: 200,
-        message: "User profile retrieved successfully",
+        message: 'User profile retrieved successfully',
         user: {
           _id: user._id,
           name: user.name,
           email: user.email,
-          isAdmin: user.isAdmin,
-        },
-      });
+          isAdmin: user.isAdmin
+        }
+      })
     } else {
       res.status(404).json({
         statusCode: 404,
-        message: "User not found",
-      });
+        message: 'User not found'
+      })
     }
   } catch (error) {
     res.status(res.statusCode || 500).json({
       statusCode: res.statusCode || 500,
-      message: error.message,
-    });
+      message: error.message
+    })
   }
-});
+})
 
 /**
  * @desc Update user profile
@@ -170,52 +209,51 @@ const getUserProfile = asyncHandler(async (req, res) => {
  */
 const updateUserProfile = asyncHandler(async (req, res) => {
   try {
-    const user = await User.findById(req.user._id);
+    const user = await User.findById(req.user._id)
 
     if (user) {
       // Update user fields
-      user.name = req.body.name || user.name;
-      user.email = req.body.email || user.email;
+      user.name = req.body.name || user.name
+      user.email = req.body.email || user.email
       if (req.body.password) {
-        user.password = req.body.password;
+        user.password = req.body.password
       }
 
       // Save updated user to database
-      const updatedUser = await user.save();
+      const updatedUser = await user.save()
 
       // Respond with updated user data and status code
       res.status(200).json({
         statusCode: 200,
-        message: "User profile updated successfully",
+        message: 'User profile updated successfully',
         user: {
           _id: updatedUser._id,
           name: updatedUser.name,
           email: updatedUser.email,
-          isAdmin: updatedUser.isAdmin,
+          isAdmin: updatedUser.isAdmin
         },
-        token: generateToken(updatedUser._id),
-      });
+        token: generateToken(updatedUser._id)
+      })
     } else {
       res.status(404).json({
         statusCode: 404,
-        message: "User not found",
-      });
+        message: 'User not found'
+      })
     }
   } catch (error) {
     res.status(500).json({
       statusCode: 500,
-      message: error.message,
-    });
+      message: error.message
+    })
   }
-});
+})
 
-export { registerUser, loginUser, adminLogin, logoutUser, getUserProfile, updateUserProfile };
-
-
-
-
-
-
-
-
-
+export {
+  registerUser,
+  loginUser,
+  adminLogin,
+  logoutUser,
+  getUserProfile,
+  updateUserProfile,
+  doctorLogin
+}
