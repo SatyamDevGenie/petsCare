@@ -51,45 +51,6 @@ const getAllAppointments = asyncHandler(async (req, res) => {
   });
 });
 
-// Doctor Accept/Reject Appointment
-const respondToAppointment = asyncHandler(async (req, res) => {
-  const { appointmentId, response } = req.body;
-
-  if (!["Accepted", "Rejected"].includes(response)) {
-    return res.status(400).json({
-      success: false,
-      message: "Response must be 'Accepted' or 'Rejected'.",
-    });
-  }
-
-  const appointment = await Appointment.findById(appointmentId);
-
-  if (!appointment) {
-    return res.status(404).json({
-      success: false,
-      message: "Appointment not found.",
-    });
-  }
-
-  if (appointment.doctor.toString() !== req.user._id.toString()) {
-    return res.status(403).json({
-      success: false,
-      message: "You are not authorized to respond to this appointment.",
-    });
-  }
-
-  appointment.doctorResponse = response;
-  appointment.status = response;
-
-  const updatedAppointment = await appointment.save();
-
-  res.status(200).json({
-    success: true,
-    appointment: updatedAppointment,
-  });
-});
-
-
 
 // Get appointments for the logged-in petOwner
 const getUserAppointments = asyncHandler(async (req, res) => {
@@ -111,12 +72,8 @@ const getUserAppointments = asyncHandler(async (req, res) => {
   });
 });
 
-
-
-export { bookAppointment, getAllAppointments, respondToAppointment, getUserAppointments };
-
-
-
-
-
-
+export {
+  bookAppointment,
+  getAllAppointments,
+  getUserAppointments
+};

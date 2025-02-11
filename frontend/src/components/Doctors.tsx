@@ -55,7 +55,7 @@ const Doctors: React.FC = () => {
             onClick={handleAptClick}
             className=" ml-4 bg-indigo-600 text-white font-medium mb-8 p-2 md:px-5 sm:p-3 text-sm sm:text-lg flex items-center justify-center rounded-lg shadow-md hover:bg-indigo-700 transition duration-200 ease-in-out transform hover:scale-105"
           >
-            Get All Appointments
+            See All Appointments
           </button>
         </motion.div>
       )}

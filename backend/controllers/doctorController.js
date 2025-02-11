@@ -3,12 +3,21 @@ import asyncHandler from "express-async-handler";
 import Doctor from "../models/doctorModel.js";
 import generateToken from '../utils/generateToken.js' // Assuming you have this utility function
 
+
+
+
 // @desc    Create a new doctor (Admin only)
 // @route   POST /api/doctors/create
 // @access  Private/Admin
 const createDoctor = asyncHandler(async (req, res) => {
   try {
-    const { name, email, specialization, contactNumber, profileImage, notes } = req.body;
+    const {
+      name,
+      email,
+      specialization,
+      contactNumber,
+      notes,
+    } = req.body;
 
     const doctorExists = await Doctor.findOne({ email });
 
@@ -19,13 +28,15 @@ const createDoctor = asyncHandler(async (req, res) => {
       });
     }
 
+    // const hashedPassword = await bcrypt.hash(password, 10);
+
     const doctor = await Doctor.create({
       name,
       email,
       specialization,
       contactNumber,
-      profileImage,
       notes,
+      isDoctor: true,
     });
 
     res.status(201).json({
@@ -41,6 +52,9 @@ const createDoctor = asyncHandler(async (req, res) => {
     });
   }
 });
+
+
+
 
 // @desc    Update a doctor (Admin only)
 // @route   PUT /api/doctors/:id
@@ -160,4 +174,43 @@ const getDoctorById = asyncHandler(async (req, res) => {
 
 
 
-export { createDoctor, updateDoctor, deleteDoctor, getDoctors, getDoctorById};
+
+/**
+ * @desc Doctor Login
+ * @route POST /api/users/doctor/doctorLogin
+ * @access Public
+ */
+const doctorLogin = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+
+  // Find the user by email, excluding password
+  const doctor = await Doctor.findOne({ email }).select("-password");
+
+  if (doctor) {
+    if (!doctor.isDoctor) {
+      res.status(401);
+      throw new Error("Not authorized as a doctor");
+    }
+
+    res.json({
+      _id: doctor._id,
+      name: doctor.name,
+      email: doctor.email,
+      specialization: doctor.specialization,
+      contactNumber: doctor.contactNumber,
+      profileImage: doctor.profileImage,
+      isDoctor: doctor.isDoctor,
+      token: generateToken(doctor._id), // JWT token for authentication
+    });
+  } else {
+    res.status(401);
+    throw new Error("Invalid email");
+  }
+});
+
+
+
+
+
+
+export { createDoctor, updateDoctor, deleteDoctor, getDoctors, getDoctorById, doctorLogin};

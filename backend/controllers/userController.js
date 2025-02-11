@@ -1,6 +1,5 @@
 import asyncHandler from 'express-async-handler'
 import User from '../models/userModel.js'
-import Doctor from '../models/doctorModel.js'
 import generateToken from '../utils/generateToken.js' // Assuming you have this utility function
 
 /**
@@ -113,44 +112,6 @@ const adminLogin = asyncHandler(async (req, res) => {
 })
 
 
-
-/**
- * @desc Doctor Login
- * @route POST /api/users/doctor/doctorLogin
- * @access Public
- */
-const doctorLogin = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
-
-  // Find the user by email
-  const doctor = await Doctor.findOne({ email });
-
-  // Check if user exists and password matches
-  if (doctor && (await doctor.matchPassword(password))) {
-    if (!doctor.isDoctor) {
-      res.status(401);
-      throw new Error("Not authorized as a doctor");
-    }
-
-    res.json({
-      _id: doctor._id,
-      name: doctor.name,
-      email: doctor.email,
-      specialization: doctor.specialization,
-      contactNumber: doctor.contactNumber,
-      profileImage: doctor.profileImage,
-      isDoctor: doctor.isDoctor,
-      token: generateToken(doctor._id), // JWT token for authentication
-    });
-  } else {
-    res.status(401);
-    throw new Error("Invalid email or password");
-  }
-});
-
-
-
-
 /**
  * @desc Logout user
  * @route POST /api/users/logout
@@ -258,5 +219,4 @@ export {
   logoutUser,
   getUserProfile,
   updateUserProfile,
-  doctorLogin
 }

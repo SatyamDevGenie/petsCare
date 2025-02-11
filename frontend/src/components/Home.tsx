@@ -50,7 +50,7 @@ const Home: React.FC = () => {
       >
         <div className="relative text-center py-12 sm:py-20">
           <h1 className="text-2xl sm:text-5xl font-bold text-gray-800 mb-4">
-          Step into pet Paradise 🐕🐈
+            Step into pet Paradise 🐕🐈
           </h1>
           <p className="text-sm sm:text-lg text-green-600 max-w-lg mx-auto mt-12 font-medium">
             Explore our collection of adorable pets and give them the love and
@@ -66,7 +66,9 @@ const Home: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <h2 className="text-2xl font-medium text-gray-800">Our Featured Pets</h2>
+        <h2 className="text-2xl font-medium text-gray-800">
+          Our Featured Pets
+        </h2>
       </motion.div>
 
       {/* Pets Grid */}
@@ -99,6 +101,22 @@ const Home: React.FC = () => {
         ))}
       </motion.div>
 
+      <div className="flex flex-col items-center p-6 sm:p-8 rounded-lg mt-12 w-full text-center">
+        <h2 className="mb-6 text-xl sm:text-2xl font-bold mt-7">
+          Training a Dog by one of our Trainer
+        </h2>
+        <div className="w-full max-w-3xl">
+          <iframe
+            className="w-full h-48 sm:h-64 md:h-80 lg:h-96 rounded-lg shadow-md"
+            src="https://www.youtube.com/embed/DkCHTlaFtio"
+            title="Pet Care Video"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        </div>
+      </div>
+
       {/* Admin Buttons */}
       {isAdmin && (
         <motion.div
@@ -107,7 +125,7 @@ const Home: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.7 }}
         >
-          <h3 className="text-lg sm:text-2xl font-medium mb-4">
+          <h3 className="text-lg sm:text-2xl font-medium mb-4 mt-12">
             Don't see the perfect pet? 🐶🐱
           </h3>
           <motion.button

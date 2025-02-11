@@ -83,7 +83,7 @@ const AppointmentModal: React.FC<ModalProps> = ({
       <div className="fixed inset-0 z-10 flex items-center justify-center bg-gray-900 bg-opacity-50">
         <div className="bg-white max-w-2xl mx-auto rounded-lg p-6 shadow-lg w-full">
           <h2 className="text-2xl text-gray-800 font-bold text-center mb-4">
-            Add a New Doctor
+            Book Appointment
           </h2>
           <form onSubmit={handleSubmit}>
             {/* Grid Container */}
