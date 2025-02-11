@@ -2,9 +2,9 @@ import express from "express";
 import {
   bookAppointment,
   getAllAppointments,
-  getUserAppointments,
+  getUserAppointments
 } from "../controllers/appointmentController.js";
-import { protect, admin } from "../middlewares/authMiddleware.js";
+import { protect, admin} from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
@@ -17,3 +17,8 @@ router.get("/all", protect, admin, getAllAppointments);
 router.get("/usersAppointments", protect, getUserAppointments); // Pet Owners Only
 
 export default router;
+
+
+
+
+

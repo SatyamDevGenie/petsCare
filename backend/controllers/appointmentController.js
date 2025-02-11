@@ -72,8 +72,12 @@ const getUserAppointments = asyncHandler(async (req, res) => {
   });
 });
 
-export {
-  bookAppointment,
-  getAllAppointments,
-  getUserAppointments
-};
+
+
+export { bookAppointment, getAllAppointments, getUserAppointments };
+
+
+
+
+
+

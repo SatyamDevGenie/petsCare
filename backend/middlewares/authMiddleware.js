@@ -27,9 +27,11 @@ const protect = asyncHandler(async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     // Attach user to the request object
-    req.user =
-      (await User.findById(decoded.id).select("-password")) ||
-      (await Doctor.findById(decoded.id).select("-password"));
+    req.user = await Doctor.findById(decoded.id).select("-password");
+    if (!req.user) {
+      req.user = await User.findById(decoded.id).select("-password");
+    }
+
 
     if (!req.user) {
       return res.status(401).json({
