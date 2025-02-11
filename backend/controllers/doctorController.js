@@ -3,21 +3,12 @@ import asyncHandler from "express-async-handler";
 import Doctor from "../models/doctorModel.js";
 import generateToken from '../utils/generateToken.js' // Assuming you have this utility function
 
-
-
-
 // @desc    Create a new doctor (Admin only)
 // @route   POST /api/doctors/create
 // @access  Private/Admin
 const createDoctor = asyncHandler(async (req, res) => {
   try {
-    const {
-      name,
-      email,
-      specialization,
-      contactNumber,
-      notes,
-    } = req.body;
+    const { name, email, specialization, contactNumber, notes } = req.body;
 
     const doctorExists = await Doctor.findOne({ email });
 
@@ -28,15 +19,12 @@ const createDoctor = asyncHandler(async (req, res) => {
       });
     }
 
-    // const hashedPassword = await bcrypt.hash(password, 10);
-
     const doctor = await Doctor.create({
       name,
       email,
       specialization,
       contactNumber,
       notes,
-      isDoctor: true,
     });
 
     res.status(201).json({
@@ -52,9 +40,6 @@ const createDoctor = asyncHandler(async (req, res) => {
     });
   }
 });
-
-
-
 
 // @desc    Update a doctor (Admin only)
 // @route   PUT /api/doctors/:id
@@ -174,19 +159,19 @@ const getDoctorById = asyncHandler(async (req, res) => {
 
 
 
-
 /**
  * @desc Doctor Login
  * @route POST /api/users/doctor/doctorLogin
  * @access Public
  */
 const doctorLogin = asyncHandler(async (req, res) => {
-  const { email } = req.body;
+  const { email, password } = req.body;
 
-  // Find the user by email, excluding password
-  const doctor = await Doctor.findOne({ email }).select("-password");
+  // Find the user by email
+  const doctor = await Doctor.findOne({ email });
 
-  if (doctor) {
+  // Check if user exists and password matches
+  if (doctor && (await doctor.matchPassword(password))) {
     if (!doctor.isDoctor) {
       res.status(401);
       throw new Error("Not authorized as a doctor");
@@ -204,12 +189,9 @@ const doctorLogin = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(401);
-    throw new Error("Invalid email");
+    throw new Error("Invalid email or password");
   }
 });
-
-
-
 
 
 

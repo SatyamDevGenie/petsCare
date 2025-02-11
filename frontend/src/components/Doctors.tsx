@@ -8,7 +8,6 @@ import AddDoctorModal from "./AddDoctorModel";
 import { Plus } from "lucide-react";
 
 const Doctors: React.FC = () => {
-
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
@@ -20,57 +19,90 @@ const Doctors: React.FC = () => {
   const { addDoctor } = useSelector((state: RootState) => state.doctors);
 
   useEffect(() => {
-    // Dispatch action to fetch doctors list
     dispatch(fetchDoctorsList);
   }, [dispatch, addDoctor]);
-
 
   const handleAptClick = () => {
     navigate("/allApointments");
   };
 
-
   return (
-    <div className="container mx-auto px-6 py-8 mt-20">
-      <h2 className="text-3xl sm:text-4xl font-extrabold text-center text-gray-800 mb-10">
+    <motion.div
+      className="container mx-auto px-6 py-12 mt-20"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+    >
+      {/* Heading Animation */}
+      <motion.h2
+        className="text-3xl sm:text-4xl font-extrabold text-center text-gray-800 mb-12"
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+      >
         Our Doctors
-      </h2>
+      </motion.h2>
 
       {/* Display "Create Doctor" button for admin users */}
       {userInfo?.email === "admin@gmail.com" && (
         <motion.div
-          className="flex justify-end mb-8"
+          className="flex justify-end mb-10"
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
         >
-          <button
+          <motion.button
             onClick={() => setOpen(true)}
-            className="bg-indigo-600 text-white font-medium mb-8 p-2 md:px-5 sm:p-3 text-sm sm:text-lg flex items-center justify-center rounded-lg shadow-md hover:bg-indigo-700 transition duration-200 ease-in-out transform hover:scale-105"
+            className="bg-indigo-600 text-white font-medium p-2 md:px-5 sm:p-3 text-sm sm:text-lg flex items-center justify-center rounded-lg shadow-lg hover:bg-indigo-700 transition duration-200 ease-in-out"
+            whileHover={{ scale: 1.1, rotate: 2 }}
+            whileTap={{ scale: 0.9 }}
           >
             <Plus className="w-5 h-5 sm:w-6 sm:h-6 mr-2" />
             Add Doctor
-          </button>
-          <button
+          </motion.button>
+          <motion.button
             onClick={handleAptClick}
-            className=" ml-4 bg-indigo-600 text-white font-medium mb-8 p-2 md:px-5 sm:p-3 text-sm sm:text-lg flex items-center justify-center rounded-lg shadow-md hover:bg-indigo-700 transition duration-200 ease-in-out transform hover:scale-105"
+            className="ml-4 bg-indigo-600 text-white font-medium p-2 md:px-5 sm:p-3 text-sm sm:text-lg flex items-center justify-center rounded-lg shadow-lg hover:bg-indigo-700 transition duration-200 ease-in-out"
+            whileHover={{ scale: 1.1, rotate: -2 }}
+            whileTap={{ scale: 0.9 }}
           >
             See All Appointments
-          </button>
+          </motion.button>
         </motion.div>
       )}
+
+      {/* Doctors List with Stronger Animation */}
       {doctorsList && doctorsList.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: { staggerChildren: 0.3 },
+            },
+          }}
+        >
           {doctorsList.map((doctor: any) => (
-            <Link to={`/doctor/${doctor._id}`}>
-              <div
-                key={doctor.email}
-                className="bg-white text-gray-900 rounded-xl shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-300 p-6"
-              >
-                <img
+            <motion.div
+              key={doctor._id}
+              className="bg-white text-gray-900 rounded-xl shadow-lg hover:shadow-2xl transform transition-transform duration-300 p-6"
+              variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0 },
+              }}
+              whileHover={{ scale: 1.05 }}
+            >
+              <Link to={`/doctor/${doctor._id}`}>
+                <motion.img
                   src={doctor.profileImage}
                   alt={doctor.name}
-                  className="w-24 h-24 rounded-full mx-auto mb-4"
+                  className="w-24 h-24 rounded-full mx-auto mb-4 shadow-md"
+                  initial={{ scale: 0.8 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 0.4 }}
                 />
                 <h3 className="text-xl font-semibold text-center mb-2">
                   {doctor.name}
@@ -81,24 +113,23 @@ const Doctors: React.FC = () => {
                 <p className="text-center text-gray-600 text-sm leading-relaxed mb-2">
                   Contact: {doctor.contactNumber}
                 </p>
-              </div>
-            </Link>
+              </Link>
+            </motion.div>
           ))}
-
           <AddDoctorModal isOpen={open} onClose={() => setOpen(false)} />
-        </div>
+        </motion.div>
       ) : (
-        <p className="text-center text-gray-300">No Doctors Found</p>
+        <motion.p
+          className="text-center text-gray-400"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+        >
+          No Doctors Found
+        </motion.p>
       )}
-    </div>
+    </motion.div>
   );
 };
 
 export default Doctors;
-
-
-
-
-
-
-
