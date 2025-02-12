@@ -2,9 +2,10 @@ import express from "express";
 import {
   bookAppointment,
   getAllAppointments,
-  getUserAppointments
+  getUserAppointments,
+  respondToAppointment
 } from "../controllers/appointmentController.js";
-import { protect, admin} from "../middlewares/authMiddleware.js";
+import { protect, admin, doctor} from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
@@ -15,6 +16,9 @@ router.post("/book", protect, bookAppointment);
 router.get("/all", protect, admin, getAllAppointments);
 
 router.get("/usersAppointments", protect, getUserAppointments); // Pet Owners Only
+
+// Route for doctors to accept or reject appointments
+router.put("/respond", protect, doctor, respondToAppointment);
 
 export default router;
 

@@ -26,14 +26,15 @@ const protect = asyncHandler(async (req, res, next) => {
     // Verify token and decode it
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // Attach user to the request object
-    req.user = await Doctor.findById(decoded.id).select("-password");
-    if (!req.user) {
-      req.user = await User.findById(decoded.id).select("-password");
-    }
+    // Attach user or doctor to the request object
+    const doctor = await Doctor.findById(decoded.id).select("-password");
+    const user = await User.findById(decoded.id).select("-password");
 
-
-    if (!req.user) {
+    if (doctor) {
+      req.doctor = doctor;
+    } else if (user) {
+      req.user = user;
+    } else {
       return res.status(401).json({
         success: false,
         message: "User not found. Invalid token.",
@@ -62,14 +63,14 @@ const admin = (req, res, next) => {
   }
 };
 
-// Middleware to check if the user is an doctor
+// Middleware to check if the user is a doctor
 const doctor = (req, res, next) => {
-  if (req.user && req.user.isDoctor) {
+  if (req.doctor && req.doctor.isDoctor) {
     next();
   } else {
     res.status(403).json({
       success: false,
-      message: "Access denied, Doctor privileges required",
+      message: "Access denied, Doctor privileges required.",
     });
   }
 };
