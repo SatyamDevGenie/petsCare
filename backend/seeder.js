@@ -11,7 +11,6 @@ import Appointment from "./models/appointmentModel.js";
 import Service from "./models/serviceModel.js"; // Import the Service model
 
 dotenv.config();
-
 connectDB();
 
 const importData = async () => {
@@ -23,7 +22,7 @@ const importData = async () => {
     await Appointment.deleteMany();
     await Service.deleteMany(); // Delete existing services data
 
-    // Insert user data and get their IDs
+    // Insert users and get their IDs
     const createdUsers = await User.insertMany(users);
 
     // Create a map of user email to user ID
@@ -32,26 +31,33 @@ const importData = async () => {
       return map;
     }, {});
 
-    // Create pets and ensure 'user' field references valid ObjectId
+    // Insert doctors and get their IDs
+    const createdDoctors = await Doctor.insertMany(doctors);
+
+    // Create a map of doctor email to doctor ID
+    const doctorMap = createdDoctors.reduce((map, doctor) => {
+      map[doctor.email] = doctor._id;
+      return map;
+    }, {});
+
+    // Create pets and assign user and doctor references
     const samplePets = pets.map((pet, index) => ({
       ...pet,
-      user: userMap[users[index % users.length].email], // Assign user ID based on email
+      user: userMap[users[index % users.length].email], // Assign user ID
+      doctor: doctorMap[doctors[index % doctors.length].email] || null, // Assign doctor ID if applicable
     }));
 
-    // Insert pets data into the database
+    // Insert pets into the database
     await Pet.insertMany(samplePets);
-
-    // Insert doctors data into the database
-    await Doctor.insertMany(doctors);
 
     // Insert services data into the database
     const sampleServices = services.map((service) => ({
       title: service.title,
       description: service.description,
       price: service.price,
-      image: service.image, // Optional, omit if not needed
+      image: service.image, // Optional
     }));
-    await Service.insertMany(sampleServices); // Insert services into the database
+    await Service.insertMany(sampleServices); // Insert services
 
     console.log("Data imported successfully!");
     process.exit();
@@ -63,12 +69,12 @@ const importData = async () => {
 
 const destroyData = async () => {
   try {
-    // Delete all pets, users, doctors, and services data
+    // Delete all data
     await Doctor.deleteMany();
     await Pet.deleteMany();
     await User.deleteMany();
     await Appointment.deleteMany();
-    await Service.deleteMany(); // Delete services data
+    await Service.deleteMany();
 
     console.log("Data destroyed!");
     process.exit();
@@ -78,9 +84,12 @@ const destroyData = async () => {
   }
 };
 
-// Check command line argument to determine whether to destroy or import data
+// Check command line argument
 if (process.argv[2] === "-d") {
   destroyData();
 } else {
   importData();
 }
+
+
+

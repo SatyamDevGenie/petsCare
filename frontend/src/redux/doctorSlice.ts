@@ -4,6 +4,7 @@ interface doctor {
   _id: string;
   name: string;
   email: string;
+  password: string;
   specialization: string;
   profileImage: string;
   notes: string;

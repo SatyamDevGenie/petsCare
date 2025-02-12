@@ -75,46 +75,65 @@ const getUserAppointments = asyncHandler(async (req, res) => {
 
 
 
+
 // Doctor Accept/Reject Appointment
 const respondToAppointment = asyncHandler(async (req, res) => {
-  const { appointmentId, response } = req.body;
+  try {
+    const { appointmentId, response } = req.body;
 
-  if (!["Accepted", "Rejected"].includes(response)) {
-    return res.status(400).json({
+    // Validate response type
+    if (!["Accepted", "Rejected"].includes(response)) {
+      return res.status(400).json({
+        success: false,
+        message: "Response must be either 'Accepted' or 'Rejected'.",
+      });
+    }
+
+    // Find appointment by ID
+    const appointment = await Appointment.findById(appointmentId);
+
+    if (!appointment) {
+      return res.status(404).json({
+        success: false,
+        message: "Appointment not found.",
+      });
+    }
+
+    // Ensure the request contains a valid doctor object
+    if (!req.doctor || !req.doctor._id) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized. Doctor credentials required.",
+      });
+    }
+
+    // Ensure only the assigned doctor can respond
+    if (appointment.doctor.toString() !== req.doctor._id.toString()) {
+      return res.status(403).json({
+        success: false,
+        message: "You are not authorized to respond to this appointment.",
+      });
+    }
+
+    // Update appointment status
+    appointment.doctorResponse = response;
+    appointment.status = response;
+
+    const updatedAppointment = await appointment.save();
+
+    res.status(200).json({
+      success: true,
+      message: `Appointment has been ${response.toLowerCase()} successfully.`,
+      appointment: updatedAppointment,
+    });
+  } catch (error) {
+    res.status(500).json({
       success: false,
-      message: "Response must be 'Accepted' or 'Rejected'.",
+      message: "An error occurred while responding to the appointment.",
+      error: error.message,
     });
   }
-
-  const appointment = await Appointment.findById(appointmentId);
-
-  if (!appointment) {
-    return res.status(404).json({
-      success: false,
-      message: "Appointment not found.",
-    });
-  }
-
-  // Ensure only the assigned doctor can respond
-  if (!req.doctor || appointment.doctor.toString() !== req.doctor._id.toString()) {
-    return res.status(403).json({
-      success: false,
-      message: "You are not authorized to respond to this appointment.",
-    });
-  }
-
-  appointment.doctorResponse = response;
-  appointment.status = response;
-
-  const updatedAppointment = await appointment.save();
-
-  res.status(200).json({
-    success: true,
-    appointment: updatedAppointment,
-  });
 });
-
-
 
 
 export { bookAppointment, getAllAppointments, getUserAppointments, respondToAppointment };
