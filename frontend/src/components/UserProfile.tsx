@@ -68,32 +68,41 @@ const UserProfile = () => {
 
   return (
     <motion.div
-      className="flex flex-col items-center min-h-screen p-4 md:p-8 bg-gray-100"
+      className="grid md:grid-cols-3 gap-8 p-6 min-h-screen bg-gradient-to-r from-gray-50 to-blue-100 mt-12"
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
+      {/* Left Side - Profile */}
       <motion.div
-        className="bg-white p-6 md:p-10 rounded-xl shadow-lg w-full max-w-xl transform transition-all hover:shadow-2xl"
+        className="bg-white p-6 rounded-xl shadow-lg md:col-span-1 transform transition-all hover:shadow-2xl border-l-4 border-blue-500 mt-12"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.7 }}
       >
-        <h2 className="text-2xl md:text-3xl font-extrabold text-center mb-6 text-gray-800">
+        <h2 className="text-3xl font-extrabold text-center mb-6 text-gray-800 mt-12">
           User Profile
         </h2>
         <div className="space-y-4">
           <div>
-            <strong className="block text-sm font-medium text-gray-700">Full Name</strong>
+            <strong className="block text-sm font-medium text-gray-700">
+              Full Name
+            </strong>
             <p className="text-lg text-gray-800">{userInfo?.name}</p>
           </div>
           <div>
-            <strong className="block text-sm font-medium text-gray-700">Email</strong>
+            <strong className="block text-sm font-medium text-gray-700">
+              Email
+            </strong>
             <p className="text-lg text-gray-800">{userInfo?.email}</p>
           </div>
           <div>
-            <strong className="block text-sm font-medium text-gray-700">Admin Status</strong>
-            <p className="text-lg text-gray-800">{userInfo?.isAdmin ? "Yes" : "No"}</p>
+            <strong className="block text-sm font-medium text-gray-700">
+              Admin Status
+            </strong>
+            <p className="text-lg text-gray-800">
+              {userInfo?.isAdmin ? "Yes" : "No"}
+            </p>
           </div>
         </div>
 
@@ -111,24 +120,67 @@ const UserProfile = () => {
             Logout
           </motion.button>
         </div>
+      </motion.div>
 
+      {/* Right Side - Appointments */}
+      <motion.div
+        className="bg-white p-6 rounded-xl shadow-lg md:col-span-2 transform transition-all hover:shadow-2xl border-l-4 border-green-500 mt-12"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.7 }}
+      >
+        <h2 className="text-3xl font-semibold text-center text-gray-800 mb-6">
+          My Appointments
+        </h2>
         {appointments && appointments.length > 0 ? (
-          <>
-            <h2 className="text-xl text-center mt-6 font-semibold">My Appointments</h2>
-            <div className="mt-4 space-y-4">
-              {appointments.map((appointment, index) => (
-                <div key={index} className="bg-gray-50 p-4 rounded-lg shadow border">
-                  <p className="text-sm"><strong>Pet Owner:</strong> {userInfo.name}</p>
-                  <p className="text-sm"><strong>Pet:</strong> {appointment.pet?.breed || "Unknown"}</p>
-                  <p className="text-sm"><strong>Doctor:</strong> {singleDoctor?.name || appointment?.doctor?.name || "Unknown"}</p>
-                  <p className="text-sm"><strong>Date:</strong> {appointment.appointmentDate}</p>
-                  <p className="text-sm"><strong>Status:</strong> {appointment.status}</p>
+          <motion.div
+            className="grid md:grid-cols-2 gap-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            {appointments.map((appointment, index) => (
+              <motion.div
+                key={index}
+                className="bg-white p-5 rounded-xl shadow-md border-l-4 border-blue-500 hover:shadow-lg transition-all"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+              >
+                <h3 className="text-lg font-bold text-gray-800 mb-2">
+                  Appointment #{index + 1}
+                </h3>
+                <div className="text-gray-700 space-y-1 text-sm">
+                  <p>
+                    <strong>👤 Pet Owner:</strong> {userInfo.name}
+                  </p>
+                  <p>
+                    <strong>🐶 Pet:</strong> {appointment.pet?.breed || "Unknown"}
+                  </p>
+                  <p>
+                    <strong>🩺 Doctor:</strong>{" "}
+                    {singleDoctor?.name || appointment?.doctor?.name || "Unknown"}
+                  </p>
+                  <p>
+                    <strong>📅 Date:</strong> {appointment.appointmentDate}
+                  </p>
+                  <p
+                    className={`font-semibold ${
+                      appointment.status === "Pending"
+                        ? "text-yellow-500"
+                        : "text-green-600"
+                    }`}
+                  >
+                    <strong>📌 Status:</strong> {appointment.status}
+                  </p>
                 </div>
-              ))}
-            </div>
-          </>
+              </motion.div>
+            ))}
+          </motion.div>
         ) : (
-          <p className="mt-6 font-normal text-center text-gray-600">No Appointments</p>
+          <p className="mt-4 text-center text-gray-500 text-lg">
+            No Appointments yet
+          </p>
         )}
       </motion.div>
     </motion.div>
