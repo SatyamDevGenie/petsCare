@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { AppDispatch, RootState } from "../redux/store";
 import { bookAppointmentService } from "../services/appointmentService";
 import { Root } from "react-dom/client";
+import toast from "react-hot-toast";
 
 interface Pet {
   _id: string;
@@ -67,6 +68,18 @@ const AppointmentModal: React.FC<ModalProps> = ({
         ...formData,
       };
       dispatch(bookAppointmentService(appointment));
+
+        // Show success toast
+        toast.success("Appointment Booked !", {
+          style: {
+            fontSize: "14px", // Smaller text size
+            padding: "8px",   // Reduce padding
+            minWidth: "200px", // Reduce width
+            fontFamily:"Arial Black",
+            fontWeight:"bolder"
+          },
+        });
+
       navigate("/doctors");
       onClose();
     };
