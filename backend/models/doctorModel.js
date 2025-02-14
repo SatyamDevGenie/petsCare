@@ -38,6 +38,10 @@ const doctorSchema = mongoose.Schema(
       type: Boolean,
       default: true, // Set to true by default
     },
+    availability: {
+      type: String,
+      required: false, // Optional field
+    },
   },
   { timestamps: true }
 );

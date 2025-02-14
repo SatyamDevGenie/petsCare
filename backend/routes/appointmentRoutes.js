@@ -3,7 +3,8 @@ import {
   bookAppointment,
   getAllAppointments,
   getUserAppointments,
-  respondToAppointment
+  respondToAppointment,
+  getDoctorAppointments
 } from "../controllers/appointmentController.js";
 import { protect, admin, doctor} from "../middlewares/authMiddleware.js";
 
@@ -15,7 +16,11 @@ router.post("/book", protect, bookAppointment);
 // Route for admin to get all appointments
 router.get("/all", protect, admin, getAllAppointments);
 
-router.get("/usersAppointments", protect, getUserAppointments); // Pet Owners Only
+// Route for pet owners to get their appointments
+router.get("/usersAppointments", protect, getUserAppointments);
+
+// Route for doctors to accept or reject appointments
+router.get("/doctorsAppointments", protect, doctor, getDoctorAppointments);
 
 // Route for doctors to accept or reject appointments
 router.put("/respond", protect, doctor, respondToAppointment);

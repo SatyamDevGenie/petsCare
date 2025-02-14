@@ -74,8 +74,6 @@ const getUserAppointments = asyncHandler(async (req, res) => {
 
 
 
-
-
 // Doctor Accept/Reject Appointment
 const respondToAppointment = asyncHandler(async (req, res) => {
   try {
@@ -136,7 +134,29 @@ const respondToAppointment = asyncHandler(async (req, res) => {
 });
 
 
-export { bookAppointment, getAllAppointments, getUserAppointments, respondToAppointment };
+
+// Get all appointments for the logged-in doctor
+const getDoctorAppointments = asyncHandler(async (req, res) => {
+  if (!req.doctor) {
+    return res.status(403).json({
+      success: false,
+      message: "Access denied. Only doctors can view their appointments.",
+    });
+  }
+
+  const appointments = await Appointment.find({ doctor: req.doctor._id })
+    .populate("petOwner", "name email")
+    .populate("pet", "name type breed age");
+
+  res.status(200).json({
+    success: true,
+    count: appointments.length,
+    appointments,
+  });
+});
+
+
+export { bookAppointment, getAllAppointments, getUserAppointments, respondToAppointment, getDoctorAppointments };
 
 
 

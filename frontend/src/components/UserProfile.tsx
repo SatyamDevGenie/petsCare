@@ -162,7 +162,7 @@ const UserProfile = () => {
                     {singleDoctor?.name || appointment?.doctor?.name || "Unknown"}
                   </p>
                   <p>
-                    <strong>📅 Date:</strong> {appointment.appointmentDate}
+                    <strong>📅 Date:</strong>   {appointment.appointmentDate.split("T")[0]}
                   </p>
                   <p
                     className={`font-semibold ${

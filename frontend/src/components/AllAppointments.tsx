@@ -59,7 +59,7 @@ const AllAppointments: React.FC = () => {
                       Date
                     </td>
                     <td className="border px-4 py-2 text-sm font-normal">
-                      {appointment.appointmentDate}
+                    {appointment.appointmentDate.split("T")[0]}
                     </td>
                   </tr>
                   <tr>
