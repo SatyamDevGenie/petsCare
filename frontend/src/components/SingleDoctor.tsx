@@ -73,8 +73,32 @@ const SingleDoctor: React.FC = () => {
     }
   };
 
+
+  const handleAptClick = () => {
+    navigate("/allApointments");
+  };
+
+
   // Display the doctor's details
   return (
+
+    <div className="container mx-auto px-6 py-8 mt-20">
+    {userInfo.isDoctor && (
+      <motion.div
+        className="flex justify-end mb-8"
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
+      >
+        <button
+          onClick={handleAptClick}
+          className=" ml-4 bg-indigo-600 text-white font-medium mb-8 p-2 md:px-5 sm:p-3 text-sm sm:text-lg flex items-center justify-center rounded-lg shadow-md hover:bg-indigo-700 transition duration-200 ease-in-out transform hover:scale-105"
+        >
+          See User's Appointments
+        </button>
+      </motion.div>
+    )}
+
     <motion.div
       className="container mx-auto px-6 py-16 mt-20"
       initial="hidden"
@@ -187,6 +211,7 @@ const SingleDoctor: React.FC = () => {
       />
 
     </motion.div>
+    </div>
   );
 };
 

@@ -4,28 +4,35 @@ import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
+import { LoginDoctor } from "../services/doctorService";
+import { AppDispatch } from "../redux/store";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [role, setRole] = useState("user"); // Default user => petOwner
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await loginUser(dispatch, { email, password });
- 
+      if (role === "doctor") {
+        await dispatch(LoginDoctor({ email, password }));
+      } else {
+        await loginUser(dispatch, { email, password });
+      }
+
       // Show success toast
       toast.success("Login successfully !", {
         style: {
           fontSize: "14px", // Smaller text size
-          padding: "8px",   // Reduce padding
+          padding: "8px", // Reduce padding
           minWidth: "200px", // Reduce width
-          fontFamily:"Arial Black",
-          fontWeight:"bolder"
+          fontFamily: "Arial Black",
+          fontWeight: "bolder",
         },
       });
 
@@ -36,10 +43,10 @@ const Login = () => {
       toast.error("You are not authorized to add a service !", {
         style: {
           fontSize: "14px", // Smaller text size
-          padding: "8px",   // Reduce padding
+          padding: "8px", // Reduce padding
           minWidth: "200px", // Reduce width
-          fontFamily:"Arial Black",
-          fontWeight:"bolder"
+          fontFamily: "Arial Black",
+          fontWeight: "bolder",
         },
       });
     }
@@ -55,7 +62,10 @@ const Login = () => {
       <motion.form
         onSubmit={handleSubmit}
         className="bg-white p-8 md:p-16 rounded-xl shadow-lg w-full max-w-md transform transition-all"
-        whileHover={{ scale: 1.03, boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.15)" }}
+        whileHover={{
+          scale: 1.03,
+          boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.15)",
+        }}
       >
         <motion.h2
           className="text-3xl font-extrabold text-center mb-6 text-gray-800"
@@ -76,6 +86,20 @@ const Login = () => {
             {error}
           </motion.div>
         )}
+
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Login as:
+          </label>
+          <select
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            className="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+          >
+            <option value="user">User</option>
+            <option value="doctor">Doctor</option>
+          </select>
+        </div>
 
         <motion.div
           className="mb-6"
@@ -138,7 +162,7 @@ const Login = () => {
           transition={{ duration: 0.5, delay: 0.6 }}
         >
           <p className="text-sm text-gray-600">
-            Don't have an account?{' '}
+            Don't have an account?{" "}
             <Link
               to="/register"
               className="text-purple-500 hover:text-purple-700 underline transition"

@@ -9,9 +9,11 @@ interface doctor {
   profileImage: string;
   notes: string;
   contactNumber: string;
+  isDoctor: boolean;
 }
 
 interface doctorState {
+  Doctor: doctor;
   doctorsList: doctor[];
   singleDoctor: doctor | null;
   addDoctor: doctor | null;
@@ -20,22 +22,27 @@ interface doctorState {
 }
 
 const initialState: doctorState = {
+  Doctor: JSON.parse(localStorage.getItem("Doctor") || "null"),
   doctorsList: [],
   singleDoctor: null,
   addDoctor: null,
   updateDoctor: null,
-  removeDoctor: null
+  removeDoctor: null,
 };
 
 const doctorSlice = createSlice({
   name: "doctor",
   initialState,
   reducers: {
+    login: (state, action) => {
+      state.Doctor = action.payload;
+      localStorage.setItem("Doctor", JSON.stringify(action.payload));
+    },
     getAllDoctors: (state, action) => {
       state.doctorsList = action.payload;
     },
-    getSingleDoctor:(state,action)=>{
-        state.singleDoctor= action.payload;
+    getSingleDoctor: (state, action) => {
+      state.singleDoctor = action.payload;
     },
     createDoctor: (state, action) => {
       state.addDoctor = action.payload;
@@ -45,9 +52,15 @@ const doctorSlice = createSlice({
     },
     deleteDoctor: (state, action) => {
       state.removeDoctor = action.payload;
-    }
+    },
   },
 });
 
-export const { getAllDoctors, getSingleDoctor, createDoctor, editDoctor, deleteDoctor } = doctorSlice.actions;
+export const {
+  getAllDoctors,
+  getSingleDoctor,
+  createDoctor,
+  editDoctor,
+  deleteDoctor,
+} = doctorSlice.actions;
 export default doctorSlice.reducer;

@@ -13,8 +13,8 @@ const router = express.Router();
 // Route for pet owners to book an appointment
 router.post("/book", protect, bookAppointment);
 
-// Route for admin to get all appointments
-router.get("/all", protect, admin, getAllAppointments);
+// Route for inside userInfo.doctor OR userInfo.isAdmin to get all appointments
+router.get("/all", protect, getAllAppointments);
 
 // Route for pet owners to get their appointments
 router.get("/usersAppointments", protect, getUserAppointments);

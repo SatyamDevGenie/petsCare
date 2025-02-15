@@ -2,6 +2,8 @@ import axios from "axios";
 import { AppDispatch, RootState } from "../redux/store";
 import { getAllDoctors, getSingleDoctor, createDoctor as newDoctor, editDoctor, deleteDoctor } from "../redux/doctorSlice";
 
+import {login} from "../redux/userSlice";
+
 const API_URL = "/api/doctors/";
 
 export const fetchDoctorsList = async (dispatch: AppDispatch) => {
@@ -115,6 +117,29 @@ export const fetchSingleDoctor =
       const response = await axios.delete(`${API_URL}${doctor._id}`, config);
       dispatch(deleteDoctor(response.data));
       return response.data;
+    } catch (error: any) {
+      console.error(
+        "Failed to add service:",
+        error.response?.data || error.message
+      );
+      throw new Error(
+        error.response?.data?.message ||
+          "Failed to add service. Please try again."
+      );
+    }
+  };
+
+
+
+
+
+  export const LoginDoctor =
+  (doctor: { email: string; password: string }) =>
+  async (dispatch: AppDispatch, getState: () => RootState) => {
+    try {
+      const response = await axios.post(`${API_URL}doctorLogin`, doctor);
+      dispatch(login(response.data.doctor));
+      return response.data.doctor;
     } catch (error: any) {
       console.error(
         "Failed to add service:",
