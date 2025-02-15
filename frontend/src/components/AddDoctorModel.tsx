@@ -1,172 +1,138 @@
 import React, { useState } from "react";
-import { createDoctor } from "../services/doctorService";
 import { useDispatch } from "react-redux";
+import { createDoctor } from "../services/doctorService";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "../redux/store";
-import toast from "react-hot-toast";
 
-interface ModalProps {
+interface AddDoctorModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const AddDoctorModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",  // Added password field
-    specialization: "",
-    contactNumber: "",
-    notes: "",
-  });
-
+const AddDoctorModal: React.FC<AddDoctorModalProps> = ({ isOpen, onClose }) => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    specialization: "",
+    contactNumber: "",
+    notes: "",
+    availability: "",
+  });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Doctor added:", formData);
-    
-    const newDoctor = {
-      ...formData,
-    };
-
-    dispatch(createDoctor(newDoctor));
-
+    dispatch(createDoctor(formData));
     // Show success toast
-    toast.success("Doctor Created!", {
+    toast.success("Login successfully !", {
       style: {
-        fontSize: "14px",
-        padding: "8px",
-        minWidth: "200px",
+        fontSize: "14px", // Smaller text size
+        padding: "8px", // Reduce padding
+        minWidth: "200px", // Reduce width
         fontFamily: "Arial Black",
         fontWeight: "bolder",
       },
     });
-
     navigate("/doctors");
     onClose();
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-10 flex items-center justify-center bg-gray-900 bg-opacity-50">
-      <div className="bg-white max-w-2xl mx-auto rounded-lg p-6 shadow-lg w-full">
-        <h2 className="text-2xl text-gray-800 font-bold text-center mb-4">
-          Add a New Doctor
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+      <div className="bg-white p-4 rounded-lg shadow-lg w-80">
+        <h2 className="text-lg font-semibold text-gray-800 mb-3 text-center">
+          Add Doctor
         </h2>
-        <form onSubmit={handleSubmit}>
-          {/* Grid Container */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Name */}
-            <div>
-              <label className="block text-gray-700 text-sm font-bold mb-1">
-                Name
-              </label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                className="w-full border rounded px-3 py-2 text-gray-700 text-sm font-normal"
-              />
-            </div>
-
-            {/* Email */}
-            <div>
-              <label className="block text-gray-700 text-sm font-bold mb-1">
-                Email
-              </label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                className="w-full border rounded px-3 py-2 text-gray-700 text-sm font-normal"
-              />
-            </div>
-
-            {/* Password */}
-            <div>
-              <label className="block text-gray-700 text-sm font-bold mb-1">
-                Password
-              </label>
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-                className="w-full border rounded px-3 py-2 text-gray-700 text-sm font-normal"
-              />
-            </div>
-
-            {/* Specialization */}
-            <div>
-              <label className="block text-gray-700 text-sm font-bold mb-1">
-                Specialization
-              </label>
-              <input
-                type="text"
-                name="specialization"
-                value={formData.specialization}
-                onChange={handleChange}
-                required
-                className="w-full border rounded px-3 py-2 text-gray-700 text-sm font-normal"
-              />
-            </div>
-
-            {/* Contact Number */}
-            <div>
-              <label className="block text-gray-700 text-sm font-bold mb-1">
-                Contact Number
-              </label>
-              <input
-                type="tel"
-                name="contactNumber"
-                value={formData.contactNumber}
-                onChange={handleChange}
-                required
-                className="w-full border rounded px-3 py-2 text-gray-700 text-sm font-normal"
-              />
-            </div>
-
-            {/* Notes */}
-            <div>
-              <label className="block text-gray-700 text-sm font-bold mb-1">
-                Notes
-              </label>
-              <input
-                type="text"
-                name="notes"
-                value={formData.notes}
-                onChange={handleChange}
-                className="w-full border rounded px-3 py-2 text-gray-700 text-sm font-normal"
-              />
-            </div>
-          </div>
-
-          {/* Buttons */}
-          <div className="flex justify-between mt-6">
+        <form onSubmit={handleSubmit} className="space-y-3">
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            placeholder="Name"
+            required
+            className="w-full border rounded-md px-3 py-1 text-sm"
+          />
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="Email"
+            required
+            className="w-full border rounded-md px-3 py-1 text-sm"
+          />
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            placeholder="Password"
+            required
+            className="w-full border rounded-md px-3 py-1 text-sm"
+          />
+          <input
+            type="text"
+            name="specialization"
+            value={formData.specialization}
+            onChange={handleChange}
+            placeholder="Specialization"
+            required
+            className="w-full border rounded-md px-3 py-1 text-sm"
+          />
+          <input
+            type="tel"
+            name="contactNumber"
+            value={formData.contactNumber}
+            onChange={handleChange}
+            placeholder="Contact Number"
+            required
+            className="w-full border rounded-md px-3 py-1 text-sm"
+          />
+          <textarea
+            name="notes"
+            value={formData.notes}
+            onChange={handleChange}
+            placeholder="Notes"
+            className="w-full border rounded-md px-3 py-1 text-sm"
+          ></textarea>
+          <input
+            type="text"
+            name="availability"
+            value={formData.availability}
+            onChange={handleChange}
+            placeholder="Availability"
+            required
+            className="w-full border rounded-md px-3 py-1 text-sm"
+          />
+          <div className="flex justify-end space-x-2 pt-2">
             <button
               type="button"
               onClick={onClose}
-              className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 text-sm"
+              className="px-3 py-1 text-sm bg-gray-400 text-white rounded-md"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 text-sm"
+              className="px-3 py-1 text-sm bg-blue-500 text-white rounded-md"
             >
-              Add Doctor
+              Add
             </button>
           </div>
         </form>
@@ -177,173 +143,3 @@ const AddDoctorModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
 export default AddDoctorModal;
 
-
-
-
-
-
-
-
-
-
-
-// import React, { useState } from "react";
-// import { createDoctor } from "../services/doctorService";
-// import { useDispatch } from "react-redux";
-// import { useNavigate } from "react-router-dom";
-// import { AppDispatch } from "../redux/store";
-// import toast from "react-hot-toast";
-
-// interface ModalProps {
-//   isOpen: boolean;
-//   onClose: () => void;
-// }
-
-// const AddDoctorModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
-//   const [formData, setFormData] = useState({
-//     name: "",
-//     email: "",
-//     specialization: "",
-//     contactNumber: "",
-//     notes: "",
-//   });
-
-//   const dispatch = useDispatch<AppDispatch>();
-//   const navigate = useNavigate();
-
-//   const handleSubmit = (e: React.FormEvent) => {
-//     e.preventDefault();
-//     console.log("Doctor added:", formData);
-//     const newDoctor = {
-//       ...formData,
-//     };
-//     dispatch(createDoctor(newDoctor));
-    
-//       // Show success toast
-//       toast.success("Doctor Created !", {
-//         style: {
-//           fontSize: "14px", // Smaller text size
-//           padding: "8px",   // Reduce padding
-//           minWidth: "200px", // Reduce width
-//           fontFamily:"Arial Black",
-//           fontWeight:"bolder"
-//         },
-//       });
-//     navigate("/doctors");
-//     onClose();
-//   };
-
-//   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     setFormData({ ...formData, [e.target.name]: e.target.value });
-//   };
-
-//   if (!isOpen) return null;
-
-//   return (
-//     <div className="fixed inset-0 z-10 flex items-center justify-center bg-gray-900 bg-opacity-50">
-//       <div className="bg-white max-w-2xl mx-auto rounded-lg p-6 shadow-lg w-full">
-//         <h2 className="text-2xl text-gray-800 font-bold text-center mb-4">
-//           Add a New Doctor
-//         </h2>
-//         <form onSubmit={handleSubmit}>
-//           {/* Grid Container */}
-//           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-//             {/* Name */}
-//             <div>
-//               <label className="block text-gray-700 text-sm font-bold mb-1">
-//                 Name
-//               </label>
-//               <input
-//                 type="text"
-//                 name="name"
-//                 value={formData.name}
-//                 onChange={handleChange}
-//                 required
-//                 className="w-full border rounded px-3 py-2 text-gray-700 text-sm font-normal"
-//               />
-//             </div>
-
-//             {/* Email */}
-//             <div>
-//               <label className="block text-gray-700 text-sm font-bold mb-1">
-//                 Email
-//               </label>
-//               <input
-//                 type="email"
-//                 name="email"
-//                 value={formData.email}
-//                 onChange={handleChange}
-//                 required
-//                 className="w-full border rounded px-3 py-2 text-gray-700 text-sm font-normal"
-//               />
-//             </div>
-
-//             {/* Specialization */}
-//             <div>
-//               <label className="block text-gray-700 text-sm font-bold mb-1">
-//                 Specialization
-//               </label>
-//               <input
-//                 type="text"
-//                 name="specialization"
-//                 value={formData.specialization}
-//                 onChange={handleChange}
-//                 required
-//                 className="w-full border rounded px-3 py-2 text-gray-700 text-sm font-normal"
-//               />
-//             </div>
-
-//             {/* Contact Number */}
-//             <div>
-//               <label className="block text-gray-700 text-sm font-bold mb-1">
-//                 Contact Number
-//               </label>
-//               <input
-//                 type="tel"
-//                 name="contactNumber"
-//                 value={formData.contactNumber}
-//                 onChange={handleChange}
-//                 required
-//                 className="w-full border rounded px-3 py-2 text-gray-700 text-sm font-normal"
-//               />
-//             </div>
-
-//             {/* Notes */}
-//             <div>
-//               <label className="block text-gray-700 text-sm font-bold mb-1">
-//                 Notes
-//               </label>
-//               <input
-//                 type="text"
-//                 name="notes"
-//                 value={formData.notes}
-//                 onChange={handleChange}
-//                 required
-//                 className="w-full border rounded px-3 py-2 text-gray-700 text-sm font-normal"
-//               />
-//             </div>
-//           </div>
-
-//           {/* Buttons */}
-//           <div className="flex justify-between mt-6">
-//             <button
-//               type="button"
-//               onClick={onClose}
-//               className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 text-sm"
-//             >
-//               Cancel
-//             </button>
-//             <button
-//               type="submit"
-//               className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 text-sm"
-//             >
-//               Add Doctor
-//             </button>
-//           </div>
-//         </form>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default AddDoctorModal;

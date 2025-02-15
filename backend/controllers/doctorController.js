@@ -8,7 +8,7 @@ import bcrypt from "bcryptjs";
 // @access  Private/Admin
 const createDoctor = asyncHandler(async (req, res) => {
   try {
-    const { name, email, password, specialization, contactNumber, notes } = req.body;
+    const { name, email, password, specialization, contactNumber, notes, availability } = req.body;
 
     const doctorExists = await Doctor.findOne({ email });
 
@@ -29,6 +29,7 @@ const createDoctor = asyncHandler(async (req, res) => {
       specialization,
       contactNumber,
       notes,
+      availability,
       isDoctor: true, // Ensure the user is a doctor
     });
 
