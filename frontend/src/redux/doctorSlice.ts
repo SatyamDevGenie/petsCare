@@ -10,6 +10,7 @@ interface doctor {
   notes: string;
   contactNumber: string;
   isDoctor: boolean;
+  availability: string;
 }
 
 interface doctorState {

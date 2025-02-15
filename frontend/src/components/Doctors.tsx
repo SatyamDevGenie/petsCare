@@ -23,7 +23,7 @@ const Doctors: React.FC = () => {
   }, [dispatch, addDoctor]);
 
   const handleAptClick = () => {
-    navigate("/allApointments");
+    navigate("/allAppointments");
   };
 
   return (

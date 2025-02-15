@@ -24,10 +24,10 @@ const AllAppointments: React.FC = () => {
     <div className="container mx-auto p-6 mt-20">
       <h2 className="text-2xl font-bold text-center mb-4">All Appointments</h2>
 
-      {(userInfo?.isAdmin || userInfo?.isDoctor) &&
+      {(userInfo && userInfo?.isAdmin || userInfo?.isDoctor) &&
       allAppointments.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {userInfo?.isAdmin
+          {userInfo && userInfo?.isAdmin
             ? allAppointments.map((appointment, index) => (
                 <div
                   key={index}
@@ -87,6 +87,7 @@ const AllAppointments: React.FC = () => {
               ))
             : allAppointments
                 .filter(
+                  // (appointment) => appointment.doctor?.name === userInfo && userInfo?.name
                   (appointment) => appointment.doctor?.name === userInfo?.name
                 ) // Filter by doctor
                 .map((appointment, index) => (
@@ -142,7 +143,7 @@ const AllAppointments: React.FC = () => {
                             {appointment.status}
                           </td>
                         </tr>
-                        {userInfo.isDoctor && (
+                        {userInfo && userInfo.isDoctor && (
                           <tr>
                             <td className="border px-4 py-2 text-sm font-bold bg-gray-100">
                               Response

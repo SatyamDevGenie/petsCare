@@ -40,7 +40,7 @@ const Login = () => {
     } catch (err: any) {
       setError(err.message || "Invalid credentials");
 
-      toast.error("You are not authorized to add a service !", {
+      toast.error("Can't able to login", {
         style: {
           fontSize: "14px", // Smaller text size
           padding: "8px", // Reduce padding
