@@ -70,7 +70,7 @@ const AppointmentModal: React.FC<ModalProps> = ({
       dispatch(bookAppointmentService(appointment));
 
         // Show success toast
-        toast.success("Appointment Booked !", {
+        toast.success(`${userInfo.name} Booked Appointment`, {
           style: {
             fontSize: "14px", // Smaller text size
             padding: "8px",   // Reduce padding

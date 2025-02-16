@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface Appointment {
+
+  _id: string; // ✅ Add this line
   petOwner: { _id: string; name: string } | string;
   pet: {
     breed: string; _id: string; name: string 
@@ -10,19 +12,21 @@ interface Appointment {
   query: string;
   status: "Pending" | "Approved" | "Rejected";
   doctorResponse: "Pending" | "Responded";
+  
 }
 
 interface AppointmentState {
   bookAppointment: Appointment | null;
   appointments: Appointment[];
   allAppointments: Appointment[];
-  
+  appointmentStatus: Appointment[];
 }
 
 const initialState: AppointmentState = {
   bookAppointment: null,
   appointments: [],
-  allAppointments: []
+  allAppointments: [],
+  appointmentStatus: []
 };
 
 const appointmentSlice = createSlice({
@@ -41,10 +45,14 @@ const appointmentSlice = createSlice({
     },
     getAllAppointments: (state, action) => {
       state.allAppointments = action.payload;
+    },
+    updateAppointmentStatus: (state, action) => {
+       state.appointmentStatus = action.payload;
+       localStorage.setItem("appointmentStatus", JSON.stringify(state.appointmentStatus));
     }
   },
 });
 
 
-export const {bookApt, setAppointments, getAllAppointments} = appointmentSlice.actions;
+export const {bookApt, setAppointments, getAllAppointments, updateAppointmentStatus} = appointmentSlice.actions;
 export default appointmentSlice.reducer;

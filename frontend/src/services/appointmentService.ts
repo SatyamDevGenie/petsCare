@@ -4,6 +4,7 @@ import {
   bookApt,
   getAllAppointments,
   setAppointments,
+  updateAppointmentStatus,
 } from "../redux/appointmentSlice";
 
 const API_URL = "/api/appointment/";
@@ -92,5 +93,37 @@ export const getAllAppointmentsAsync =
         error.response?.data?.message ||
           "Failed to add service. Please try again."
       );
+    }
+  };
+
+
+
+
+  export const respondToAppointmentService =
+  (appointmentId: string, response: "Accepted" | "Rejected") =>
+  async (dispatch: AppDispatch, getState: () => RootState) => {
+    try {
+      const { userInfo } = getState().user;
+
+      // Ensure only doctors can respond to appointments
+      if (userInfo.isDoctor !== true) {
+        throw new Error("Unauthorized: Only doctors can respond to appointments.");
+      }
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      // Sending PUT request to update appointment status
+      const { data } = await axios.put(`${API_URL}respond`, { appointmentId, response }, config);
+
+      dispatch(updateAppointmentStatus({ appointmentId, status: response }));
+      return data;
+    } catch (error: any) {
+      console.error("Failed to respond to appointment:", error.response?.data || error.message);
+      throw new Error(error.response?.data?.message || "Failed to respond to appointment. Please try again.");
     }
   };
