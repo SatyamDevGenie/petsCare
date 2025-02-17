@@ -37,7 +37,7 @@ const AddService: React.FC = () => {
 
         await dispatch(addServiceAPI(newService));
 
-        toast.success("Service added successfully!", {
+        toast.success("Service Added", {
           style: {
             fontSize: "14px",
             padding: "8px",

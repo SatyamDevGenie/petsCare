@@ -59,7 +59,7 @@ const EditDoctorModal: React.FC<ModalProps> = React.memo(
         );
         navigate("/doctors");
         // Show success toast
-        toast.success("Doctor Updated Successfully !", {
+        toast.success("Doctor Updated", {
           style: {
             fontSize: "14px", // Smaller text size
             padding: "8px", // Reduce padding

@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../redux/store";
 import { useNavigate } from "react-router-dom";
 import { updatePet } from "../services/petsService";
+import toast from "react-hot-toast";
 
 interface PetProps {
   pet: {
@@ -73,6 +74,16 @@ const EditPetModal: React.FC<PetProps> = ({ pet, isOpen, onClose }) => {
           notes: formData.notes,
         })
       );
+      // Show success toast
+      toast.success("Pet Updated", {
+        style: {
+          fontSize: "14px", // Smaller text size
+          padding: "8px", // Reduce padding
+          minWidth: "200px", // Reduce width
+          fontFamily: "Arial Black",
+          fontWeight: "bolder",
+        },
+      });
       navigate("/");
       onClose();
     } catch (error: any) {

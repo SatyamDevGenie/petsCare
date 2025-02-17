@@ -26,7 +26,7 @@ const Login = () => {
       }
 
       // Show success toast
-      toast.success("Login successfully !", {
+      toast.success("Login Successfully", {
         style: {
           fontSize: "14px", // Smaller text size
           padding: "8px", // Reduce padding

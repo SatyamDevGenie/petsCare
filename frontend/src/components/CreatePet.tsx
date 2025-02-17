@@ -66,7 +66,7 @@ const CreatePet: React.FC = () => {
       dispatch(createPet(petData));
 
       // Show success toast
-      toast.success("Pet Created !", {
+      toast.success("Pet Created", {
         style: {
           fontSize: "14px",
           padding: "8px",

@@ -32,7 +32,7 @@ const SingleService: React.FC = () => {
         navigate("/services"); // Redirect to services page after deletion
 
         // Show success toast
-      toast.success("Service Deleted !", {
+      toast.success("Service Deleted", {
         style: {
           fontSize: "14px", // Smaller text size
           padding: "8px",   // Reduce padding

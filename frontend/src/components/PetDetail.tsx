@@ -4,6 +4,7 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { fetchSinglePet, updatePet, deletePet } from "../services/petsService";
 import { RootState, AppDispatch } from "../redux/store";
 import EditPetModal from "./EditPetModel";
+import toast from "react-hot-toast";
 
 interface Pet {
   _id: string;
@@ -51,6 +52,16 @@ const PetDetail: React.FC<Pet> = () => {
     try {
       dispatch(deletePet(pet._id));
       navigate("/");
+      // Show success toast
+      toast.success("Pet Deleted", {
+        style: {
+          fontSize: "14px", // Smaller text size
+          padding: "8px", // Reduce padding
+          minWidth: "200px", // Reduce width
+          fontFamily: "Arial Black",
+          fontWeight: "bolder",
+        },
+      });
     } catch (error: any) {
       console.error("Error deleting service:", error);
     }

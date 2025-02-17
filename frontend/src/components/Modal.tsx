@@ -50,7 +50,7 @@ const Modal: React.FC<ModalProps> = ({ singleService, isOpen, onClose }) => {
       );
 
       // Show success toast
-      toast.success("Service Updated Successfully !", {
+      toast.success("Service Updated", {
         style: {
           fontSize: "14px", // Smaller text size
           padding: "8px",   // Reduce padding

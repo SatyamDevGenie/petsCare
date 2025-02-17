@@ -17,15 +17,14 @@ const Header: React.FC = () => {
   const handleLogout = () => {
     dispatch(logout());
     // Show success toast
-    toast.success("Logout successfully!", {
+    toast.success("Logout successfully", {
       style: {
         fontSize: "14px", // Smaller text size
         padding: "8px", // Reduce padding
         minWidth: "200px", // Reduce width
         fontFamily: "Arial Black",
         fontWeight: "bolder",
-        backgroundColor: "gray", // Custom green for success
-        color: "white", // White text color for contrast
+        color: "black", // White text color for contrast
         borderRadius: "8px", // Rounded corners
         boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Optional subtle shadow
       },

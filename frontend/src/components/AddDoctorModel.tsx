@@ -37,7 +37,7 @@ const AddDoctorModal: React.FC<AddDoctorModalProps> = ({ isOpen, onClose }) => {
     e.preventDefault();
     dispatch(createDoctor(formData));
     // Show success toast
-    toast.success("Login successfully !", {
+    toast.success("Doctor Added", {
       style: {
         fontSize: "14px", // Smaller text size
         padding: "8px", // Reduce padding
