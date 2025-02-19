@@ -23,69 +23,62 @@ const SingleService: React.FC = () => {
     }
   }, [dispatch, service_id]);
 
-
-
   const handleDelete = async () => {
     if (SingleService) {
       try {
-        await dispatch(cancelService(SingleService)); // Dispatch the delete action
-        navigate("/services"); // Redirect to services page after deletion
+        await dispatch(cancelService(SingleService)); 
+        navigate("/services"); 
 
-        // Show success toast
-      toast.success("Service Deleted", {
-        style: {
-          fontSize: "14px", // Smaller text size
-          padding: "8px",   // Reduce padding
-          minWidth: "200px", // Reduce width
-          fontFamily:"Arial Black",
-          fontWeight:"bolder"
-        },
-      });
-
+        toast.success("Service Deleted", {
+          style: {
+            fontSize: "14px",
+            padding: "8px",
+            minWidth: "200px",
+            fontFamily: "Arial Black",
+            fontWeight: "bolder",
+          },
+        });
       } catch (error) {
         console.error("Error deleting service:", error);
       }
     }
   };
 
-
   return (
-    <div className="container mx-auto px-8 py-12 mt-24 max-w-5xl">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-16 max-w-lg sm:max-w-3xl">
       {SingleService ? (
-        <div className="bg-white text-gray-900 max-w-3xl mx-auto rounded-xl shadow-xl p-12 mt-10 border border-gray-200">
-          <h2 className="text-center text-3xl font-bold mb-6 text-indigo-700">
+        <div className="bg-white text-gray-900 rounded-lg shadow-md p-6 sm:p-10 border border-gray-200">
+          <h2 className="text-center text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-indigo-700">
             {SingleService.title}
           </h2>
-          <p className="text-center text-gray-700 text-lg leading-relaxed mb-6">
+          <p className="text-center text-gray-700 text-sm sm:text-base leading-relaxed mb-4 sm:mb-6 font-semibold">
             {SingleService.description}
           </p>
-          <p className="text-center text-blue-600 font-semibold text-xl mb-6">
+          <p className="text-center text-blue-600 font-extrabold text-lg sm:text-xl mb-4 sm:mb-6">
             Price: ${SingleService.price}
           </p>
+
           {userInfo?.isAdmin && (
-            <div className="flex justify-center gap-6 mt-8">
+            <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 mt-6">
               <button
                 onClick={() => setOpenModal(true)}
-                className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300"
+                className="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 sm:py-3 sm:px-6 rounded-lg text-sm sm:text-lg transition duration-300"
               >
                 Edit
               </button>
               <button
-              onClick={handleDelete}
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300"
+                onClick={handleDelete}
+                className="w-full sm:w-auto bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 sm:py-3 sm:px-6 rounded-lg text-sm sm:text-lg transition duration-300"
               >
                 Delete
               </button>
             </div>
           )}
-          <Modal
-            isOpen={openModal}
-            onClose={() => setOpenModal(false)}
-            singleService={SingleService}
-          />
+
+          <Modal isOpen={openModal} onClose={() => setOpenModal(false)} singleService={SingleService} />
         </div>
       ) : (
-        <p className="text-center text-gray-400 text-xl">Loading service details...</p>
+        <p className="text-center text-gray-400 text-lg sm:text-xl">Loading service details...</p>
       )}
     </div>
   );

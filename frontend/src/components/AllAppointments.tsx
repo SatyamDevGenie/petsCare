@@ -49,12 +49,12 @@ const AllAppointments: React.FC = () => {
   };
   return (
     <div className="container mx-auto p-6 mt-20">
-      <h2 className="text-2xl font-bold text-center mb-4">All Appointments</h2>
+      <h2 className="text-2xl font-bold text-center mb-4">Appointment Dashboard</h2>
 
       {filteredAppointments.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-12">
           {filteredAppointments.map((appointment, index) => (
-            <div key={index} className="border border-gray-300 rounded-lg shadow-md p-4">
+            <div key={index} className="border border-gray-300 rounded-lg shadow-md p-4 mt-12">
               <table className="w-full border-collapse">
                 <tbody>
                   <tr>

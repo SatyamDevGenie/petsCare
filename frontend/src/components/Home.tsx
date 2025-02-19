@@ -101,24 +101,24 @@ const Home: React.FC = () => {
         ))}
       </motion.div>
 
-      {/* Adoption Information Section */}
-      <div className='text-center p-6 sm:p-10 mt-12 sm:mt-16 bg-gray-100 rounded-lg shadow-md'>
-        <h2 className='text-lg sm:text-2xl font-bold text-gray-800'>
+
+     {/* Adoption Info Section */}
+     <div className='text-center p-4 sm:p-6 mt-8 sm:mt-12 bg-gray-100 rounded-lg shadow-md'>
+        <h2 className='text-base sm:text-xl font-bold text-gray-800'>
           Why Adopt With Us?
         </h2>
-        <p className='text-gray-600 mt-2 max-w-2xl mx-auto text-sm sm:text-lg'>
-          Our adoption process ensures pets find a caring and responsible home.
-          We provide medical checkups and support every step of the way.
+        <p className='text-xs sm:text-lg text-gray-600 mt-2 max-w-md mx-auto font-medium'>
+          Our adoption process ensures pets find a loving home. We provide medical checkups and support every step.
         </p>
       </div>
 
-      <div className='flex flex-col items-center p-6 sm:p-8 rounded-lg mt-12 w-full text-center'>
-        <h2 className='mb-6 text-xl sm:text-2xl font-bold mt-7'>
-          Training a Dog by one of our Trainer
-        </h2>
-        <div className='w-full max-w-3xl'>
+
+         {/* Training Video Section */}
+         <div className='text-center p-4 sm:p-6 mt-8 sm:mt-12'>
+        <h2 className='text-base sm:text-xl font-bold'>Training a Dog by Our Trainer</h2>
+        <div className='w-full max-w-3xl mx-auto mt-4'>
           <iframe
-            className='w-full h-48 sm:h-64 md:h-80 lg:h-96 rounded-lg shadow-md'
+            className='w-full h-40 sm:h-64 md:h-80 rounded-lg shadow-md'
             src='https://www.youtube.com/embed/DkCHTlaFtio'
             title='Pet Care Video'
             frameBorder='0'
@@ -127,6 +127,7 @@ const Home: React.FC = () => {
           ></iframe>
         </div>
       </div>
+
 
       {/* Admin Buttons */}
       {isAdmin && (

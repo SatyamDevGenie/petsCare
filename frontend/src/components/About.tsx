@@ -1,23 +1,23 @@
 import React from "react";
-import { motion } from "framer-motion"; // Import Framer Motion
+import { motion } from "framer-motion";
 
 const AboutUs: React.FC = () => {
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 mt-16">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 mt-12 sm:mt-16">
       
       {/* Heading Animation */}
       <motion.h2
-        className="text-3xl sm:text-4xl font-bold text-center text-black mb-8 mt-5"
+        className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-black mb-6 sm:mb-8 mt-4 sm:mt-5"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        About petsCare Platform
+        About petsCare 
       </motion.h2>
 
       {/* Content Animation */}
       <motion.div
-        className="space-y-6"
+        className="space-y-4 sm:space-y-6 max-w-[90%] sm:max-w-[80%] md:max-w-[70%] mx-auto text-justify"
         initial="hidden"
         animate="visible"
         variants={{
@@ -31,7 +31,7 @@ const AboutUs: React.FC = () => {
         }}
       >
         <motion.p
-          className="text-gray-600 text-base sm:text-lg leading-relaxed font-semibold"
+          className="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed font-medium"
           variants={{
             hidden: { opacity: 0, y: 20 },
             visible: { opacity: 1, y: 0 },
@@ -45,7 +45,7 @@ const AboutUs: React.FC = () => {
         </motion.p>
 
         <motion.p
-          className="text-gray-600 text-base sm:text-lg leading-relaxed font-semibold"
+          className="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed font-medium"
           variants={{
             hidden: { opacity: 0, y: 20 },
             visible: { opacity: 1, y: 0 },
@@ -60,7 +60,7 @@ const AboutUs: React.FC = () => {
         </motion.p>
 
         <motion.p
-          className="text-gray-600 text-base sm:text-lg leading-relaxed font-semibold"
+          className="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed font-medium"
           variants={{
             hidden: { opacity: 0, y: 20 },
             visible: { opacity: 1, y: 0 },
