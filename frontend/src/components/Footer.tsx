@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-black text-gray-300 w-full mt-3 p-3">
+    <footer className="bg-black text-gray-300 w-full mt-auto p-3">
       <div className="px-5 py-5">
         {/* Top Section */}
-        <div className="flex flex-col md:flex-row justify-between items-center border-b border-gray-700 pb-6 max-w-screen-xl mx-auto gap-6">
+        <div className="flex flex-col md:flex-row justify-between items-center border-b border-gray-700 pb-6 max-w-screen-xl mx-auto gap-6 mt-12 ">
           {/* Logo and About */}
           <div className="text-center md:text-left">
             <h2 className="text-2xl font-extrabold tracking-wide text-white">

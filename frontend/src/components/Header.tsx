@@ -93,14 +93,14 @@ const Header: React.FC = () => {
                   <div className="flex justify-between items-center space-x-4">
                     <Link
                       to="/profile"
-                      className="block px-4 py-2 text-sm hover:bg-gray-100"
+                      className="block px-4 py-2 text-sm hover:bg-gray-100 font-bold"
                       onClick={() => setIsDropdownOpen(false)}
                     >
                       Profile
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className="block text-teal-500 px-4 py-2 text-sm hover:bg-gray-100"
+                      className="block text-teal-500 px-4 py-2 text-sm hover:bg-gray-100  font-bold"
                     >
                       Logout
                     </button>
