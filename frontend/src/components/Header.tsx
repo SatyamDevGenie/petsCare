@@ -36,13 +36,13 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white shadow-md w-full fixed top-0 left-0 z-50">
+    <header className="text-black w-full top-0 left-0 z-50">
       <div className="container mx-auto px-4 sm:px-6 flex justify-between items-center py-4">
         {/* Logo Section */}
         <div className="text-3xl font-bold tracking-wide text-white">
           <Link to="/" className="hover:text-teal-300 transition-all">
-            <span className="text-teal-400">🐾 pets</span>
-            <span className="text-white">Care</span>
+            <span className="text-teal-400">pets</span>
+            <span className="text-black">Care</span>
           </Link>
         </div>
 
@@ -50,19 +50,19 @@ const Header: React.FC = () => {
         <nav className="hidden md:flex items-center space-x-8">
           <Link
             to="/about"
-            className="text-sm font-medium tracking-wide uppercase hover:text-teal-300 transition-transform transform hover:scale-105"
+            className="text-sm font-medium tracking-wide uppercase hover:text-teal-900 transition-transform transform hover:scale-105"
           >
             About
           </Link>
           <Link
             to="/services"
-            className="text-sm font-medium tracking-wide uppercase hover:text-teal-300 transition-transform transform hover:scale-105"
+            className="text-sm font-medium tracking-wide uppercase hover:text-teal-900 transition-transform transform hover:scale-105"
           >
             Services
           </Link>
           <Link
             to="/doctors"
-            className="text-sm font-medium tracking-wide uppercase hover:text-teal-300 transition-transform transform hover:scale-105"
+            className="text-sm font-medium tracking-wide uppercase hover:text-teal-900 transition-transform transform hover:scale-105"
           >
             Doctors
           </Link>
@@ -120,7 +120,7 @@ const Header: React.FC = () => {
 
         {/* Mobile Hamburger Menu */}
         <button
-          className="md:hidden text-white focus:outline-none"
+          className="md:hidden text-teal-500 focus:outline-none"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
           <svg
@@ -230,3 +230,14 @@ const Header: React.FC = () => {
 };
 
 export default Header;
+
+
+
+
+
+
+
+
+
+
+

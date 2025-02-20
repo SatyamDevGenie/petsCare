@@ -68,12 +68,12 @@ const Login = () => {
         }}
       >
         <motion.h2
-          className="text-3xl font-extrabold text-center mb-6 text-gray-800"
+          className="text-4xl font-medium text-center mb-6 text-gray-800"
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          Login
+          Login 
         </motion.h2>
 
         {error && (
@@ -87,9 +87,9 @@ const Login = () => {
           </motion.div>
         )}
 
-        <div className="mb-6">
+        <div className="mb-6 mt-10">
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Login as:
+            Login As :-
           </label>
           <select
             value={role}
@@ -149,10 +149,10 @@ const Login = () => {
 
         <motion.button
           type="submit"
-          className="w-full bg-gradient-to-r from-purple-500 to-blue-500 text-sm text-white py-3 rounded-lg shadow-md hover:from-purple-600 hover:to-blue-600 transition duration-200"
+          className="w-full bg-gradient-to-r font-extrabold from-green-500 to-blue-500 text-sm text-white py-3 rounded-lg shadow-md hover:from-green-600 hover:to-blue-600 transition duration-200"
           whileHover={{ scale: 1.05 }}
         >
-          Login
+          LOGIN
         </motion.button>
 
         <motion.div
@@ -162,10 +162,10 @@ const Login = () => {
           transition={{ duration: 0.5, delay: 0.6 }}
         >
           <p className="text-sm text-gray-600">
-            Don't have an account?{" "}
+            Don't have an account ?{" "}
             <Link
               to="/register"
-              className="text-purple-500 hover:text-purple-700 underline transition"
+              className="text-teal-300 hover:text-teal-700 transition font-extrabold"
             >
               Register
             </Link>

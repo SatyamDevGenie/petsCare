@@ -6,6 +6,7 @@ import { cancelDoctor, fetchSingleDoctor } from "../services/doctorService";
 import EditDoctorModal from "./EditDoctorModel";
 import AppointmentModal from "./AppointmentModal";
 import { motion } from "framer-motion";
+import { FaUserMd, FaMapMarkerAlt, FaStar, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 import toast from "react-hot-toast";
 
 const SingleDoctor: React.FC = () => {
@@ -39,16 +40,15 @@ const SingleDoctor: React.FC = () => {
     }
     try {
       await dispatch(cancelDoctor(singleDoctor));
-        // Show success toast
-        toast.success("Doctor Deleted", {
-          style: {
-            fontSize: "14px", // Smaller text size
-            padding: "8px", // Reduce padding
-            minWidth: "200px", // Reduce width
-            fontFamily: "Arial Black",
-            fontWeight: "bolder",
-          },
-        });
+      toast.success("Doctor Deleted", {
+        style: {
+          fontSize: "14px",
+          padding: "8px",
+          minWidth: "200px",
+          fontFamily: "Arial Black",
+          fontWeight: "bolder",
+        },
+      });
       navigate("/doctors");
     } catch (err) {
       console.error("Error deleting doctor:", err);
@@ -64,8 +64,8 @@ const SingleDoctor: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto px-6 py-8 mt-20">
-      {userInfo?.isDoctor &&  userInfo._id === singleDoctor._id && (
+    <div className="container mx-auto px-6 py-12 mt-20 p-5">
+      {userInfo?.isDoctor && userInfo._id === singleDoctor._id && (
         <motion.div
           className="flex justify-end mb-8"
           initial={{ opacity: 0, x: 50 }}
@@ -80,22 +80,44 @@ const SingleDoctor: React.FC = () => {
           </button>
         </motion.div>
       )}
+
       <div className="bg-white max-w-md mx-auto rounded-lg p-6 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-300">
         <img
           src={singleDoctor.profileImage}
           alt={singleDoctor.name}
-          className="w-32 h-32 rounded-full mx-auto mb-4"
+          className="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-indigo-500 shadow-lg"
         />
-        <table className="w-full border-collapse text-gray-800">
+
+        {/* Doctor's Name */}
+        <p className="text-xl font-bold text-center text-gray-800">{singleDoctor.name}</p>
+
+        {/* Specialization with Icon */}
+        <p className="text-lg font-semibold text-indigo-600 flex items-center justify-center gap-2 mt-2">
+          <FaUserMd /> {singleDoctor.specialization}
+        </p>
+
+        {/* 📍 Static Location Section */}
+        <p className="text-sm text-gray-500 flex items-center justify-center gap-2 mt-1">
+          <FaMapMarkerAlt className="text-red-500" /> Mumbai, India
+        </p>
+
+        {/* ⭐ Rating */}
+        <p className="text-lg font-bold text-yellow-500 mt-2 flex items-center justify-center gap-2">
+          <FaStar /> 4.8 / 5
+        </p>
+
+        {/* Contact Information */}
+        <p className="text-sm text-gray-600 flex items-center justify-center gap-2 mt-2">
+          <FaPhoneAlt className="text-green-500" /> {singleDoctor.contactNumber}
+        </p>
+        <p className="text-sm text-gray-600 flex items-center justify-center gap-2 mt-1">
+          <FaEnvelope className="text-blue-500" /> {singleDoctor.email}
+        </p>
+
+        {/* Static Table for Details */}
+        <table className="w-full border-collapse text-gray-800 mt-4">
           <tbody>
-            {[
-              ["Name", singleDoctor.name],
-              ["Email", singleDoctor.email],
-              ["Specialization", singleDoctor.specialization],
-              ["Description", singleDoctor.notes],
-              ["Availability", singleDoctor.availability],
-              ["Contact", singleDoctor.contactNumber],
-            ].map(([label, value]) => (
+            {[["Description", singleDoctor.notes], ["Availability", singleDoctor.availability]].map(([label, value]) => (
               <tr key={label}>
                 <td className="px-4 py-2 text-sm font-bold">{label}:</td>
                 <td className="px-4 py-2 text-sm font-semibold text-black">{value}</td>
@@ -103,6 +125,8 @@ const SingleDoctor: React.FC = () => {
             ))}
           </tbody>
         </table>
+
+        {/* Buttons for Booking & Editing */}
         {userInfo && !userInfo.isAdmin && !userInfo.isDoctor && (
           <div className="flex justify-center items-center mt-6">
             <button
@@ -113,6 +137,7 @@ const SingleDoctor: React.FC = () => {
             </button>
           </div>
         )}
+
         {userInfo?.isAdmin && (
           <div className="flex justify-between items-center mt-6">
             <button
@@ -130,6 +155,7 @@ const SingleDoctor: React.FC = () => {
           </div>
         )}
       </div>
+
       <EditDoctorModal singleDoctor={singleDoctor} isOpen={isOpen} onClose={() => setIsOpen(false)} />
       <AppointmentModal singleDoctor={singleDoctor} isOpen={bookAptIsOpen} onClose={() => setBookAptIsOpen(false)} />
     </div>
@@ -137,9 +163,6 @@ const SingleDoctor: React.FC = () => {
 };
 
 export default SingleDoctor;
-
-
-
 
 
 

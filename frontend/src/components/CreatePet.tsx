@@ -97,17 +97,17 @@ const CreatePet: React.FC = () => {
 
   return (
     <motion.div
-      className="flex justify-center items-center min-h-screen px-4 py-8 w-full mt-12"
+      className="flex justify-center items-center min-h-screen px-4 py-8 w-full mt-5"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
       <motion.div
-        className="bg-white p-6 rounded-lg shadow-md w-full max-w-md mt-12"
+        className="bg-white p-6 rounded-lg shadow-md w-full max-w-md"
         whileHover={{ scale: 1.03 }}
       >
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-4">
-          Create Pet
+        <h2 className="text-3xl font-semibold text-center text-gray-800 mb-4">
+          Create a Pet
         </h2>
         <form className="space-y-3 mt-12 px-12 border-gray-200" onSubmit={handleSubmit}>
           <motion.input

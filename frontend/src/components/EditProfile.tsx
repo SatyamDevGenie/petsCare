@@ -29,14 +29,14 @@ const EditProfile: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen px-4 mt-9">
+    <div className="flex justify-center items-center min-h-screen px-4 m-3">
       <motion.div
         className="bg-white p-8 md:p-16 rounded-xl shadow-lg w-full max-w-md transform transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-2xl"
         initial={{ opacity: 0, y: -50 }} // Initial state of the component
         animate={{ opacity: 1, y: 0 }} // Animated state
         transition={{ duration: 0.5 }}
       >
-        <h2 className="text-3xl font-extrabold text-center mb-4 text-gray-800">
+        <h2 className="text-3xl font-medium text-center mb-4 text-gray-800">
           Edit Profile
         </h2>
 
@@ -63,7 +63,7 @@ const EditProfile: React.FC = () => {
         )}
 
         <form onSubmit={handleSubmit}>
-          <div className="mb-4 py-3">
+          <div className="mb-4 py-6">
             <label
               className="block text-xs font-medium text-gray-700 mb-1"
               htmlFor="name"

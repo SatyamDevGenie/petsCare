@@ -61,7 +61,7 @@ const Register = () => {
         transition={{ duration: 0.4, ease: "easeInOut" }}
       >
         <motion.h2
-          className="text-3xl font-extrabold text-center mb-6 text-gray-800"
+          className="text-4xl font-medium text-center mb-6 text-gray-800"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
@@ -79,7 +79,7 @@ const Register = () => {
             {error}
           </motion.div>
         )}
-        <div className="mb-6">
+        <div className="mb-6 mt-10">
           <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
             Full Name
           </label>
@@ -126,7 +126,7 @@ const Register = () => {
         </div>
         <motion.button
           type="submit"
-          className="w-full bg-gradient-to-r from-green-500 to-blue-500 text-sm text-white py-3 rounded-lg shadow-md hover:from-green-600 hover:to-blue-600 transition duration-200"
+          className="w-full bg-gradient-to-r font-extrabold from-green-500 to-blue-500 text-sm text-white py-3 rounded-lg shadow-md hover:from-green-600 hover:to-blue-600 transition duration-200"
           whileHover={{ scale: 1.03, backgroundColor: "#22c55e" }}
           whileTap={{ scale: 0.95 }}
         >
@@ -139,10 +139,10 @@ const Register = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
         >
           <p className="text-sm text-gray-600">
-            Already have an account?{" "}
+            Already have an account ?{" "}
             <Link
               to="/login"
-              className="text-green-500 hover:text-green-700 underline transition"
+              className="text-green-500 hover:text-green-700 transition font-extrabold"
             >
               Login
             </Link>

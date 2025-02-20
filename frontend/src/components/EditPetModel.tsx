@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../redux/store";
 import { useNavigate } from "react-router-dom";
 import { updatePet } from "../services/petsService";
 import toast from "react-hot-toast";
@@ -22,6 +22,8 @@ interface PetProps {
 const EditPetModal: React.FC<PetProps> = ({ pet, isOpen, onClose }) => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+
+
 
   const [formData, setFormData] = useState({
     name: "",

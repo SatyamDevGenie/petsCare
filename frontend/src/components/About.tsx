@@ -3,16 +3,16 @@ import { motion } from "framer-motion";
 
 const AboutUs: React.FC = () => {
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 mt-12 sm:mt-16">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
       
       {/* Heading Animation */}
       <motion.h2
-        className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-black mb-6 sm:mb-8 mt-4 sm:mt-5"
+        className="text-2xl sm:text-3xl md:text-4xl font-medium text-center text-black mb-6 sm:mb-8 mt-4 sm:mt-5"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        About petsCare 
+        About petsCare Platform
       </motion.h2>
 
       {/* Content Animation */}
@@ -31,7 +31,7 @@ const AboutUs: React.FC = () => {
         }}
       >
         <motion.p
-          className="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed font-medium"
+          className="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed font-medium mt-10"
           variants={{
             hidden: { opacity: 0, y: 20 },
             visible: { opacity: 1, y: 0 },
