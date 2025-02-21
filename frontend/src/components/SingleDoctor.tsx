@@ -15,7 +15,7 @@ const SingleDoctor: React.FC = () => {
   const { singleDoctor } = useSelector((state: RootState) => state.doctors);
   const { userInfo } = useSelector((state: RootState) => state.user);
   const navigate = useNavigate();
-  
+
   const [isOpen, setIsOpen] = useState(false);
   const [bookAptIsOpen, setBookAptIsOpen] = useState(false);
 
@@ -28,7 +28,7 @@ const SingleDoctor: React.FC = () => {
   if (!singleDoctor) {
     return (
       <div className="container mx-auto px-6 py-8 mt-20">
-        <p className="text-center text-gray-300">Doctor details not available.</p>
+        <p className="text-center text-gray-400 text-lg">Doctor details not available.</p>
       </div>
     );
   }
@@ -64,97 +64,97 @@ const SingleDoctor: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto px-6 py-12 mt-20 p-5">
+    <div className="container mx-auto px-6 py-12 mt-10">
       {userInfo?.isDoctor && userInfo._id === singleDoctor._id && (
         <motion.div
           className="flex justify-end mb-8"
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
         >
           <button
             onClick={handleAptClick}
-            className="ml-4 bg-indigo-600 text-white font-medium px-5 py-3 text-lg flex items-center justify-center rounded-lg shadow-md hover:bg-indigo-700 transition duration-200 ease-in-out transform hover:scale-105"
+            className="ml-4 bg-indigo-600 text-white font-medium px-6 py-3 text-lg flex items-center justify-center rounded-xl shadow-md hover:bg-indigo-700 transition-transform transform hover:scale-105"
           >
             My Appointments
           </button>
         </motion.div>
       )}
 
-      <div className="bg-white max-w-md mx-auto rounded-lg p-6 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-300">
-        <img
-          src={singleDoctor.profileImage}
-          alt={singleDoctor.name}
-          className="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-indigo-500 shadow-lg"
-        />
+      <motion.div
+        className="bg-white max-w-3xl mx-auto rounded-xl p-8 shadow-xl hover:shadow-2xl transform hover:scale-105 transition duration-300 border border-gray-200"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
+        <div className="flex flex-col items-center">
+          <img
+            src={singleDoctor.profileImage}
+            alt={singleDoctor.name}
+            className="w-36 h-36 rounded-full border-4 border-indigo-500 shadow-lg mb-4"
+          />
+          <p className="text-2xl font-bold text-gray-800">{singleDoctor.name}</p>
+          <p className="text-lg font-semibold text-indigo-600 flex items-center gap-2 mt-1">
+            <FaUserMd /> {singleDoctor.specialization}
+          </p>
+          <p className="text-sm text-gray-500 flex items-center gap-2 mt-1">
+            <FaMapMarkerAlt className="text-red-500" /> Mumbai, India
+          </p>
+          <p className="text-lg font-bold text-yellow-500 mt-2 flex items-center gap-2">
+            <FaStar /> 4.8 / 5
+          </p>
+          <p className="text-sm text-gray-600 flex items-center gap-2 mt-2">
+            <FaPhoneAlt className="text-green-500" /> {singleDoctor.contactNumber}
+          </p>
+          <p className="text-sm text-gray-600 flex items-center gap-2 mt-1">
+            <FaEnvelope className="text-blue-500" /> {singleDoctor.email}
+          </p>
+        </div>
 
-        {/* Doctor's Name */}
-        <p className="text-xl font-bold text-center text-gray-800">{singleDoctor.name}</p>
+        <div className="mt-6">
+          <table className="w-full border-collapse text-gray-800 text-sm">
+            <tbody>
+              {[["Description", singleDoctor.notes], ["Availability", singleDoctor.availability]].map(([label, value]) => (
+                <tr key={label} className="border-b">
+                  <td className="px-4 py-3 font-semibold">{label}:</td>
+                  <td className="px-4 py-3 text-gray-700">{value}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
-        {/* Specialization with Icon */}
-        <p className="text-lg font-semibold text-indigo-600 flex items-center justify-center gap-2 mt-2">
-          <FaUserMd /> {singleDoctor.specialization}
-        </p>
-
-        {/* 📍 Static Location Section */}
-        <p className="text-sm text-gray-500 flex items-center justify-center gap-2 mt-1">
-          <FaMapMarkerAlt className="text-red-500" /> Mumbai, India
-        </p>
-
-        {/* ⭐ Rating */}
-        <p className="text-lg font-bold text-yellow-500 mt-2 flex items-center justify-center gap-2">
-          <FaStar /> 4.8 / 5
-        </p>
-
-        {/* Contact Information */}
-        <p className="text-sm text-gray-600 flex items-center justify-center gap-2 mt-2">
-          <FaPhoneAlt className="text-green-500" /> {singleDoctor.contactNumber}
-        </p>
-        <p className="text-sm text-gray-600 flex items-center justify-center gap-2 mt-1">
-          <FaEnvelope className="text-blue-500" /> {singleDoctor.email}
-        </p>
-
-        {/* Static Table for Details */}
-        <table className="w-full border-collapse text-gray-800 mt-4">
-          <tbody>
-            {[["Description", singleDoctor.notes], ["Availability", singleDoctor.availability]].map(([label, value]) => (
-              <tr key={label}>
-                <td className="px-4 py-2 text-sm font-bold">{label}:</td>
-                <td className="px-4 py-2 text-sm font-semibold text-black">{value}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-
-        {/* Buttons for Booking & Editing */}
-        {userInfo && !userInfo.isAdmin && !userInfo.isDoctor && (
-          <div className="flex justify-center items-center mt-6">
-            <button
+        <div className="mt-6 flex justify-center space-x-4">
+          {userInfo && !userInfo.isAdmin && !userInfo.isDoctor && (
+            <motion.button
               onClick={() => setBookAptIsOpen(true)}
-              className="text-sm bg-indigo-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg shadow-md transform hover:scale-105 transition"
+              whileHover={{ scale: 1.05 }}
             >
               Book Appointment
-            </button>
-          </div>
-        )}
+            </motion.button>
+          )}
 
-        {userInfo?.isAdmin && (
-          <div className="flex justify-between items-center mt-6">
-            <button
-              onClick={() => setIsOpen(true)}
-              className="text-sm bg-indigo-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            >
-              Edit
-            </button>
-            <button
-              onClick={handleDelete}
-              className="text-sm bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-            >
-              Delete
-            </button>
-          </div>
-        )}
-      </div>
+          {userInfo?.isAdmin && (
+            <>
+              <motion.button
+                onClick={() => setIsOpen(true)}
+                className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg shadow-md transform hover:scale-105 transition"
+                whileHover={{ scale: 1.05 }}
+              >
+                Edit
+              </motion.button>
+              <motion.button
+                onClick={handleDelete}
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg shadow-md transform hover:scale-105 transition"
+                whileHover={{ scale: 1.05 }}
+              >
+                Delete
+              </motion.button>
+            </>
+          )}
+        </div>
+      </motion.div>
 
       <EditDoctorModal singleDoctor={singleDoctor} isOpen={isOpen} onClose={() => setIsOpen(false)} />
       <AppointmentModal singleDoctor={singleDoctor} isOpen={bookAptIsOpen} onClose={() => setBookAptIsOpen(false)} />
@@ -163,10 +163,3 @@ const SingleDoctor: React.FC = () => {
 };
 
 export default SingleDoctor;
-
-
-
-
-
-
-

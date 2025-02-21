@@ -66,7 +66,7 @@ const Services: React.FC = () => {
 
       {/* Services Grid */}
       <motion.div
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 mt-7"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 mt-12"
         initial="hidden"
         animate="visible"
         variants={{
@@ -81,7 +81,7 @@ const Services: React.FC = () => {
           allServices.map((service: Service) => (
             <motion.div
               key={service.id}
-              className="bg-white/80 backdrop-blur-lg text-gray-900 rounded-xl shadow-lg hover:shadow-2xl transform transition-transform duration-500"
+              className="bg-white/80 backdrop-blur-lg mt-8 text-gray-900 rounded-xl shadow-lg hover:shadow-2xl transform transition-transform duration-500"
               variants={{
                 hidden: { opacity: 0, y: 50, scale: 0.9 },
                 visible: { opacity: 1, y: 0, scale: 1 },

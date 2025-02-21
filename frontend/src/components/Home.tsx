@@ -39,8 +39,8 @@ const Home: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
       >
-        <h1 className="text-2xl sm:text-5xl font-medium text-gray-900 leading-tight">
-          Step into Pet Paradise 🐕🐈
+        <h1 className="text-2xl sm:text-5xl font-medium text-gray-800 leading-tight">
+          Step into Pets Paradise 🐕🐈
         </h1>
         <p className="mt-4 sm:mt-6 text-sm sm:text-lg text-gray-600 max-w-lg mx-auto">
           Explore our collection of adorable pets and give them the love and
@@ -138,9 +138,64 @@ const Home: React.FC = () => {
           </motion.button>
         </motion.div>
       )}
+
+      {/* Testimonials Section */}
+      <div className="mt-12 sm:mt-24 px-4 sm:px-10 py-10 bg-gray-50 rounded-lg shadow-md">
+        <h2 className="text-lg sm:text-3xl font-medium text-gray-800 text-center">
+          What Our Happy Clients Say
+        </h2>
+        <div className="mt-6 sm:mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          {[
+            {
+              quote:
+                "I adopted my furry friend from petsCare, and it was the best decision ever! The process was smooth, and the team truly cares about the pets' well-being.",
+              name: "Riya Sharma",
+            },
+            {
+              quote:
+                "Thanks to petsCare, I found the perfect companion! The team was so supportive and even provided training tips for my new pet.",
+              name: "Amit Verma",
+            },
+            {
+              quote:
+                "The team at petsCare goes above and beyond! The pet adoption process was seamless, and the care they provide is unmatched.",
+              name: "Neha Kapoor",
+            },
+            {
+              quote:
+                "Excellent service! The adoption process was hassle-free, and I received full support from the team even after adoption.",
+              name: "Rajesh Kumar",
+            },
+            {
+              quote:
+                "I highly recommend petsCare! They made sure I was completely ready before bringing home my new pet. Wonderful experience!",
+              name: "Simran Malhotra",
+            },
+            {
+              quote:
+                "Professional, caring, and passionate about pets! Thank you for helping me find my adorable kitten.",
+              name: "Arjun Mehta",
+            },
+          ].map((testimonial, index) => (
+            <motion.div
+              key={index}
+              className="bg-white p-6 rounded-lg shadow-sm border border-gray-200"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 + index * 0.2 }}
+            >
+              <p className="text-gray-700 text-sm sm:text-base font-medium italic">
+                "{testimonial.quote}"
+              </p>
+              <span className="block mt-4 text-gray-900 font-semibold text-right">
+                - {testimonial.name}
+              </span>
+            </motion.div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
 
 export default Home;
-

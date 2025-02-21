@@ -227,7 +227,7 @@ const UserProfile = () => {
                         : "text-green-600"
                   }`}
                 >
-                  <strong>📌 Appointment:</strong> {appointment.status}
+                  <strong>📌 Response:</strong> {appointment.status}
                 </p>
               </motion.div>
             ))}

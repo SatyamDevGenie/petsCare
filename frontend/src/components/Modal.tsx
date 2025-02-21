@@ -79,7 +79,7 @@ const Modal: React.FC<ModalProps> = ({ singleService, isOpen, onClose }) => {
   return (
     <>
       {singleService ? (
-        <div className="fixed inset-0 z-10 flex items-center justify-center bg-gray-900 bg-opacity-50">
+        <div className="fixed inset-0 z-10 flex items-center justify-center bg-gray-900 bg-opacity-50 p-4">
           <div className="bg-white rounded-lg shadow-xl sm:w-96">
             <div className="px-4 py-3 pb-0 border-b border-gray-200 flex justify-between">
               <h3 className="text-xl font-bold text-gray-900 my-4 mt-2">

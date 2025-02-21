@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateUser } from "../services/userService";
 import { motion } from "framer-motion"; // Import Framer Motion
+import toast from "react-hot-toast";
 
 const EditProfile: React.FC = () => {
   const [name, setName] = useState("");
@@ -19,7 +20,16 @@ const EditProfile: React.FC = () => {
 
     try {
       const updatedUser = await updateUser(dispatch, { name, email, password });
-      setSuccess("Profile updated successfully!");
+       // Show success toast
+       toast.success("Updated your Profile", {
+        style: {
+          fontSize: "14px", // Smaller text size
+          padding: "8px", // Reduce padding
+          minWidth: "200px", // Reduce width
+          fontFamily: "Arial Black",
+          fontWeight: "bolder",
+        },
+      });
       setName(updatedUser.name || "");
       setEmail(updatedUser.email || "");
       setPassword("");

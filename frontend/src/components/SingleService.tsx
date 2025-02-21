@@ -82,13 +82,13 @@ const SingleService: React.FC = () => {
             <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 mt-6">
               <button
                 onClick={() => setOpenModal(true)}
-                className="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-8 sm:py-3 sm:px-6 rounded-lg text-sm sm:text-lg transition duration-300"
+                className="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-7 py-2 sm:py-3 sm:px-6 rounded-lg text-sm sm:text-lg transition duration-300"
               >
                 Edit
               </button>
               <button
                 onClick={handleDelete}
-                className="w-full sm:w-auto bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-8 sm:py-3 sm:px-6 rounded-lg text-sm sm:text-lg transition duration-300"
+                className="w-full sm:w-auto bg-red-500 hover:bg-red-700 text-white font-bold px-4 py-2  sm:py-3 sm:px-6 rounded-lg text-sm sm:text-lg transition duration-300"
               >
                 Delete
               </button>

@@ -47,7 +47,7 @@ const AllAppointments: React.FC = () => {
       {filteredAppointments.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
           {filteredAppointments.map((appointment, index) => (
-            <div key={index} className="bg-white shadow-lg rounded-xl p-6 border border-gray-200 transition-transform transform hover:scale-105">
+            <div key={index} className="bg-white shadow-lg rounded-xl p-6 border border-gray-200 transition-transform transform hover:scale-105 mt-12">
               <table className="w-full border-collapse text-gray-700">
                 <tbody>
                   <tr>

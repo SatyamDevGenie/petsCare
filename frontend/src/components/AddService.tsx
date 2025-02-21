@@ -77,12 +77,12 @@ const AddService: React.FC = () => {
         whileHover={{ scale: 1.02, boxShadow: "0px 8px 24px rgba(0, 0, 0, 0.15)" }}
       >
         <motion.h2
-          className="text-2xl sm:text-3xl p-3 font-bold text-center text-black mb-6"
+          className="text-2xl sm:text-3xl p-3 font-medium text-center text-black mb-6"
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
         >
-          Create a New Service
+          Create a Service
         </motion.h2>
         <form onSubmit={handleSubmit} className="space-y-6 p-8 sm:p-4">
           {/* Title Input */}
