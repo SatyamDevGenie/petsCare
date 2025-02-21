@@ -40,18 +40,7 @@ const Footer: React.FC = () => {
             <p className="text-sm mt-2 text-gray-400 flex justify-center sm:justify-start items-center gap-2">
               <FaEnvelope className="text-teal-400" /> support@petscare.com
             </p>
-            {/* Social Media Icons */}
-            <div className="flex justify-center sm:justify-start space-x-4 mt-3">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-teal-400">
-                <FaFacebookF size={18} />
-              </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-teal-400">
-                <FaInstagram size={18} />
-              </a>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-teal-400">
-                <FaTwitter size={18} />
-              </a>
-            </div>
+           
           </div>
         </div>
 
