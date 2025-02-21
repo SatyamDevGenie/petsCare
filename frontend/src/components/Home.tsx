@@ -126,7 +126,7 @@ const Home: React.FC = () => {
           transition={{ delay: 0.3, duration: 0.7 }}
         >
           <h3 className="text-md sm:text-2xl font-medium mb-3 sm:mb-6">
-            Don't see the perfect pet? 🐶🐱
+            Don't see the perfect pet ? 🐶🐱
           </h3>
           <motion.button
             onClick={handleCreatePet}

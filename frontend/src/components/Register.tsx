@@ -20,7 +20,7 @@ const Register = () => {
       await registerUser(dispatch, { name, email, password });
 
       // Show success toast
-      toast.success("Register Successfully !", {
+      toast.success("Register Successfully", {
         style: {
           fontSize: "14px", // Smaller text size
           padding: "8px",   // Reduce padding

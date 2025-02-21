@@ -72,8 +72,9 @@ const Header: React.FC = () => {
                 className="flex items-center space-x-2 text-sm md:text-base font-medium focus:outline-none"
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               >
-                <span className="text-black font-extrabold">
-                  Welcome {userInfo.name}
+                <span className="text-black font-medium">
+                  {/* Welcome {userInfo.name} */} 
+                  {userInfo?.name ? `Welcome, ${userInfo.name}` : "Welcome to petsCare"}
                 </span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
