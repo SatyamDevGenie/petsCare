@@ -24,8 +24,8 @@ const pets = [
     ],
     isNeutered: true,
     notes:
-      "Highly intelligent and energetic, loves obedience training and playing fetch.",
-      image: "/images/shepherd.jpg", // Replace with the actual image URL or path
+      "Highly intelligent and energetic, Shadow excels in obedience training and agility courses. He is very protective of his family and enjoys playing fetch. Regular exercise is a must to keep him happy and healthy. He responds well to positive reinforcement and enjoys learning new tricks.",
+    image: "/images/shepherd.jpg",
   },
 
   {
@@ -52,8 +52,9 @@ const pets = [
       },
     ],
     isNeutered: true,
-    notes: "Friendly and outgoing, loves swimming and playing fetch.",
-    image: "/images/labrodor.jpg", // Replace with the actual image URL or path
+    notes:
+      "Bella is a friendly and outgoing dog who loves to be around people. He enjoys swimming and playing fetch, especially with his favorite tennis ball. He is great with kids and other pets, making him a perfect family companion. His high energy levels require daily walks and playtime.",
+    image: "/images/labrodor.jpg",
   },
 
   {
@@ -81,8 +82,8 @@ const pets = [
     ],
     isNeutered: true,
     notes:
-      "Gentle and affectionate, enjoys lounging by windows and playing with feather toys.",
-      image: "/images/max.jpg", // Replace with the actual image URL or path
+      "Max is a gentle and affectionate Maine Coon who enjoys lounging by the window and observing birds outside. She loves playing with feather toys and chasing laser pointers. Her long fur requires regular grooming to prevent matting. She is independent but enjoys occasional cuddles.",
+    image: "/images/max.jpg",
   },
 
   {
@@ -110,8 +111,8 @@ const pets = [
     ],
     isNeutered: true,
     notes:
-      "Very vocal and loves attention. Enjoys climbing and playing with interactive toys.",
-      image: "/images/milo.jpg", // Replace with the actual image URL or path
+      "Milo is very vocal and loves attention. She enjoys climbing on furniture, exploring new places, and playing with interactive toys. She follows her owner around the house and often 'talks' to them with her meows. She forms strong bonds with her favorite humans and loves warm cozy spots.",
+    image: "/images/milo.jpg",
   },
 
   {
@@ -139,8 +140,8 @@ const pets = [
     ],
     isNeutered: true,
     notes:
-      "Affectionate and curious, enjoys warmth and cuddles. Needs regular skin care due to lack of fur.",
-      image: "/images/sphynx.jpg", // Replace with the actual image URL or path
+      "Luna is an affectionate and curious Sphynx cat who loves cuddles and warmth. Due to her lack of fur, she needs regular skin care, including baths to remove excess oils. She enjoys wearing cozy sweaters during colder months and loves to burrow under blankets. She thrives on companionship and prefers not to be left alone for long periods.",
+    image: "/images/sphynx.jpg",
   },
 
   {
@@ -162,8 +163,9 @@ const pets = [
       },
     ],
     isNeutered: false,
-    notes: "Loyal and protective, enjoys long walks and training sessions.",
-    image: "/images/Rotweiler.jpg", // Replace with the actual image URL or path
+    notes:
+      "Prince is a loyal and protective Rottweiler who forms strong bonds with his family. He is highly intelligent and thrives on training sessions. He enjoys long walks and requires proper socialization from an early age. While he can be reserved around strangers, he is incredibly affectionate with those he trusts. Regular exercise and mental stimulation are essential for his well-being.",
+    image: "/images/Rotweiler.jpg",
   },
 ];
 
