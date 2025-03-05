@@ -128,7 +128,7 @@ const AppointmentModal: React.FC<ModalProps> = ({
                   required
                   className="w-full border rounded px-3 py-2 text-gray-700 text-sm font-normal"
                 >
-                  <option value="">Select a Pet</option>
+                  <option value="">Select your breed</option>
                   {petsList.map((pet) => (
                     <option key={pet._id} value={pet._id}>
                       {pet.breed}
